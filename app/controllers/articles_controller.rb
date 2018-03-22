@@ -1,0 +1,91 @@
+class ArticlesController < ApplicationController
+  
+  before_action :set_menu, only: [:index, :edit]
+
+  def new
+    Article.new
+  end
+
+  def edit
+    @website = Website.find(params[:website_id])
+    @article = Article.find(params[:id])
+    @image_list = @article.images
+    @image_main = @image_list[0]
+    @image_new = Image.new do |img|
+      img.category = 'article_content'
+      img.imageable_type = 'Article'
+      img.imageable_id = params[:id]
+    end
+  end
+
+  def create
+    @article = Article.new
+    @article.date = DateTime.now
+    @article.update(article_params)  
+    image = Image.new do |img|
+      img.category = 'article_main'
+    end
+    @article.images << image
+    redirect_to action: "edit", id: @article.id
+  end
+
+  def update
+    @article = Article.find(params[:id])
+    @article.update(article_params)
+    redirect_to action: "index"
+  end
+
+  def index
+    @website = Website.find(params[:website_id])
+    @articles = @website.articles
+    @article_new = Article.new
+  end
+
+  def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+    redirect_to action: "index"
+  end
+
+  private
+
+    def article_params
+      params.require(:article).
+        permit(:website_id, :fake, :date, :featured, :title, :intro, :markdown)
+    end 
+
+    def set_menu
+      @navigation = {
+        :path => [ { :label=>t('components.website.navbar'), :url=>websites_path } ],
+        :links => [],
+        :tabs => []        
+      }
+      action = params[:action]
+      if not ["create", "update"].include?(action) 
+        @website = Website.find(params[:website_id])
+        #PATH
+        @navigation[:path].push( { 
+          :label => @website.project, :url=>edit_website_path(@website) } )
+        @navigation[:path].push( { 
+          :label => "Articles", :url=>website_articles_path(@website) } )
+        #LINKS
+        @navigation[:links].push( { 
+          :label=>t('components.article.navbar'), :url=>website_articles_path(@website) } )
+        @navigation[:links].push( { 
+          :label=>t('components.theme.navbar'), :url=>website_themes_path(@website) } )
+        @navigation[:links].push( { 
+          :label=>t('components.information.navbar'), :url=>website_infos_path(@website) } )
+        @navigation[:links].push( { 
+          :label=>t('components.album.navbar'), :url=>website_albums_path(@website) } )
+        #TABS
+
+        #puts "articles_controller action > #{action}"
+        #if(action == 'edit')
+        #  @navigation[:tabs].push( { 
+        #    :label=>t('article.tabs.properties.title'), :id=>"#article_tab_properties" } )
+        #  @navigation[:tabs].push( { 
+        #    :label=>t('article.tabs.content.title'), :id=>"#article_tab_content" } )
+        #end
+      end
+    end
+end

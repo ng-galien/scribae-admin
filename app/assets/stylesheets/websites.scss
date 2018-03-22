@@ -1,0 +1,329 @@
+
+// Place all the styles related to the Articles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import 'application';
+
+#edit-bg-left {
+  width: 250px;
+  height: 100%;
+  position: fixed;
+  outline: 1px solid;
+  //background: red;
+}
+#edit-bg-right {
+  width: calc(100% - 270px);
+  left: 270px;
+  height: auto;
+  //outline: 1px solid;
+  position: relative;
+  right: 0;
+  //background: blue;
+}
+
+
+
+.home-container .container {
+  width: 100%!important;
+  margin: 2rem!important;
+}
+.parallax-container {
+  height: 500px;
+}
+
+.home-title {
+  
+  color: white !important;
+  //font-family: 'Lora', serif;
+  font-weight: 500 !important;
+  font-size: 5rem !important;
+  text-shadow: 2px 2px 8px #000000;
+  @media all and (max-width: 600px) {
+      font-size: 4rem !important;
+  }
+  @media all and (max-width: 400px) {
+      font-size: 3rem !important;
+  }
+}
+.home-subtitle {
+  @extend .home-title;
+}
+
+.home-intro {
+  //margin: 2rem;
+  color: white !important;
+  //background-color:#ffffff50;
+  text-shadow: 1px 1px 3px #000000;
+  font-size: 3rem;
+  font-weight: 400 !important;
+  @media all and (max-width: 600px) {
+    font-size: 2rem !important;
+  }
+
+}
+
+.home-post-title {
+    //color: $primary-color !important;
+  font-size: 2rem;
+}
+
+.featured-post {
+
+}
+
+.featured-post-title {
+    color: black;
+    font-size: 1.5rem;
+}
+.featured-post-date {
+  color: gray;
+  font-size: 1.3rem;
+}
+
+.home-card {
+    //background-color: $home-background;
+
+    
+    margin-top: 20px;
+}
+
+.home-card-title {
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: 0
+}
+
+.home-card-image {
+
+}
+
+.home-item {
+  margin: 1rem;
+  @extend .center;
+  //background-color: $home-background;
+}
+.home-item-small > * {
+  vertical-align: middle;
+}
+
+.home-item-desc {
+  margin: 0rem;
+  font-size: 1.3rem !important;
+  font-weight: 400 !important;
+}
+.home-item-title {
+  @extend .center;
+  margin: 0.5rem;
+  font-size: 2.0rem !important;
+  font-weight: 500 !important;
+  //color: darken($primary-color, 10%) !important;
+}
+
+#home-top-drop {
+  border: 2px solid rgb(145, 92, 230);
+  min-height: 150px;
+}
+#home-bottom-drop {
+  border: 2px solid rgb(145, 92, 230);
+  min-height: 150px;
+}
+#img-gallery{ display: table-cell;}
+
+.resizable-input {
+  min-width:50px!important;
+  max-width:99.99%!important;
+  transition: width 1s;
+  text-align:center;
+}
+
+.edit-proxy {
+  display: inline-block;
+}
+
+.edit-item  {
+  //display: inline-flex;
+  position: absolute;
+  //@extend .hoverable;
+}
+.edit-item i {
+  color: rgb(151, 255, 125);
+  //font-size: 3rem!important;
+  padding: 0.1rem;
+  border-radius: 4px;
+  border: solid 1px rgb(255, 94, 0);
+  background: rgb(153, 153, 153);
+  @extend .hoverable;
+}
+
+.component-item i {
+  font-size: 1.5rem;
+
+}
+.component-item i.component-icon {
+  font-size: 5.5rem;
+  
+}
+
+.edit-wrapper {
+  user-select: none;
+  //display: inline-flex;
+  //border: solid 1px green;
+  //padding: 5px 50px 5px 50px;
+}
+
+
+
+.form-helper {
+  color: red;
+  font-size: 2rem;
+  position: absolute;
+}
+.component {
+  padding: 0.3rem!important;
+  user-select: none;
+}
+.component-item {
+  background-color: rgb(255, 255, 255);
+  border: solid 1px rgb(136, 136, 136);
+  border-radius: 5px;
+  //padding: 0.3rem;
+}
+.edit-component {
+  display: inline-flex;
+  position: absolute;
+  @extend .hoverable;
+}
+.edit-component i {
+  color: rgb(47, 48, 68);
+  font-size: 1.5rem!important;
+  padding: 0.3rem;
+  border-radius: 4px;
+  border: solid 1px orange;
+  //@extend .hoverable;
+}
+
+.component-icon {
+  color: red;
+  //border: solid 1px blue;
+}
+.component-title{
+  font-size: 1.8rem;
+  font-weight: bolder;
+  //border: solid 1px blue;
+}
+.component-intro {
+  //border: solid 1px blue;
+  //margin-bottom: 20px;
+}
+.home-spacer-1 {
+  height: 1.7rem;
+}
+.home-spacer-2 {
+  height: 10rem;
+}
+.title {
+  //margin: 2rem;
+  color: white !important;
+  //background-color:#ffffff50;
+  text-shadow: 1px 1px 3px #000000;
+  font-size: 4rem;
+  font-weight: 400 !important;
+}
+.intro {
+  //margin: 1rem;
+  color: white !important;
+  //background-color:#ffffff50;
+  text-shadow: 1px 1px 3px #000000;
+  font-size: 2.5rem;
+  font-weight: 400 !important;
+}
+
+.comp-show-label {
+  margin: 0 2rem 0 2rem
+}
+
+.sortable-spacer {
+  height: 20px;
+}
+.sortable-handle {
+  //background-color: rgb(206, 206, 241);
+  //margin-bottom: -20px;
+  //margin-top: 0px;
+  //height: 0px;
+  //opacity: 0;
+}
+
+.component-container {
+  margin: 1rem;
+}
+
+.sortable-handle span {
+  display: block;
+  color: rgb(77, 81, 163);
+  width: 100%;
+  border-radius: 5px;
+  border: solid 1px;
+  border-color: white;
+  padding: 5px 0 0 0;
+  @extend .hoverable;
+
+}
+.icon-test p {
+  padding: 0px;
+  margin: 0px;
+}
+.icon-stack {
+  display: block;
+}
+.icon-stack p {
+  display: block;
+  padding: 2px;
+  margin: 0px;
+}
+.icon-stack i {
+  cursor: pointer;
+}
+
+.edit-action-validate {
+  color: green;
+}
+.edit-action-cancel {
+  color: red;
+}
+
+
+.dz-default {
+  //background-color: grey;
+  //width: 200px;
+  //height: 150px;
+  //color: black;
+  //font-size: 2rem;
+}
+.dropzone {
+  border: 2px dashed #0087F7;
+  border-radius: 5px;
+  background: white;
+  min-height: 150px;
+  min-width: 150px;
+}
+
+.image-icon-container {
+  padding-top: 5rem;
+}
+.image-icon-container i {
+  cursor: pointer;
+  color: rgb(151, 255, 125);
+  font-size: 3rem;
+  padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+  border-radius: 4px;
+  border: solid 1px rgb(255, 94, 0);
+  background: rgb(153, 153, 153);
+  @extend .hoverable;
+}
+
+
+
+
+

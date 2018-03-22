@@ -1,0 +1,15 @@
+div id="app-navbar" class="navbar-fixed"
+  nav
+    div id="navbar-header" class="nav-wrapper"  
+      - unless @navigation[:path].empty?
+        div class="navbar-path"
+          - @navigation[:path].each do |path|
+            a class="breadcrumb" href="#{path[:url]}" == path[:label]
+        ul class="right"
+          - @navigation[:links].each do |link|
+            li
+              a href="#{link[:url]}" == link[:label]
+        
+
+
+

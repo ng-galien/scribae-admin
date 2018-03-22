@@ -1,0 +1,8 @@
+div class="card website-card"
+  div class="card-content"
+    span class="card-title"
+      = website.project
+    p
+      = website.description
+  div class="card-action"
+    = link_to "#{t 'website.index.edit'}" , edit_website_path(website)

@@ -1,0 +1,16 @@
+= form_for @website, remote: true, html: { class: 'form-helper', id: 'website_form' ,data: { type: :script } } do |website_form|
+  = website_form.text_field :top_title, class: 'browser-default', :size=>10
+  = website_form.text_field :top_intro, class: 'browser-default', :size=>10
+  = website_form.text_field :bottom_title, class: 'browser-default', :size=>10
+  = website_form.text_field :bottom_intro, class: 'browser-default', :size=>10
+    /- @website.components.each do |components|
+  = website_form.fields_for :components, :child_index => ""  do |comp_form|
+    = comp_form.number_field :pos, class: 'browser-default'
+    = comp_form.text_field :icon, class: 'browser-default'
+    = comp_form.text_field :icon_color, class: 'browser-default'
+    = comp_form.text_field :title, class: 'browser-default'
+    = comp_form.text_field :intro, class: 'browser-default'
+= form_for @website, remote: true, multipart: true, html: { class: 'img-form', id: 'image_form' ,data: { type: :script } } do |form|
+  = form.fields_for :images do |img_form|
+    = img_form.hidden_field :name, class: 'browser-default'
+    = img_form.file_field :upload, multiple: false, class: 'browser-default'

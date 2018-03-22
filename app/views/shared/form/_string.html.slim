@@ -1,0 +1,5 @@
+div class="col #{col} input-field"
+  a  data-tooltip="#{t( "#{local}" << ".tip")}" class="prefix tooltipped" data-position="right" data-delay="50"
+    i class="material-icons tip-icon" == 'create'
+  = f.text_field field, :class=>"validate"
+  = f.label field, "#{t( "#{local}" << ".label")}"

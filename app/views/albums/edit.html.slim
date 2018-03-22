@@ -1,0 +1,67 @@
+div class="edit-container"
+  //Image uploader
+  = render partial: 'layouts/image/uploader'
+  //Image gallery
+  = render partial: 'layouts/image/gallery'
+  //Theme invite
+  div class="row"
+    div class="col s12 center invite"
+      div class="section"
+        span class="" == t('album.edit.invite')
+        a href="#{website_albums_path(@website)}" class="modal-trigger waves-effect waves-light btn right"
+          == t('return_to_list')   
+      div class="divider"
+    
+    div class="col s12 m3 center"
+      div class="row"
+        div class="col s12 center"
+          - if @image_main.upload.url != nil
+            = image_tag @image_main.upload.xs.url, id: 'image-main-preview', class: 'responsive-img z-depth-3'
+          - else
+            img#image-main-preview class='responsive-img z-depth-3'
+        div class="col s12 center"
+          a class="waves-effect waves-light btn modal-trigger" href="#image-main-modal" == 'Image' 
+    //Album form   
+    = form_for [ @website, @album ] do |prop_form|
+      div class="col 12 m9 center"
+        div class="row"
+          //title
+          div class="col s12 input-field center"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('album.edit.form.title.tip')}"
+              i class="material-icons tip-icon" == 'create'
+            = prop_form.text_field  :title, :class=>"validate materialize-textarea"
+            = prop_form.label       :title, "#{t('album.edit.form.title.label')}", :for=>"title"  
+          //intro
+          div class="col m9 input-field"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('album.edit.form.intro.tip')}"
+              i class="material-icons tip-icon" == 'create'
+            = prop_form.text_area  :intro, :class=>"validate materialize-textarea"
+            = prop_form.label      :intro, "#{t('album.edit.form.intro.label')}", :for=>"project"
+          //extern
+          div class="col m3 input-field center"
+            p
+              a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('album.edit.form.extern.tip')}"
+                i class="material-icons tip-icon" == 'create'
+              label
+                = prop_form.check_box :extern, {}, 'true', 'false'
+                span == t('album.edit.form.extern.label')
+          //link
+          div class="col m9 input-field has-gallery"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('album.edit.form.link.tip')}"
+              i class="material-icons tip-icon" == 'create'
+            = prop_form.text_field  :link, :class=>"validate materialize-textarea"
+            = prop_form.label      :link, "#{t('album.edit.form.link.label')}", :for=>"project"
+      //submit        
+      div class="col s12 center"     
+        = prop_form.submit "#{t('confirm')}", :class=>"btn"
+      //Images
+      div class="col s12 has-gallery"
+        div class="row"
+          - @image_list.each do |image|
+            -if image.upload.m.url != nil
+              div class="col s6 m3 l4"
+                = image_tag image.upload.m.url, id: 'image-main-preview', class: 'responsive-img z-depth-3'
+              
+      //submit
+      div class="col s12 center has-gallery"     
+        = prop_form.submit "#{t('confirm')}", :class=>"btn"

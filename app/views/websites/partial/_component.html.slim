@@ -1,0 +1,45 @@
+- @components.sort_by{|comp| comp.pos}.each do |comp|
+  div class="col center component" data-id="#{comp.id}" 
+    div class="hide comp-info" data-show="#{comp.show}" data-value="website_components_attributes_#{comp.id}_show"
+      == "#{comp.show}"
+    //Component item 
+    div class="component-item form-wrapper nested-item hoverable"
+      
+      div class="component-pos hide" data-field="website_components_attributes_#{comp.id}_pos" == "#{comp.pos}"
+      
+      span class="edit-wrapper"
+        span class="edit-item icon-stack"
+          p
+            span class="edit-action edit-icon" data-field="website_components_attributes_#{comp.id}_icon"
+              i class="material-icons" == 'photo_library'
+            div class="edit-field hide" data-value="website_components_attributes_#{comp.id}_icon"
+              == "#{comp.icon}"
+          p
+            span class="edit-action edit-color" data-field="website_components_attributes_#{comp.id}_icon_color"
+              i class="material-icons" == 'color_lens'  
+            div class="edit-field hide" data-value="website_components_attributes_#{comp.id}_icon_color"
+              == "#{comp.icon_color}"
+        span class="edit-proxy"
+          i data-field="field_icon" class="material-icons component-icon" == "#{comp.icon}"
+      //Component title
+      p class="match-height-1"
+        span class="edit-wrapper" 
+          span class="edit-item edit-action edit-text" data-field="website_components_attributes_#{comp.id}_title"
+            i class="material-icons" == 'create' 
+          span class="edit-field edit-proxy component-title" data-value="website_components_attributes_#{comp.id}_title" 
+            == "#{comp.title}"
+      //Componennt intro
+      p class="match-height-2"
+        span class="edit-wrapper" 
+          span class="edit-item edit-action edit-text" data-field="website_components_attributes_#{comp.id}_intro"
+            i class="material-icons" == 'create' 
+          span class="edit-field edit-proxy component-intro" data-value="website_components_attributes_#{comp.id}_intro" 
+            == "#{comp.intro}"
+      span class="edit-component"
+        i class="material-icons" == 'build'
+      div class="sortable-handle"
+        span class=""
+          i class="material-icons" == 'chevron_left'
+          i class="material-icons" == 'my_location'
+          i class="material-icons" == 'chevron_right'
+      

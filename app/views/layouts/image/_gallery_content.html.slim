@@ -1,0 +1,7 @@
+- @image_list.each do |image|
+  - if image.upload.url
+    div class="col s6 m4 l3 CIM-gallery"
+      div class="card hoverable"
+        div class="card-image card-image-small"
+          a onClick='Scribae.Image.selectGallery({id:"#{image.id}", size:{m:"#{image.upload.m.url}", s:"#{image.upload.s.url}", xs:"#{image.upload.xs.url}"} }, "#{image.upload.m.url}")'
+            = image_tag image.upload.m.url, class: 'insert-card-image'

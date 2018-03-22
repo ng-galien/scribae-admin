@@ -1,0 +1,26 @@
+.edit-picker {
+  z-index: 10;
+  display: none;
+  position: absolute;  
+}
+
+.picker-header {
+  //box-sizing: content-box;
+  background: rgb(216, 216, 216);
+  margin: 0px;
+
+}
+.picker-container {
+  //box-sizing: content-box;
+  background-color: white;
+  border: solid 1px black;
+}
+#icon-picker {
+  
+  max-width: 70%;
+}
+#icon-picker-container {
+  overflow: scroll;
+  height: 400px;
+  
+}

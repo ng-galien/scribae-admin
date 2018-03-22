@@ -1,0 +1,66 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ * require jquery-tablesorter/theme.dropbox
+ *= require_self
+ *= require material_icons_unicode
+ *= require dropzone/dropzone
+ *= require jquery-ui
+ *= require_tree ./common 
+ *= require jquery-tablesorter/addons/pager/jquery.tablesorter.pager
+ */
+
+
+$nav-bar-offset: 0px;
+
+@import 'materialize';
+
+@import 'scribae/global';
+@import 'scribae/image';
+@import 'scribae/picker';
+@import 'scribae/edit';
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  //background: gray;
+}
+
+
+main {
+  flex: 1 0 auto;
+}
+
+
+.navbar-fixed{
+  z-index:998;
+  //height: $nav-bar-offset;
+}
+.navbar-path {
+  display: inline-block;
+}
+
+.tip-icon {
+  @extend .indigo-text;
+  //@extend .medium;
+
+}
+
+.invite {
+  font-size: 2.5rem;
+  //border-bottom: 2px solid $primary_color
+}
+
+
+
+
+

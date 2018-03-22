@@ -1,0 +1,7 @@
+= form_for @website, remote: true, html: { class: 'form-helper', id: 'components_form' ,data: { type: :script } } do |form|
+  = form.fields_for :components do |comp_form|
+    = comp_form.number_field :pos, class: 'browser-default'
+    = comp_form.text_field :icon, class: 'browser-default'
+    = comp_form.text_field :icon_color, class: 'browser-default'
+    = comp_form.text_field :title, class: 'browser-default'
+    = comp_form.text_field :intro, class: 'browser-default'

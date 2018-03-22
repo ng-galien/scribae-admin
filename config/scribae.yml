@@ -1,0 +1,12 @@
+default: &default
+  modules:
+    - articles
+    - themes
+    - infos
+    - albums
+    - maps
+development:
+  <<: *default
+
+production:
+  <<: *default

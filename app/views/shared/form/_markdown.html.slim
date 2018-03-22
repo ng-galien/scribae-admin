@@ -1,0 +1,9 @@
+div id="#{id_helper}" class="modal"
+  div class="modal-content"
+    = f.text_area field, :class=>"markdown-field"
+  /div class="modal-footer"
+    a href="##{redirect}" class="modal-action modal-close waves-effect waves-green btn-flat" == 'Agree'
+div class="col #{col}"
+  
+  a data-tooltip="#{t( "#{local}" << ".tip")}" href="##{id_helper}" class="btn tooltipped waves-effect waves-light btn modal-trigger" data-position="right" data-delay="50"
+    == "#{t( "#{local}" << ".label")}"

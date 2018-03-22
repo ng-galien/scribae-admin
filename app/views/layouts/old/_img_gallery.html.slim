@@ -1,0 +1,6 @@
+div  class="row"
+  - album.each do |image|
+    div class="col s12 m6 l4"
+      div id="img-#{image.id}" class="gallery_img_wrapper"
+        a
+          img class="responsive-img " src="#{image.upload.url()}" alt=""

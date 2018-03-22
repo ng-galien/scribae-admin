@@ -1,0 +1,340 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+  yes: "Yes"
+  no: "No"
+  confirm: "Confirm"
+  save: "Save"
+  cancel: "Cancel"
+  delete: "Delete"
+  edit: "Edit"
+  confirm-delete: "Warning! Are you sure to delete?"
+  confirm-build: "Warning! Are you sure to build?"
+  return_to_list: "Return to list"
+
+  icons:
+    invite: "Choose an icon"
+  #Components
+  components:
+    website:
+      navbar: "Projects"
+    article: 
+      navbar: "Articles"
+    theme: 
+      navbar: "Themes"
+    information: 
+      navbar: "Information"
+    album: 
+      navbar: "Albums"
+    map: 
+      navbar: "Maps"
+  style:
+    defaut:
+      
+  website: 
+    navbar: "Projects"
+    #Default values
+    default: 
+      site_title: ""
+      home_title: "Home"
+      home_icon: "home"
+      top_title: "Top title"
+      top_intro: "Top intro"
+      bottom_title: "Bottom title"
+      bottom_intro: "Bottom intro"
+      featured_title: "Featured posts"
+      markdown: '# Content title \n\n Write the content here'
+      #Default pages
+      components:
+        articles:
+          title: 'Articles'
+          intro: 'Follow latest articles'
+          icon: 'flash_on'
+          show: true
+
+        themes:
+          title: 'Theme'
+          intro: 'Discover the themes'
+          icon: 'accessible'
+          show: true
+        infos:
+          title: 'Information'
+          intro: 'Full information'
+          icon: 'info_outline'
+          show: true
+        albums:
+          title: 'Albums'
+          intro: 'See the albums'
+          icon: 'camera_roll'
+          show: true
+        maps:
+          title: 'Map'
+          intro: 'Explore maps'
+          icon: 'camera_roll'
+          show: false
+      #Default article
+      article:
+        fake:
+          title: 'Sample article'
+          intro: 'Read the article introduction'
+          date: '01/01/2000'
+
+    #Index page
+    index:
+      invite: "Welcome to Sribae website creator"
+      empty: "No projects, you must first create a new one"
+      create: "Create a new project"
+      select: "Enter in Website"
+      edit: "Edit website"
+
+    #Create form
+    new:
+      invite: "New Project"
+      form:
+        project: 
+          label: "Name"
+          tip: "The name of the project for your website"
+        description: 
+          label: "Description"
+          tip: "Write a short description of your project"      
+
+    #Edit page
+    edit:
+      invite: "Website main page edition"
+      parameters: "Parameters"
+      
+      #edit home
+      home: 
+        title: "home page"
+        invite: "Set the home page"
+        form:
+          title: 
+            label: "Site head title"
+            tip: "The site title will be available on the browser head"
+          top_title: 
+            label: "The title on top"
+            tip: "The big tile on the first image"
+          top_intro: 
+            label: "Top intro"
+            tip: "The text that follow the top title"
+          top_image:
+            label: "Select the top image"
+            tip: "Click to change the top image"
+          bottom_title: 
+            label: "Bottom title"
+            tip: "The big tile on the second image"
+          bottom_intro:
+            label: "Bottom intro"
+            tip: "The text that follow the bottom title"
+          bottom_image:
+            label: "Select the bottom image"
+            tip: "Click to change the top image"
+          show_featured: 
+            label: "Show featured"
+            tip: "Show featuread articles"
+          featured_title: 
+            label: "Featured posts"
+            tip: "Text introduicing featured articles"
+          show_markdown:
+            label: "Show bottom text"
+            tip: "The bottom text is at the end of the page"
+          markdown: 
+            label: Puts your text here'
+            tip: "The bottom text is at the end of the page"
+      #Component tab
+      component:
+        title: "Components"
+        invite: "Customize components"
+        form:
+          show: 
+            label: "Show this on the website"
+            tip: ""
+          icon: 
+            label: "Choose a icon"
+            tip: ""
+          theme: 
+            label: "Choose a theme"
+            tip: ""
+          title: 
+            label: "The primary label"
+            tip: ""
+          intro: 
+            label: "The text intro"
+            tip: ""
+          show_markdown: 
+            label: "Show text"
+            tip: "Show longer text on the module page"
+          markdown: 
+            label: "Text for the module"
+            tip: "Longer text on the module page"
+      #Component tab
+      settings:
+        title: "Settings"
+        invite: "Project properties"
+        form:
+          project: 
+            label: "Name of the project"
+            tip: ""
+          description: 
+            label: "Description of the project"
+            tip: ""
+          url: 
+            label: "URL of the website"
+            tip: ""
+          repo: 
+            label: "Github repository"
+            tip: ""
+          token: 
+            label: "Token of the repo"
+            tip: ""
+          readme: 
+            label: "Read me of the repo"
+            tip: ""
+
+  article:
+    navbar: "Articles"
+    #Index Page
+    index:
+      invite: "Article list"
+      create: "Create article"
+      empty: "No article, create a new one"
+    new:
+      invite: "Create new article"
+      form:
+        title: 
+          label: "Title"
+          tip: "Write the main title of the article"
+        intro: 
+          label: "Introduction"
+          tip: "Write an introduction of the article"
+    edit:
+      invite: "Article edition"
+      form:
+        title: 
+          label: "Title"
+          tip: "Write the main title of the article"
+        image: 
+          label: "Image"
+          tip: "Select an illustration for the article"
+        intro: 
+          label: "Introduction"
+          tip: "Write an introduction of the article"
+        date: 
+          label: "Date"
+          tip: "Set the publish date of the article"
+        time: 
+          label: "Time"
+          tip: "Set the publish time of the article"
+        featured: 
+          label: "Featured"
+          tip: "Choose if the article is features"
+        markdown:
+          label: "Article content"
+          tip: "The content of the article"
+
+  theme:
+    
+    index:
+      invite: "Themes list"
+      empty: "No themes, you must create a new one"
+      create: "Create a new theme"
+    new:
+      invite: "Create a new theme"
+      form:
+        title: 
+          label: "Title"
+          tip: "tip"
+        intro: 
+          label: "Introduction"
+          tip: "tip"
+    edit:
+      invite: "Theme edition"
+      form:
+        title: 
+          label: "Title"
+          tip: "tip"
+        intro: 
+          label: "Introduction"
+          tip: "tip"
+  
+  info:
+    index: 
+      invite: "Section list"
+      empty: "No section, you must create a new one"
+      create: "Create a new section"
+    edit:
+      invite: "Section edition"
+      form:
+        title: 
+          label: "Title"
+          tip: "Write the title of the section"
+
+  album:
+    index: 
+      invite: "Album list"
+      empty: "No Album, you must create a new one"
+      create: "Create a new album"
+    new:
+      invite: "Create a new album"
+      form:
+        title: 
+          label: "Title"
+          tip: "Title for the album"
+        intro: 
+          label: "Introduction"
+          tip: "Introduction for the album"
+    edit:
+      invite: "Album edition"
+      form:
+        title: 
+          label: "Title"
+          tip: "Write the title of the section"
+        intro: 
+          label: "Intro"
+          tip: "Write an introduction for the album"
+        extern: 
+          label: "External"
+          tip: "The album come from another site"
+        link: 
+          label: "Website"
+          tip: "The website where is the album"
+
+  time:
+    formats:
+      default: "%d/%m/%y %H:%M"
+      short: "%b %d"
+      long: "%B %d, %Y"
+
+
+
+
+        

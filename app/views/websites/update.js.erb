@@ -1,0 +1,17 @@
+
+//Texts
+$("[data-value='website_top_title']").html("<%= escape_javascript(@website.top_title) %>");
+$("[data-value='website_top_intro']").html("<%= escape_javascript(@website.top_intro) %>");
+$("[data-value='website_bottom_title']").html("<%= escape_javascript(@website.bottom_title) %>");
+$("[data-value='website_bottom_intro']").html("<%= escape_javascript(@website.bottom_intro) %>");
+//Images
+
+
+//Components
+<% @components.sort_by{|comp| comp.pos}.each do |comp| %>
+  $('<%= "[data-value=\"website_components_attributes_#{comp.id}_show\"]".html_safe %>').html("<%= escape_javascript(comp.show.to_s) %>");
+  $('<%= "[data-value=\"website_components_attributes_#{comp.id}_icon\"]".html_safe %>').html("<%= escape_javascript(comp.icon) %>");
+  $('<%= "[data-value=\"website_components_attributes_#{comp.id}_icon_color\"]".html_safe %>').html("<%= escape_javascript(comp.icon_color) %>");
+  $('<%= "[data-value=\"website_components_attributes_#{comp.id}_title\"]".html_safe %>').html("<%= escape_javascript(comp.title) %>");
+  $('<%= "[data-value=\"website_components_attributes_#{comp.id}_intro\"]".html_safe %>').html("<%= escape_javascript(comp.intro) %>");
+<% end %>

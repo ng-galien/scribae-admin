@@ -1,0 +1,46 @@
+= form_for @website, remote: true, html: { id: 'home_form' ,data: { url: '/update', type: :script } } do |form|
+  //title
+  == render partial: 'shared/form/string', :locals=>{:f=>form, :field=>:title, :col=>'s12', \
+    :local=>'website.edit.tabs.home.form.title'}
+
+  //TOP
+  //top_title
+  == render partial: 'shared/form/string', :locals=>{:f=>form, :field=>:top_title, :col=>'s12 m4', \
+    :local=>'website.edit.tabs.home.form.top_title'}
+  //top_intro
+  == render partial: 'shared/form/string', :locals=>{:f=>form, :field=>:top_intro, :col=>'s12 m8', \
+    :local=>'website.edit.tabs.home.form.top_intro'}
+  
+  //BOTTOM
+  //---bottom_title
+  == render partial: 'shared/form/string', :locals=>{:f=>form, :field=>:bottom_title, :col=>'s12 m4', \
+    :local=>'website.edit.tabs.home.form.bottom_title'}
+  //---bottom_intro
+  == render partial: 'shared/form/string', :locals=>{:f=>form, :field=>:bottom_intro, :col=>'s12 m8', \
+    :local=>'website.edit.tabs.home.form.bottom_intro'}
+  
+  //FEATURED
+  //---show_featured
+  == render partial: 'shared/form/bool', :locals=>{:f=>form, :field=>:show_featured, :col=>'s12 m3', \
+   :id_helper=>'show_featured', :local=>'website.edit.tabs.home.form.show_featured'}
+  //---featured_title
+  == render partial: 'shared/form/string', :locals=>{:f=>form, :field=>:featured_title, :col=>'s12 m9', \
+    :local=>'website.edit.tabs.home.form.featured_title'}
+
+  
+  //MARKDOWN
+  //---show_markdown
+  /== render partial: 'shared/form/bool', :locals=>{:f=>form, :field=>:show_markdown, :col=>'s12 m3', \
+  // :id_helper=>'show_markdown', :local=>'website.edit.tabs.home.form.show_markdown'}
+  //--markdown
+  //== render partial: 'shared/form/markdown', :locals=>{:f=>form, :field=>:markdown, :col=>'s12 m3', \
+  // :id_helper=>'home-markdown', :local=>'website.edit.tabs.home.form.markdown'}
+  /div class="col s12 m9 input-field"
+    a data-tooltip="#{t('website.edit.tabs.home.form.markdown.tip')}" class="prefix tooltipped" data-position="right" data-delay="50"
+      i class="material-icons tip-icon" == 'create'
+    = form.text_field  :markdown, :class=>"validate"
+    = form.label       :markdown, "#{t('website.edit.tabs.home.form.markdown.label')}", :for=>"markdown"
+
+  //Submit
+  div class="col s12 center"          
+    = form.submit "#{t('confirm')}", :class=>"btn"

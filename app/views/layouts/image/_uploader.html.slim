@@ -1,0 +1,9 @@
+div#image-main-modal class="modal"
+  div class="modal-content"
+    = form_for @image_main, remote: true, html: {id: 'image-main-form', class: 'dropzone'} do |img_form|
+      = img_form.hidden_field :category, class: 'browser-default'
+      = img_form.hidden_field :imageable_type, class: 'browser-default'
+      = img_form.hidden_field :imageable_id, class: 'browser-default'
+      = img_form.hidden_field :name, class: 'browser-default'
+      div class="fallback"
+        = img_form.file_field :upload, multiple: false, class: 'browser-default'

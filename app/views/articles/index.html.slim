@@ -1,0 +1,62 @@
+
+div id="create-modal" class="modal"
+  div class="modal-content"
+    = form_for [@website, @article_new] do |form|
+      div class="row"
+        div class="col s12 center"
+          h4 == t 'article.new.invite'
+        div class="col s12 input-field "
+          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('article.new.form.title.tip')}"
+            i class="material-icons tip-icon" == 'create'
+          = form.text_field  :title, :class=>"validate"
+          = form.label       :title, "#{t('article.new.form.title.label')}", :for=>"title"  
+        div class="col s12 input-field "
+          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('article.new.form.intro.tip')}"
+            i class="material-icons tip-icon" == 'create'
+          = form.text_field  :intro, :class=>"validate"
+          = form.label       :intro, "#{t('article.new.form.intro.label')}", :for=>"intro"  
+          = form.hidden_field :website_id, value: "#{@website.id}"
+          = form.hidden_field :featured, value: false
+          = form.hidden_field :markdown, value: ""
+        div class="col s12 center"
+          = form.submit 'OK', :class=>"btn"
+        
+div class="container"
+  div class="row"
+    div class="col s12 center invite"
+      div class="section"
+        span == t('article.index.invite')
+        a href="#create-modal" class="modal-trigger waves-effect waves-light btn right"
+          == t('article.index.create') 
+      div class="divider" 
+    
+    - if @articles.empty?
+      div class="col s12 center"
+        h3 class=""
+          == t('article.index.empty')
+    - else
+      div class="col s12 center"
+        table#list-index-table class = "striped centered"
+          thead
+            tr
+              th == 'Title'
+              th == 'Intro'
+              th == 'Featured'
+              th == 'Edition'
+              th == 'Modified'
+              th == ''
+              th == ''
+          tbody
+            - @articles.each do |article|
+              tr
+                td == article.title
+                td == article.intro.truncate(15, omission: '...')
+                td == article.featured
+                td == localize(article.date, :format => :default)
+                td == localize(article.updated_at, :format => :default)
+                td
+                  = link_to edit_website_article_path(@website, article)
+                    i class="material-icons" == 'create'
+                td
+                  = link_to website_article_path(@website, article), method: :delete, data: {confirm: "#{t('confirm-delete')}" }
+                    i class="material-icons" == 'delete' 

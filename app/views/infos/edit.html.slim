@@ -1,0 +1,30 @@
+ 
+div class="edit-container"
+  //Image gallery
+  = render partial: 'layouts/image/gallery'
+  //Info invite
+  div class="row"
+    div class="col s12 center invite"     
+      div class="section"
+        span class=""
+          == t('info.edit.invite')
+        a href="#{website_infos_path(@website)}" class="modal-trigger waves-effect waves-light btn right"
+          == t('return_to_list')   
+      div class="divider"
+    = form_for [ @website, @info ] do |prop_form|
+      div class="col 12 m9 center"
+        div class="row"
+          //title
+          div class="col s12 input-field center"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('info.edit.form.title.tip')}"
+              i class="material-icons tip-icon" == 'create'
+            = prop_form.text_field  :title, :class=>"validate materialize-textarea"
+            = prop_form.label       :title, "#{t('info.edit.form.title.label')}", :for=>"title"      
+      div class="col s12 center"     
+        = prop_form.submit "#{t('confirm')}", :class=>"btn"
+      //makdown
+      div class="row"
+        div class="col s12 input-field"
+          = prop_form.text_area  :markdown, class: 'browser-default mde-editor'
+      div class="col s12 center"     
+        = prop_form.submit "#{t('confirm')}", :class=>"btn"

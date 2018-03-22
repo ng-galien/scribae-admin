@@ -1,0 +1,138 @@
+div id="picker_container"
+  //Color
+  div id="color_picker" class="edit-picker"
+    div class="picker-header right-align row"
+      i class="material-icons edit-action-validate hoverable right" == 'check_circle'
+      i class="material-icons edit-action-cancel hoverable right" == 'highlight_off'
+    div class="row"
+      div id="color_picker_container" class="picker-container col s12" 
+  //Icon
+  div id="icon_picker" class="edit-picker"
+    div class="picker-header right-align row"
+      i class="material-icons edit-action-validate hoverable right" == 'check_circle'
+      i class="material-icons edit-action-cancel hoverable right" == 'highlight_off'
+    div id="icon_picker_container" class="picker-container row" 
+      - @icons.each do |icon|
+        div class="col s1 center hoverable"
+          i class="material-icons icon-picker-item"
+            == icon
+
+div id="form_container"
+  = form_for @website, remote: true, html: { class: 'form-helper', id: 'website_form' ,data: { type: :script } } do |website_form|
+    = website_form.text_field :top_title, class: 'browser-default', :size=>10
+    = website_form.text_field :top_intro, class: 'browser-default', :size=>10
+    = website_form.text_field :bottom_title, class: 'browser-default', :size=>10
+    = website_form.text_field :bottom_intro, class: 'browser-default', :size=>10
+      /- @website.components.each do |components|
+    = website_form.fields_for :components, :child_index => ""  do |comp_form|
+      = comp_form.number_field :pos, class: 'browser-default'
+      = comp_form.text_field :icon, class: 'browser-default'
+      = comp_form.text_field :icon_color, class: 'browser-default'
+      = comp_form.text_field :title, class: 'browser-default'
+      = comp_form.text_field :intro, class: 'browser-default'
+  = form_for @website, remote: true, multipart: true, html: { class: 'form-helper', id: 'image_form' ,data: { type: :script } } do |form|
+    = form.fields_for :images do |img_form|
+      = img_form.hidden_field :name, class: 'browser-default'
+      = img_form.file_field :upload, multiple: false, class: 'browser-default'
+
+div class="parallax-container"
+  div class="section no-pad-bot"
+    div class=""
+      div class="row"
+        //SPACER
+        div class="col s12 center home-spacer-1" 
+        //TOP_TITLE      
+        div class="col s12 center"
+          div class="editable form-wrapper" 
+            span class="edit-wrapper fixed-edit" 
+              span class="edit-item edit-action edit-text" data-field="website_top_title"
+                i class="material-icons" == 'create'
+              span class="edit-field edit-proxy home-title" data-value="website_top_title"  
+                == "#{@website.top_title}"
+        //TOP_INTRO
+        div class="col s12 center"
+          div class="editable form-wrapper" 
+            span class="edit-wrapper fixed-edit" 
+              span class="edit-item edit-action edit-text" data-field="website_top_intro"
+                i class="material-icons" == 'create'
+              span class="edit-field edit-proxy home-intro" data-value="website_top_intro"  
+                == "#{@website.top_intro}"
+        //TOP_IMAGE
+        div class="col s4 offset-s4 center"
+          div data-field="image_top" class="" 
+            span class="tooltipped" data-tooltip="#{t 'website.edit.tabs.home.form.top_intro.tip'}" data-position="right" data-delay="50"
+              i data-edit="image_top" class="material-icons edit-icon edit-upload" 
+                == 'photo'
+
+  div data-value="image_top" class="parallax"
+    img src="#{@images.first().upload.url}"
+    
+div class=""
+  div class="section"
+    div class="col s12 center"
+      h5 title="tooltimmmmp"  = "Composants" 
+    div class="divider"
+    div class="row component-container"
+      == render partial: "websites/partial/component"
+          
+    div class="divider"
+    div class="section"
+      div class="row"
+        div class="col s12 center"
+          h3 class="home-featured-title" == @website.featured_title
+        - @articles.each do |article|
+          div class="col s12"
+            div class="card hoverable featured-post"
+              div class="card-content"
+                div class="row"
+                  div class="col s8"
+                    span class="featured-post-title"
+                      == article.title
+                    p 
+                      == article.intro
+                  div class="col s4 featured-post-date right"
+                    == article.date
+//Second parallax
+div class="parallax-container"
+  div class="section no-pad-bot"
+    div class=""
+      div class="row"
+        //SPACER
+        div class="col s12 center home-spacer-1" 
+        //BOTTOM_TITLE      
+        div class="col s12 center"
+          div class="editable form-wrapper" 
+            span class="edit-wrapper fixed-edit" 
+              span class="edit-item edit-action edit-text" data-field="website_bottom_title"
+                i class="material-icons" == 'create'
+              span class="edit-field edit-proxy home-title" data-value="website_bottom_title"  
+                == "#{@website.bottom_title}"
+        //BOTTOM_INTRO
+        div class="col s12 center"
+          div class="editable form-wrapper" 
+            span class="edit-wrapper fixed-edit" 
+              span class="edit-item edit-action edit-text" data-field="website_bottom_intro"
+                i class="material-icons" == 'create'
+              span class="edit-field edit-proxy home-intro" data-value="website_bottom_intro"  
+                == "#{@website.bottom_intro}"
+        //BOTTOM_IMAGE
+        div class="col s4 offset-s4 center"
+          div data-field="image_top" class="" 
+            span class="tooltipped" data-tooltip="#{t 'website.edit.tabs.home.form.top_intro.tip'}" data-position="right" data-delay="50"
+              i data-edit="image_top" class="material-icons edit-icon edit-upload" 
+                == 'photo'
+
+  div data-value="image_bottom" class="parallax"
+    img src="#{@images.last().upload.url}"
+
+
+//Content section
+div class="container home-container"
+  div class="section"
+    div class="row"
+      div class="col s12"
+        div class="card home-card hoverable"
+          div class="card-stacked"
+            div class="card-content md-content"
+              == @website.markdown
+

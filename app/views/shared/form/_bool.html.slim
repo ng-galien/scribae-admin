@@ -1,0 +1,3 @@
+div class="col #{col} checkbox-field"
+  = f.check_box field, :id=>"#{id_helper}"
+  = f.label field, "#{t( "#{local}" << ".label")}", :for=>"#{id_helper}"

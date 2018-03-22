@@ -1,0 +1,61 @@
+
+div id="create-modal" class="modal"
+  div class="modal-content"
+    = form_for [@website, @theme_new] do |form|
+      div class="row"
+        div class="col s12 center"
+          h4 == t 'theme.new.invite'
+        div class="col s12 input-field "
+          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('theme.new.form.title.tip')}"
+            i class="material-icons tip-icon" == 'create'
+          = form.text_field  :title, :class=>"validate"
+          = form.label       :title, "#{t('theme.new.form.title.label')}", :for=>"title"  
+        div class="col s12 input-field "
+          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('theme.new.form.intro.tip')}"
+            i class="material-icons tip-icon" == 'create'
+          = form.text_field  :intro, :class=>"validate"
+          = form.label       :intro, "#{t('theme.new.form.intro.label')}", :for=>"intro"  
+        div class="col s12 m12 input-field hide"
+          = form.hidden_field :website_id, value: "#{@website.id}"
+        div class="col s12 center"
+          = form.submit 'OK', :class=>"btn"
+        
+div class="container"
+  div class="row"
+    div class="col s12 center invite"
+      div class="section"
+        span == t('theme.index.invite')
+        a href="#create-modal" class="modal-trigger waves-effect waves-light btn right"
+          == t('theme.index.create') 
+      div class="divider" 
+
+    - if @themes.empty?
+      div class="col s12 center"
+        h3 class=""
+          == t('theme.index.empty')
+    - else
+      div class="col s12"
+        table#list-index-table class = "striped centered"
+          thead
+            tr
+              th == 'Title'
+              th == 'Intro'
+              th == 'Created'
+              th == 'Modified'
+              th == ''
+              th == ''
+          tbody
+            - @themes.each do |theme|
+              tr
+                td == theme.title
+                td == theme.intro.truncate(15, omission: '...')
+                td == localize(theme.created_at, :format => :default)
+                td == localize(theme.updated_at, :format => :default)
+                td
+                  = link_to edit_website_theme_path(@website, theme)
+                    i class="material-icons" == 'create'
+                td
+                  = link_to website_theme_path(@website, theme), method: :delete, data: {confirm: "#{t('confirm-delete')}" }
+                    i class="material-icons" == 'delete'  
+  
+  

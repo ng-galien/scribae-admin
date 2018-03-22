@@ -1,0 +1,60 @@
+
+
+div id="create-modal" class="modal"
+  div class="modal-content"
+    = form_for [@website, @info_new] do |form|
+      div class="row"
+        div class="col s12 center"
+          h4 == t 'theme.new.invite'
+        div class="col s12 input-field "
+          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('theme.new.form.title.tip')}"
+            i class="material-icons tip-icon" == 'create'
+          = form.text_field  :title, :class=>"validate"
+          = form.label       :title, "#{t('theme.new.form.title.label')}", :for=>"title"  
+        div class="col s12 m12 input-field hide"
+          = form.hidden_field :website_id, value: "#{@website.id}"
+        div class="col s12 m12 input-field hide"
+          = form.hidden_field :index, value: "#{@info_new.index}"
+        div class="col s12 center"
+          = form.submit 'OK', :class=>"btn"
+        
+div class="container"
+  div class="row"
+    div class="col s12 center invite"
+      div class="section"
+        span == t('info.index.invite')
+        a href="#create-modal" class="modal-trigger waves-effect waves-light btn right"
+          == t('info.index.create')      
+        div class="divider" 
+
+    - if @infos.empty?
+      div class="col s12 center"
+        h3 class=""
+          == t('info.index.empty')
+    - else
+      div class="col s12"
+        table#list-index-table class = "striped centered"
+          thead
+            tr
+              th == 'Title'
+              th == 'Order'
+              th == 'Created'
+              th == 'Modified'
+              th == ''
+              th == ''
+          tbody
+            - @infos.each do |info|
+              tr
+                td == info.title
+                td == info.index
+                td == localize(info.created_at, :format => :default)
+                td == localize(info.updated_at, :format => :default)
+                td
+                  = link_to edit_website_info_path(@website, info)
+                    i class="material-icons" == 'create'
+                td
+                  = link_to website_info_path(@website, info), method: :delete, data: {confirm:  "#{t('confirm-delete')}" }
+                    i class="material-icons" == 'delete'
+                
+
+      

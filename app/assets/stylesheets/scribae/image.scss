@@ -1,0 +1,19 @@
+
+.card-image-small {
+  //width: 150px; /*any size*/
+  height: 150px; /*any size*/
+  background: whitesmoke
+}
+.insert-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /*magic*/
+}
+.card-image-content {
+  padding: 1rem!important;
+}
+.dz-clickable {
+  border: 0.2rem dashed #0087F7;
+  border-radius: 5px;
+  background: white;
+}
