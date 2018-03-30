@@ -1,0 +1,22 @@
+
+thead
+  tr
+    th == 'Order'
+    th == 'Title'
+    th == 'Created'
+    th == 'Modified'
+    th == ''
+    th == ''
+tbody
+  - list.each do |obj|
+    tr
+      td == obj.pos
+      td == obj.title
+      td == localize(obj.created_at, :format => :default)
+      td == localize(obj.updated_at, :format => :default)
+      td
+        = link_to [:edit, parent, obj]
+          i class="material-icons" == 'create'
+      td
+        = link_to [parent, obj], remote: true, method: :delete, data: {confirm: "#{t('confirm-delete')}" }
+          i class="material-icons" == 'delete'  

@@ -1,0 +1,8 @@
+= form_for @image_new, remote: true, html: {id: 'gallery-form', class: 'dropzone', data: { type: :script }} do |form|
+  = form.hidden_field :category, class: 'browser-default'
+  = form.hidden_field :imageable_type, class: 'browser-default'
+  = form.hidden_field :imageable_id, class: 'browser-default'
+  = form.hidden_field :name, class: 'browser-default'
+  = form.hidden_field :pos, class: 'browser-default'
+  div class="fallback"
+    = form.file_field :upload, multiple: false, class: 'browser-default'

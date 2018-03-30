@@ -1,0 +1,22 @@
+
+thead
+  tr
+    th == 'Index'
+    th == 'Title'
+    th == 'Intro'
+    th == 'Modified'
+    th == ''
+    th == ''
+tbody
+  - list.each do |obj|
+    tr
+      td == obj.pos.to_s
+      td == obj.title
+      td == obj.intro.truncate(15, omission: '...')
+      td == localize(obj.updated_at, :format => :default)
+      td
+        = link_to [:edit, parent, obj]
+          i class="material-icons" == 'create'
+      td
+        = link_to [parent, obj], method: :delete, remote: true, data: {confirm: "#{t('confirm-delete')}" }
+          i class="material-icons" == 'delete'  

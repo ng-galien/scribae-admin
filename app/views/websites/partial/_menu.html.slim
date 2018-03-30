@@ -1,0 +1,28 @@
+
+div class="fixed-action-btn"
+  div class="hide" data-link="#{preview_status_path(@preview)}" data-status="#{@preview.running}"
+  a class="btn-floating blue toolbar-main"
+    i class="material-icons menu-icon" == "toc"
+  ul
+    - if @preview.running
+      li 
+        a href="#{@preview.url}" target="_blank" class="btn-floating blue"
+          span class="tooltipped" data-tooltip="#{t 'website.edit.menu.watch'}" data-position="left" data-delay="50"
+            i class="material-icons" == "pageview"
+      li 
+        a href="#{preview_stop_path(@preview)}" data-remote="true" class="btn-floating red darken-1"
+          span class="tooltipped" data-tooltip="#{t 'website.edit.menu.stop'}" data-position="left" data-delay="50"
+            i class="material-icons" == "pause"
+    - else 
+      li 
+        a href="#{preview_start_path(@preview)}" data-remote="true" class="btn-floating green darken-3"
+          span class="tooltipped" data-tooltip="#{t 'website.edit.menu.start'}" data-position="left" data-delay="50"
+            i class="material-icons" == "play_arrow"
+    li 
+      a href="#website-settings" class="modal-trigger btn-floating orange darken-3"
+        span class="tooltipped" data-tooltip="#{t 'website.edit.menu.settings'}" data-position="left" data-delay="50"
+          i class="material-icons" == "build"
+    li 
+      a href="#{websites_path}" class="btn-floating blue darken-3" 
+        span class="tooltipped" data-tooltip="#{t 'website.edit.menu.back'}" data-position="left" data-delay="50"
+          i class="material-icons" == "fast_rewind"

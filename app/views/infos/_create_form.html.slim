@@ -1,0 +1,12 @@
+= form_for [@website, @info_new], remote: true do |form|
+  div class="row"
+    div class="col s12 center"
+      h4 == t 'theme.new.invite'
+    div class="col s12 input-field "
+      a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('infos.new.form.title.tip')}"
+        i class="material-icons tip-icon" == 'create'
+      = form.text_field  :title, :class=>"validate"
+      = form.label       :title, "#{t('infos.new.form.title.label')}", :for=>"title"  
+      = form.hidden_field :website_id, value: "#{@website.id}"
+    div class="col s12 center"
+      = form.submit 'OK', :class=>"btn"

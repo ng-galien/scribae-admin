@@ -1,0 +1,2 @@
+$('#index-table').html("<%= escape_javascript( render partial: 'articles/index_table', locals: {parent: @website, list: @articles} ) %>");
+Scribae.Global.updateIndexPage(false);

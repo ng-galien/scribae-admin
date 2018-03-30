@@ -1,0 +1,3 @@
+$('#index-table').html("<%= escape_javascript( render partial: 'themes/index_table', locals: {parent: @website, list: @themes} ) %>");
+$('#sortable-container').html("<%= escape_javascript( render partial: 'layouts/model/sortable', locals: {parent: @website, list: @themes, nested: :themes} ) %>");
+Scribae.Global.updateIndexPage(true);

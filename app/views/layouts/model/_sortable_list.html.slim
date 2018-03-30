@@ -1,0 +1,9 @@
+
+- list.each do |obj|
+  li class="collection-item sortable-list-item"
+    div class="col s2"
+      span class="sortable-list-id" data-value="#{obj.id}" == "(#{obj.id})"
+    div class="col s4"
+      span class="sortable-list-index" == "#{obj.pos}"
+    div lass="col s6"
+      span class="sortable-list-title" == "#{obj.title}"

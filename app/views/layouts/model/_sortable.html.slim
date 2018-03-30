@@ -1,0 +1,11 @@
+div class="row"
+  div class="col s12 center sortable-title"
+    span == "#{t 'sortable.invite'}"
+  div class="sortable-list-container"
+    div data-nested="#{nested}" 
+    ul#sortable-list class="sortable-list collection row"
+      = render partial: "layouts/model/sortable_list", locals: {list: list}
+    = form_for parent, url: "/sortable/#{parent.id}/#{nested}" ,remote: true, html: { class: 'hide', id: 'sortable-form' ,data: { type: :script } } do |form|
+      = form.fields_for nested, :child_index => ""  do |attr_form|
+        = attr_form.number_field :pos, class: 'browser-default'
+      = form.submit 'OK'
