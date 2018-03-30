@@ -12,12 +12,9 @@ var Scribae = Scribae || {};
 Scribae.Image = Scribae.Image || {
   mainModal: undefined,
   galleryModal: undefined,
-
   mainDrop: undefined,
   galleryDrop: undefined,
-  
   gallerySelection: undefined,
-
 };
 
 Scribae.Image.initMain = function() {
@@ -37,7 +34,7 @@ Scribae.Image.initMain = function() {
     Scribae.Image.mainDrop.on("success", function(file, response) {
       console.log('success: ' + file);
       console.log(response);
-      $('#'+IMG_MAIN_PREVIEW_ID).attr('src', response.upload.xs.url+'?v=' + new Date().getTime());
+      $('#'+IMG_MAIN_PREVIEW_ID).attr('src', response.upload.m.url+'?v=' + new Date().getTime());
       if(Scribae.Image.mainModal) {
         Scribae.Image.mainModal.close();
       }
@@ -49,7 +46,8 @@ Scribae.Image.initMain = function() {
   }
 }
 
-Scribae.Image.initGallery = function() {
+Scribae.Image.initGallery = function(reload) {
+  Scribae.Image.reloadDropZone = reload;
   //Modal
   var element = document.querySelector('#'+GALLERY_MODAL_ID);
   if(element) {
@@ -64,27 +62,23 @@ Scribae.Image.initGallery = function() {
       console.log('addedfile: ' + file)
     });
     Scribae.Image.galleryDrop.on("success", function(file, response) {
-      console.log('success: ' + file);
-      console.log(response);
+      console.log('image added to Gallery: ' + file);
+      //console.log(response);
       eval(response);
       setTimeout(function() {
         $("#"+GALLERY_FORM_ID).find('div.dz-success').remove();
         $("#"+GALLERY_FORM_ID).find('div.dz-message').show();
-      }, 500);
+      }, 100);
     });
     Scribae.Image.galleryDrop.on("complete", function(file) {
       console.log('complete: ' + file);
     });
-    $('#galery-insert-large').click(function(){
-      Scribae.Image.insertImage('m');
+    $('#gallery-insert').click(function(){
+      var align = 'c';
+      var size = 50;
+      Scribae.Image.insertImage(size, align);
     });
-    $('#galery-insert-medium').click(function(){
-      Scribae.Image.insertImage('s');
-    });
-    $('#galery-insert-small').click(function(){
-      Scribae.Image.insertImage('xs');
-    });
-    $('#galery-back').click(function(){
+    $('#gallery-return').click(function(){
       Scribae.Image.displaySelectedImage(false);
     });
   }
@@ -94,11 +88,11 @@ Scribae.Image.initGallery = function() {
 
 Scribae.Image.displaySelectedImage = function(selected) {
   if(selected) {
-    $('#gallery-upload').hide();
+    $('#new-upload-container').hide();
     $('#gallery-content').hide();
     $('#gallery-detail').show();
   } else {
-    $('#gallery-upload').show();
+    $('#new-upload-container').show();
     $('#gallery-content').show();
     $('#gallery-detail').hide();
   }
@@ -108,17 +102,16 @@ Scribae.Image.selectGallery = function (selection) {
   Scribae.Image.gallerySelection = selection;
   console.log("selectGallery");
   console.log(selection);
-  $('#galery-preview').attr('src', selection.size.m);
+  $('#galery-preview').attr('src', selection.url);
   Scribae.Image.displaySelectedImage(true);
 }
 
-Scribae.Image.insertImage = function (size) {
+Scribae.Image.insertImage = function(size, align) {
   var sel = Scribae.Image.gallerySelection;
   var editor = Scribae.Editor.editor;
   if(sel && editor) {
-    var id = sel.id;
-    var url = sel.size[size];
-    var mdi = '!['+id+']('+url+')';
+    var url = sel.url;
+    var mdi = '![{s:'+size+',a:\"'+ align +'\",o:""}]('+url+')';
     var doc = editor.codemirror.getDoc();
     var cursor = doc.getCursor();
     doc.replaceRange(mdi, cursor);

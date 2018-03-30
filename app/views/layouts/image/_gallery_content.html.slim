@@ -1,7 +1,18 @@
+/Content of the gallery
+/Writes images to a grid, add a delete link if mardown flag
+/Mardown flag indicates the gallery is used for markdon content
+/If false it's a image gallery for the album model
+/div.hide data-pos-max=""
 - @image_list.each do |image|
   - if image.upload.url
-    div class="col s6 m4 l3 CIM-gallery"
-      div class="card hoverable"
-        div class="card-image card-image-small"
-          a onClick='Scribae.Image.selectGallery({id:"#{image.id}", size:{m:"#{image.upload.m.url}", s:"#{image.upload.s.url}", xs:"#{image.upload.xs.url}"} }, "#{image.upload.m.url}")'
-            = image_tag image.upload.m.url, class: 'insert-card-image'
+    div [class="col s6 m4 l3 gallery-item" data-id="#{image.id}"  
+        data-category="#{image.category}" data-pos="#{image.pos}"]
+      div class="card-image gallery-image-container hoverable"
+        - if markdown
+          a onClick='Scribae.Image.selectGallery( {id:"#{image.id}", url:"#{image.upload.m.url}"} )'
+            = image_tag image.upload.m.url, class: 'gallery-image'
+        - else
+          span style="color: white;" == "[#{image.id}]- p #{image.pos}"
+          = link_to [image], method: :delete, remote: true, class: 'gallery-delete-link',  data: {confirm: "#{t('confirm-delete')}" }
+            i class="material-icons " == 'delete'
+          = image_tag image.upload.m.url, class: 'gallery-image'

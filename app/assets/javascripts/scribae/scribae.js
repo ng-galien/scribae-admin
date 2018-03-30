@@ -44,20 +44,67 @@ Scribae.Global = Scribae.Global || {
   ],
   navbar: undefined,
   createModal: undefined,
-
+  tocMenu: undefined,
+  sortableModal: undefined
 };
 
 Scribae.Global.initController = function() {
   Scribae.Global.navbar = $('#app-navbar');
-  var element = document.querySelector('#create-modal');
+  var element = document.getElementById('create-modal');
   if(element) {
     Scribae.Global.createModal = M.Modal.init(element, {});
+  }
+  
+  element = document.getElementById('sortable-modal');
+  if(element) {
+    Scribae.Global.sortableModal = M.Modal.init(element, {});
+  }
+  element = document.getElementById('toc-menu');
+  if(element) {
+    Scribae.Global.tocMenu = M.FloatingActionButton.init(element, {
+      direction: 'bottom',
+      hoverEnabled: false,
+      toolbarEnabled: false
+    });
   }
   $('.tooltipped').tooltip();
   M.updateTextFields();
 }
 
-Scribae.Global.initIndexListTable = function(options) {
-  $("#list-index-table").tablesorter(options);
+/**
+ * Make index table sortable
+ */
+Scribae.Global.initIndexTable = function(options) {
+  Scribae.log(Scribae.LOG_DEBUG, 'Scribae.Global.initIndexTable');
+  $("#index-table").tablesorter(options);  
+}
+
+/**
+ * Update index table, show when not empty, trig update
+ */
+Scribae.Global.updateIndexTable = function() {
+  Scribae.log(Scribae.LOG_DEBUG, 'Scribae.Global.updateIndexTable');
+  var tableSize = $("#index-table td").length;
+  if (tableSize > 0) {
+    $('.empty-index-table').css('display', 'none');
+    $("#index-table").css('opacity', 1);
+    $("#index-table").trigger("updateAll");
+    //
+  } else {
+    $('.empty-index-table').css('display', 'block');
+    $("#index-table").css('opacity', 0);
+  }
+}
+
+Scribae.Global.updateIndexPage = function(sortable) {
+  if(Scribae.Global.createModal.isOpen) {
+    Scribae.Global.createModal.close();
+    var inputs = $("input[type='text']");
+    inputs.val('');
+  }
+  Scribae.Global.updateIndexTable();
+  if(sortable) {
+    Scribae.Sortable.init();
+  }
 }
 

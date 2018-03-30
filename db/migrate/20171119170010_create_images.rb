@@ -1,7 +1,7 @@
 class CreateImages < ActiveRecord::Migration[5.1]
   def change
     create_table :images do |t|
-      t.integer :index
+      t.integer :pos
       t.string :category
       t.string :name
       t.string :intro

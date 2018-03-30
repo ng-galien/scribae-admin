@@ -1,1 +1,6 @@
-$("#gallery-content").html("<%= escape_javascript( render partial: 'layouts/image/gallery_content' ) %>");
+$("#gallery-content").html("<%= escape_javascript( render partial: 'layouts/image/gallery_content', locals: {markdown: @markdown} ) %>");
+<% unless @markdown %>
+  $("#new-upload-container").html("<%= escape_javascript( render partial: 'layouts/image/new_upload' ) %>"); 
+  $("#pos-form-container").html("<%= escape_javascript( render partial: 'layouts/image/sort_form' ) %>");
+  Scribae.Image.initGallery();   
+<% end %>

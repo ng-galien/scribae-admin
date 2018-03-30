@@ -56,15 +56,21 @@ function initTimePicker() {
 $(document).ready(function() {
     
   console.log('articles -> ready');
+  //Index page
   Scribae.Global.initController();
-  Scribae.Global.initIndexListTable({});
+  //Table
+  
+  Scribae.Global.initIndexTable({});
+  Scribae.Global.updateIndexTable();
+  
+  //Images
   Scribae.Image.initMain();
   Scribae.Image.initGallery();
+  //Editor
   Scribae.Editor.init();
-  
+  //Dates
   if($("#input_text_article_date").length > 0) {
     initTimePicker();
     initDatePicker();
   }
-  
 });

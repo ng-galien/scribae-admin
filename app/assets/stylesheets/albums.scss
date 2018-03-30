@@ -3,3 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import 'application';
+@import 'scribae/menu';
+@import 'scribae/sortable';
+
+.test {
+  min-height: 0px;
+}

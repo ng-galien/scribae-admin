@@ -210,7 +210,6 @@ Scribae.Preview.Edit = {
 Scribae.Preview.Picker = {
 
   showColorPicker: function (action, input, form) {
-
     var picker = $('#color-picker');
     wrapper = $(action).closest('.edit-wrapper');
     proxy = $(wrapper).children('.edit-proxy');
@@ -226,7 +225,7 @@ Scribae.Preview.Picker = {
     $('#color-picker .edit-action-validate')
       .css('cursor', 'pointer')
       .off('click').click(function () {
-        $(input).attr('value', rgb2hex($(proxy).css('color')));
+        $(input).attr('value', rgb2hex($(proxy).children('i').css('color')));
         $(form).submit();
         $(picker).appendTo($('#picker-container'));
         $(picker).hide();
@@ -460,11 +459,12 @@ Scribae.Preview.Component = {
                 item = $(this).parents('.edit-item');
               }
               var proxy = wrapper.find('.edit-proxy');
-              var id = item.attr('data-field');
+              var action = $(this);
+              var id = action.attr('data-field');
               var input = $('input[id="'+id+'"]');
               var value = $('[data-value="'+id+'"]');
               var fixed = true;
-              var action = $(this);
+              
               Scribae.Preview.Edit.attach(wrapper, item, action, proxy, input, value, fixed);
             });
   

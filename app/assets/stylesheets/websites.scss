@@ -4,6 +4,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import 'application';
+@import 'scribae/edit';
+@import 'scribae/menu';
 
 #edit-bg-left {
   width: 250px;
@@ -131,47 +133,6 @@
 }
 #img-gallery{ display: table-cell;}
 
-.resizable-input {
-  min-width:50px!important;
-  max-width:99.99%!important;
-  transition: width 1s;
-  text-align:center;
-}
-
-.edit-proxy {
-  display: inline-block;
-}
-
-.edit-item  {
-  //display: inline-flex;
-  position: absolute;
-  //@extend .hoverable;
-}
-.edit-item i {
-  color: rgb(151, 255, 125);
-  //font-size: 3rem!important;
-  padding: 0.1rem;
-  border-radius: 4px;
-  border: solid 1px rgb(255, 94, 0);
-  background: rgb(153, 153, 153);
-  @extend .hoverable;
-}
-
-.component-item i {
-  font-size: 1.5rem;
-
-}
-.component-item i.component-icon {
-  font-size: 5.5rem;
-  
-}
-
-.edit-wrapper {
-  user-select: none;
-  //display: inline-flex;
-  //border: solid 1px green;
-  //padding: 5px 50px 5px 50px;
-}
 
 
 
@@ -180,29 +141,8 @@
   font-size: 2rem;
   position: absolute;
 }
-.component {
-  padding: 0.3rem!important;
-  user-select: none;
-}
-.component-item {
-  background-color: rgb(255, 255, 255);
-  border: solid 1px rgb(136, 136, 136);
-  border-radius: 5px;
-  //padding: 0.3rem;
-}
-.edit-component {
-  display: inline-flex;
-  position: absolute;
-  @extend .hoverable;
-}
-.edit-component i {
-  color: rgb(47, 48, 68);
-  font-size: 1.5rem!important;
-  padding: 0.3rem;
-  border-radius: 4px;
-  border: solid 1px orange;
-  //@extend .hoverable;
-}
+
+
 
 .component-icon {
   color: red;
@@ -274,17 +214,7 @@
   padding: 0px;
   margin: 0px;
 }
-.icon-stack {
-  display: block;
-}
-.icon-stack p {
-  display: block;
-  padding: 2px;
-  margin: 0px;
-}
-.icon-stack i {
-  cursor: pointer;
-}
+
 
 .edit-action-validate {
   color: green;
@@ -309,19 +239,7 @@
   min-width: 150px;
 }
 
-.image-icon-container {
-  padding-top: 5rem;
-}
-.image-icon-container i {
-  cursor: pointer;
-  color: rgb(151, 255, 125);
-  font-size: 3rem;
-  padding: 0.1rem 0.5rem 0.1rem 0.5rem;
-  border-radius: 4px;
-  border: solid 1px rgb(255, 94, 0);
-  background: rgb(153, 153, 153);
-  @extend .hoverable;
-}
+
 
 
 

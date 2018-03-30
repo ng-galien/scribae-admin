@@ -43,8 +43,6 @@ div class="container"
               th == 'Created'
               th == ''
               th == ''
-              th == ''
-              th == ''
           tbody
             - @websites.each do |website|
               tr
@@ -57,12 +55,6 @@ div class="container"
                 td
                   = link_to website_path(website), method: :delete, data: {confirm: "#{t('confirm-delete')}" }
                     i class="material-icons" == 'delete' 
-                td
-                  = link_to website_build_path(website), data: {confirm: "#{t('confirm-build')}" }
-                    i class="material-icons" == 'build'
-                td
-                  = link_to website_run_path(website), data: {confirm: "#{t('confirm-build')}" }
-                    i class="material-icons" == 'play_arrow'
          
 
   

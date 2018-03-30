@@ -43,6 +43,20 @@ en:
 
   icons:
     invite: "Choose an icon"
+  #Menu
+  menu:
+    back:
+      label: "Project"
+      tip: "Back to project"
+    new:
+      label: "New"
+      tip: "Create new item"
+    sort:
+      label: "Sort"
+      tip: "Sort items"
+  #Sortable
+  sortable:
+    invite: "Drag to sort items"
   #Components
   components:
     website:
@@ -129,6 +143,12 @@ en:
 
     #Edit page
     edit:
+      menu:
+        back: 'Return to websites list'
+        settings: 'Open settings'
+        start: 'Start the preview'
+        stop: 'Stop the preview'
+        watch: 'Open the preview'
       invite: "Website main page edition"
       parameters: "Parameters"
       
@@ -220,7 +240,7 @@ en:
             label: "Read me of the repo"
             tip: ""
 
-  article:
+  articles:
     navbar: "Articles"
     #Index Page
     index:
@@ -261,7 +281,7 @@ en:
           label: "Article content"
           tip: "The content of the article"
 
-  theme:
+  themes:
     
     index:
       invite: "Themes list"
@@ -286,19 +306,25 @@ en:
           label: "Introduction"
           tip: "tip"
   
-  info:
+  infos:
     index: 
       invite: "Section list"
       empty: "No section, you must create a new one"
       create: "Create a new section"
+    new:
+      invite: "Create a new theme"
+      form:
+        title: 
+          label: "Title"
+          tip: "Write the section title"
     edit:
       invite: "Section edition"
       form:
         title: 
           label: "Title"
           tip: "Write the title of the section"
-
-  album:
+  
+  albums:
     index: 
       invite: "Album list"
       empty: "No Album, you must create a new one"

@@ -1,50 +1,92 @@
 class ArticlesController < ApplicationController
   
+  include PreviewConcern
+
   before_action :set_menu, only: [:index, :edit]
 
-  def new
-    Article.new
-  end
-
+  #=================================================================================
+  # Edit page
+  # 
+  # Params:
   def edit
     @website = Website.find(params[:website_id])
     @article = Article.find(params[:id])
+
     @image_list = @article.images
     @image_main = @image_list[0]
+    
     @image_new = Image.new do |img|
-      img.category = 'article_content'
+      img.category = 'content'
       img.imageable_type = 'Article'
       img.imageable_id = params[:id]
     end
+    @mardown = true;
   end
 
-  def create
-    @article = Article.new
-    @article.date = DateTime.now
-    @article.update(article_params)  
-    image = Image.new do |img|
-      img.category = 'article_main'
-    end
-    @article.images << image
-    redirect_to action: "edit", id: @article.id
-  end
-
+  #=================================================================================
+  # Response to update
+  # 
+  # Params:
   def update
     @article = Article.find(params[:id])
     @article.update(article_params)
+    website = Website.find(params[:website_id])
+    update_preview website.preview
     redirect_to action: "index"
   end
 
+  #=================================================================================
+  # Response to Article create
+  # 
+  # Params:
+
+  def create
+    article = Article.new do |art|
+      art.fake = false
+      art.featured = false
+    end
+    article.date = DateTime.now
+    article.update(article_params)  
+    image = Image.new do |img|
+      img.category = 'main'
+    end
+    article.images << image
+    @website = Website.find(article.website_id);
+    @articles = Article
+      .where(website_id: article.website_id, fake: false)
+      .order(created_at: :desc); 
+    respond_to do |format|
+      format.js
+    end
+    #redirect_to action: "edit", id: @article.id
+  end
+
+  #=================================================================================
+  # Response to Article index
+  # 
+  # Params:
   def index
     @website = Website.find(params[:website_id])
     @articles = @website.articles
+      .where(fake: false)
+      .order(created_at: :desc); 
     @article_new = Article.new
   end
 
+  #=================================================================================
+  # Delete the article
+  # 
+  # Params:  
   def destroy
-    @article = Article.find(params[:id])
-    @article.destroy
-    redirect_to action: "index"
+    article = Article.find(params[:id])
+    @website = Website.find(article.website_id);
+    article.destroy
+    @articles = Article
+      .where(website_id: article.website_id, fake: false)
+      .order(created_at: :desc); 
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

@@ -1,0 +1,119 @@
+
+
+$item-icon-color: #ffffff;
+
+$item-icon-border: #ffd9d9;
+
+$item-icon-bg-color: #5277ff;
+
+.edit-wrapper {
+  user-select: none;
+  //display: inline-flex;
+  //border: solid 1px green;
+  //padding: 5px 50px 5px 50px;
+}
+
+
+.toolbar-main {
+  width: 50px;
+  height: 50px;
+  padding: 5px 0  0 0;
+}
+.toolbar-main i {
+  font-size: 36px;
+}
+
+.resizable-input {
+  min-width:50px!important;
+  max-width:99.99%!important;
+  transition: width 1s;
+  text-align:center;
+}
+
+.edit-proxy {
+  display: inline-block;
+}
+//==============================================
+//ITEM
+.edit-item  {
+  position: absolute;
+}
+
+.edit-item i {
+  cursor: pointer;
+  //padding: 0 .8em 0 .8rem;
+  background-color: $item-icon-bg-color;
+  border: 1px solid $item-icon-border; 
+  color: $item-icon-color; 
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  font-size: 2rem;
+  @extend .hoverable;
+}
+
+.image-item-container {
+  padding-top: 5rem;
+}
+.image-item i {
+  cursor: pointer;
+  padding: 0 1.3rem 0 1.3rem;
+  background-color: $item-icon-bg-color;
+  border: 2px solid $item-icon-border; 
+  color: $item-icon-color; 
+  border-radius:50%;
+  -moz-border-radius:50%;
+  -webkit-border-radius:50%;
+  font-size: 5rem;
+  @extend .hoverable;
+}
+
+.component-item i {
+  font-size: 1.5rem;
+
+}
+.component-item i.component-icon {
+  font-size: 5.5rem;
+  
+}
+
+//==============================================
+//Component
+.component {
+  padding: 0.3rem!important;
+  user-select: none;
+}
+.component-item {
+  background-color: rgb(255, 255, 255);
+  border: solid 1px rgb(136, 136, 136);
+  border-radius: 5px;
+  //padding: 0.3rem;
+}
+.edit-component {
+  display: inline-flex;
+  position: absolute;
+  @extend .hoverable;
+}
+.edit-component i {
+  color: $item-icon-color;
+  background-color: $item-icon-bg-color;
+  font-size: 1.5rem!important;
+  padding: 0.3rem;
+  border-radius: 4px;
+  border: solid 1px $item-icon-border;
+  //@extend .hoverable;
+}
+.icon-stack {
+  display: block;
+}
+.icon-stack p {
+  display: block;
+  padding: 2px;
+  margin: 0px;
+}
+.icon-stack i {
+  padding: 0 0.4rem 0 0.4rem;
+}
+.icon-stack i {
+  cursor: pointer;
+}

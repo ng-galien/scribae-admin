@@ -1,18 +1,15 @@
 
 $(document).ready(function(){  
-  console.log('infos -> ready');
+  Scribae.log(Scribae.LOG_DEBUG, 'infos -> ready');
+  //Main
   Scribae.Global.initController();
+  //Table
+  Scribae.Global.initIndexTable();
+  Scribae.Global.updateIndexTable();
+  //Index sorter
+  Scribae.Sortable.init();
+  //Image
   Scribae.Image.initGallery();
+  //Editor
   Scribae.Editor.init();
-  Scribae.Global.initIndexListTable({
-    
-  });
-  //Scribae.Global.initIndexListTable({
-  //  sortList: [
-  //    [1, 0],
-  //    [2, 0],
-  //    [3, 0],
-  //  ],
-  //  sortForce: [[1, 0]]
-  //});
 });

@@ -1,22 +1,21 @@
+//Album edit page
 div class="edit-container"
   //Image uploader
-  = render partial: 'layouts/image/uploader'
-  //Image gallery
-  = render partial: 'layouts/image/gallery'
+  = render partial: 'layouts/image/update_upload'
   //Theme invite
   div class="row"
     div class="col s12 center invite"
       div class="section"
-        span class="" == t('album.edit.invite')
+        span class="" == t('albums.edit.invite')
         a href="#{website_albums_path(@website)}" class="modal-trigger waves-effect waves-light btn right"
           == t('return_to_list')   
       div class="divider"
-    
+    //Main Image
     div class="col s12 m3 center"
       div class="row"
         div class="col s12 center"
           - if @image_main.upload.url != nil
-            = image_tag @image_main.upload.xs.url, id: 'image-main-preview', class: 'responsive-img z-depth-3'
+            = image_tag @image_main.upload.m.url, id: 'image-main-preview', class: 'responsive-img z-depth-3'
           - else
             img#image-main-preview class='responsive-img z-depth-3'
         div class="col s12 center"
@@ -27,41 +26,33 @@ div class="edit-container"
         div class="row"
           //title
           div class="col s12 input-field center"
-            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('album.edit.form.title.tip')}"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('albums.edit.form.title.tip')}"
               i class="material-icons tip-icon" == 'create'
             = prop_form.text_field  :title, :class=>"validate materialize-textarea"
-            = prop_form.label       :title, "#{t('album.edit.form.title.label')}", :for=>"title"  
+            = prop_form.label       :title, "#{t('albums.edit.form.title.label')}", :for=>"title"  
           //intro
           div class="col m9 input-field"
-            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('album.edit.form.intro.tip')}"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('albums.edit.form.intro.tip')}"
               i class="material-icons tip-icon" == 'create'
             = prop_form.text_area  :intro, :class=>"validate materialize-textarea"
-            = prop_form.label      :intro, "#{t('album.edit.form.intro.label')}", :for=>"project"
+            = prop_form.label      :intro, "#{t('albums.edit.form.intro.label')}", :for=>"project"
           //extern
           div class="col m3 input-field center"
             p
-              a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('album.edit.form.extern.tip')}"
+              a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('albums.edit.form.extern.tip')}"
                 i class="material-icons tip-icon" == 'create'
               label
                 = prop_form.check_box :extern, {}, 'true', 'false'
-                span == t('album.edit.form.extern.label')
+                span == t('albums.edit.form.extern.label')
           //link
           div class="col m9 input-field has-gallery"
-            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('album.edit.form.link.tip')}"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('albums.edit.form.link.tip')}"
               i class="material-icons tip-icon" == 'create'
             = prop_form.text_field  :link, :class=>"validate materialize-textarea"
-            = prop_form.label      :link, "#{t('album.edit.form.link.label')}", :for=>"project"
+            = prop_form.label      :link, "#{t('albums.edit.form.link.label')}", :for=>"project"
       //submit        
       div class="col s12 center"     
         = prop_form.submit "#{t('confirm')}", :class=>"btn"
       //Images
-      div class="col s12 has-gallery"
-        div class="row"
-          - @image_list.each do |image|
-            -if image.upload.m.url != nil
-              div class="col s6 m3 l4"
-                = image_tag image.upload.m.url, id: 'image-main-preview', class: 'responsive-img z-depth-3'
-              
-      //submit
-      div class="col s12 center has-gallery"     
-        = prop_form.submit "#{t('confirm')}", :class=>"btn"
+  //Image gallery take @image_list ordered by index
+  = render partial: 'layouts/image/gallery', locals: {markdown: false}

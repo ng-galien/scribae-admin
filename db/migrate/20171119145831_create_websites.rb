@@ -9,6 +9,7 @@ class CreateWebsites < ActiveRecord::Migration[5.1]
       t.string :token
       t.text :readme
 
+      t.string :prototype
       t.string :site_title
       t.string :home_title
       t.string :home_icon
@@ -20,7 +21,7 @@ class CreateWebsites < ActiveRecord::Migration[5.1]
       t.boolean :show_featured
       t.boolean :show_markdown
       t.text :markdown
-
+      
       t.timestamps
     end
   end

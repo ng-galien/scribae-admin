@@ -1,4 +1,6 @@
+
 div class="edit-container"
+  
   //Image top modal
   div#image-top-modal class="website-image-modal modal"
     div class="modal-content"
@@ -27,9 +29,9 @@ div class="edit-container"
         = img_form.file_field :upload, multiple: false, class: 'browser-default'  
   //Settings modal
   div#website-settings class="modal"
-    = form_for @website, remote: true, html: { class: 'form-helper', id: 'settings-form' ,data: { type: :script } } do|form|
+    = form_for @website, remote: true, html: { class: '', id: 'settings-form' ,data: { type: :script } } do|form|
       //Project
-      div class="row"
+      div class="container row"
         div class="col s12 center"     
           span class="invite" == t 'website.edit.settings.invite'
         div class="col s12 input-field"
@@ -99,19 +101,18 @@ div class="edit-container"
         = comp_form.text_field :icon_color, class: 'browser-default'
         = comp_form.text_field :title, class: 'browser-default'
         = comp_form.text_field :intro, class: 'browser-default'
-    /= form_for @website, remote: true, multipart: true, html: { class: 'form-helper', id: 'image_form' ,data: { type: :script } } do |form|
-      = form.fields_for :images do |img_form|
-        = img_form.hidden_field :name, class: 'browser-default'
-        = img_form.file_field :upload, multiple: false, class: 'browser-default'
-  //Website invite
-  div class="row" 
-    div class="col s12 center invite"
-      div class="section"
-        span class="" == t('website.edit.invite')
-        span class="right"
-          = link_to t('website.edit.parameters'), '#website-settings', class: 'btn modal-trigger' 
-          = link_to t('return_to_list'), websites_path(), class: 'btn' 
-      div class="divider"  
+  //Menu
+  div#menu-temp class="hide"
+  div#menu-container class=""
+    = render partial: "websites/partial/menu"
+  //Info
+  /a#info-btn class="waves-effect waves-light btn btn-floating"
+    i class="material-icons" == "Info"
+  /div class="tap-target" data-target="info-btn"
+    div class="tap-target-content"
+      h5 == "Title"
+      p == "A bunch of text"
+    
   
   //Website preview
   div class="parallax-container"
@@ -138,8 +139,8 @@ div class="edit-container"
                   == "#{@website.top_intro}"
           //TOP_IMAGE
           div class="col s12 center"
-            div data-field="image_top" class="image-icon-container" 
-              span class="tooltipped" data-tooltip="#{t 'website.edit.home.form.top_image.tip'}" data-position="right" data-delay="50"
+            div data-field="image_top" class="image-item-container" 
+              span class="image-item tooltipped" data-tooltip="#{t 'website.edit.home.form.top_image.tip'}" data-position="right" data-delay="50"
                 i#image-top-trigger data-edit="image_top" class="material-icons" 
                   == 'photo'
 
@@ -165,7 +166,7 @@ div class="edit-container"
                 span == "#{comp_form.object.name}"
       div class="divider"
       div class="row component-container"
-        == render partial: "websites/partial/component"
+        = render partial: "websites/partial/component"
             
       div class="divider"
       div class="section"
@@ -209,8 +210,8 @@ div class="edit-container"
                   == "#{@website.bottom_intro}"
           //BOTTOM_IMAGE
           div class="col s12 center"
-            div data-field="image_bottom" class="image-icon-container" 
-              span class="tooltipped" data-tooltip="#{t 'website.edit.home.form.bottom_image.tip'}" data-position="right" data-delay="50"
+            div data-field="image_bottom" class="image-item-container" 
+              span class="image-item tooltipped" data-tooltip="#{t 'website.edit.home.form.bottom_image.tip'}" data-position="right" data-delay="50"
                 i#image-bottom-trigger data-edit="image_bottom" class="material-icons" 
                   == 'photo'
 

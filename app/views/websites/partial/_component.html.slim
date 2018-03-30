@@ -20,7 +20,7 @@
             div class="edit-field hide" data-value="website_components_attributes_#{comp.id}_icon_color"
               == "#{comp.icon_color}"
         span class="edit-proxy"
-          i data-field="field_icon" class="material-icons component-icon" == "#{comp.icon}"
+          i data-field="field_icon" class="material-icons component-icon" style="color: #{comp.icon_color};" == "#{comp.icon}"
       //Component title
       p class="match-height-1"
         span class="edit-wrapper" 

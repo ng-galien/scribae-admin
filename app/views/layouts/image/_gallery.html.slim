@@ -1,31 +1,50 @@
 //Gallery modal
-div#gallery-modal class='modal'
-  div class="modal-content"
-    div class="row"
-      div#gallery-detail class=""
-        div class="col s6"
-          img#galery-preview class="responsive-img"
-        div class="col s6"
-          div class="galery-action"
-            a#galery-insert-large
-              == 'Insert large'
-          div class="galery-action"
-            a#galery-insert-medium
-              == 'Insert medium'
-          div class="galery-action"
-            a#galery-insert-small
-              == 'Insert small'
-          div class="galery-action"
-            a#galery-back
-              == 'Back'
-      div#gallery-upload class="col s12"
-        = form_for @image_new, remote: true, html: {id: 'gallery-form', class: 'dropzone', data: { type: :script }} do |form|
-          = form.hidden_field :category, class: 'browser-default'
-          = form.hidden_field :imageable_type, class: 'browser-default'
-          = form.hidden_field :imageable_id, class: 'browser-default'
-          = form.hidden_field :name, class: 'browser-default'
-          div class="fallback"
-            = form.file_field :upload, multiple: false, class: 'browser-default'
+//If local mardown is true make it modal with insert selector
+
+- if markdown
+  div#gallery-modal class='modal'
+    div class="modal-content"
+      div class="row"
+        div#gallery-detail class=""
+          div class="col s6"
+            img#galery-preview class="responsive-img"
+          div class="col s6"
+            div class="row"
+              div class="col s6"
+                label
+                  input name="pos_group" type="radio"
+                  span = 'left'
+                label
+                  input name="pos_group" type="radio" checked="checked"
+                  span = 'center'
+                label
+                  input name="pos_group" type="radio"
+                  span = 'right'
+              div class="col s6"
+                label
+                  input name="size_group" type="radio"
+                  span = 'small'
+                label
+                  input name="size_group" type="radio" checked="checked"
+                  span = 'medium'
+                label
+                  input name="large" type="radio"
+                  span = 'right'
+              div class="col s12"
+                a#gallery-insert class="btn right" == 'select'
+                a#gallery-return class="btn" == 'back'
+        div#new-upload-container class="col s8 offset-s2"
+          = render partial: 'layouts/image/new_upload'
+        div#gallery-content class="row"
+          = render partial: 'layouts/image/gallery_content', locals: {markdown: markdown}
+
+- else
+  div#pos-form-container
+    = render partial: 'layouts/image/sort_form'
+  div#gallery class=''
+    div class='container'
+      div class="row"
+        div#new-upload-container class="col s8 offset-s2"
+          = render partial: 'layouts/image/new_upload'
       div#gallery-content class="row"
-        = render partial: 'layouts/image/gallery_content'
-        
+        = render partial: 'layouts/image/gallery_content', locals: {markdown: markdown}

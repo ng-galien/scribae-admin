@@ -4,10 +4,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
-
   #after :cache, :unlink_original
-
-
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -17,16 +14,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     #'public/upload/images'
-    "uploads/images/#{model.class.to_s.underscore}/#{model.imageable_type}/#{model.imageable_id}/#{model.id}"
+    "upload/images/#{model.imageable_type}/#{model.imageable_id}/#{model.id}"
   end
-  #def filename
-  #   "#{version_name}.jpg" if original_filename
-  #  "#{model.nicely_formatted_filename}.png"
-  #end
+
+  # Define the filename output
   def filename 
     "img.#{model.upload.file.extension}" if original_filename 
   end 
-
 
   def content_type_whitelist
     /image\//
@@ -40,32 +34,32 @@ class ImageUploader < CarrierWave::Uploader::Base
   #  true
   #end
 
-  #SIZE XL
+  #SIZE XL, For screen display up to
   version :xl, if: :is_responsive? do
     process resize_to_fit: [2500, 2500]
     process :convert => 'jpg'
     process :quality => 40
   end
-  #SIZE L
+  #SIZE L, For screen display up to
   version :l, if: :is_responsive? do
     process resize_to_fit: [1900, 1900]
     process :convert => 'jpg'
     process :quality => 50
   end
-  #SIZE M
+  #SIZE M, For screen display up to
   version :m do
     process resize_to_fit: [1500, 1500]
     process :convert => 'jpg'
     process :quality => 65
   end
-  #SIZE S
-  version :s do
+  #SIZE S, For screen display up to
+  version :s, if: :is_responsive? do
     process resize_to_fit: [1000, 1000]
     process :convert => 'jpg'
     process :quality => 70
   end
-  #SIZE XS
-  version :xs do
+  #SIZE XS, For screen display up to
+  version :xs, if: :is_responsive? do
     process :resize_to_fit => [600, 600]
     process :convert => 'jpg'
     process :quality => 90
@@ -74,20 +68,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   protected
   
   def is_responsive? image
-    puts model.inspect
-    #puts model.class
-    #puts model.id
-    #puts model.category
-    #puts model.imageable_type
-    #model.category == 'article_main'
-    model.category == 'bg'
-    #true
+    #puts model.inspect
+    return model.category == 'bg'
   end
 
- 
-
 private
-
 
   #delete the original file
   def unlink_original (file)

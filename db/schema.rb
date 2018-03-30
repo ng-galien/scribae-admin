@@ -10,15 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171128014003) do
+ActiveRecord::Schema.define(version: 20180322130438) do
 
   create_table "albums", force: :cascade do |t|
     t.integer "website_id"
-    t.integer "index"
+    t.integer "helper"
+    t.integer "pos"
     t.string "title"
     t.string "intro"
     t.boolean "extern"
     t.string "link"
+    t.text "markdown"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["website_id"], name: "index_albums_on_website_id"
@@ -26,6 +28,7 @@ ActiveRecord::Schema.define(version: 20171128014003) do
 
   create_table "articles", force: :cascade do |t|
     t.integer "website_id"
+    t.integer "helper"
     t.boolean "fake"
     t.datetime "date"
     t.boolean "featured"
@@ -64,7 +67,7 @@ ActiveRecord::Schema.define(version: 20171128014003) do
   end
 
   create_table "images", force: :cascade do |t|
-    t.integer "index"
+    t.integer "pos"
     t.string "category"
     t.string "name"
     t.string "intro"
@@ -78,7 +81,8 @@ ActiveRecord::Schema.define(version: 20171128014003) do
 
   create_table "infos", force: :cascade do |t|
     t.integer "website_id"
-    t.integer "index"
+    t.integer "helper"
+    t.integer "pos"
     t.string "title"
     t.text "markdown"
     t.datetime "created_at", null: false
@@ -88,9 +92,30 @@ ActiveRecord::Schema.define(version: 20171128014003) do
 
   create_table "maps", force: :cascade do |t|
     t.integer "website_id"
+    t.integer "helper"
+    t.integer "pos"
+    t.string "title"
+    t.string "intro"
+    t.text "geo"
+    t.text "markdown"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["website_id"], name: "index_maps_on_website_id"
+  end
+
+  create_table "previews", force: :cascade do |t|
+    t.integer "website_id"
+    t.integer "pid"
+    t.float "updated"
+    t.boolean "running"
+    t.boolean "created"
+    t.string "root_path"
+    t.string "url"
+    t.integer "port"
+    t.text "log"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["website_id"], name: "index_previews_on_website_id"
   end
 
   create_table "styles", force: :cascade do |t|
@@ -109,7 +134,8 @@ ActiveRecord::Schema.define(version: 20171128014003) do
 
   create_table "themes", force: :cascade do |t|
     t.integer "website_id"
-    t.integer "index"
+    t.integer "helper"
+    t.integer "pos"
     t.string "title"
     t.string "intro"
     t.text "markdown"
@@ -125,6 +151,7 @@ ActiveRecord::Schema.define(version: 20171128014003) do
     t.string "repo"
     t.string "token"
     t.text "readme"
+    t.string "prototype"
     t.string "site_title"
     t.string "home_title"
     t.string "home_icon"

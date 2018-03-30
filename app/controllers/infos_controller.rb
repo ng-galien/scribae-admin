@@ -1,56 +1,98 @@
 class InfosController < ApplicationController
 
+  include PreviewConcern
+
   before_action :set_menu, only: [:index, :edit]
 
-  def new
-    Theme.new
-  end
-
+  #=================================================================================
+  # Edit page
+  # 
+  # Params:
   def edit
     @website = Website.find(params[:website_id])
     @info = Info.find(params[:id])
+    @image_list = @info.images
+
     @image_new = Image.new do |img|
-      img.category = 'infor_content'
+      img.category = 'content'
       img.imageable_type = 'Info'
       img.imageable_id = params[:id]
     end
-    @image_list = Image.where({
-      imageable_type: 'Info',
-      imageable_id: params[:id]
-    }).order(created_at: :desc); 
-    @image_main = @image_list.last
+    @mardown = true;
   end
 
+  #=================================================================================
+  # Response to Infos update
+  # 
+  # Params:
   def update
     @info = Info.find(params[:id])
     @info.update(info_params)
+    website = Website.find(params[:website_id])
+    update_preview website.preview
     redirect_to action: "index"
   end
 
+  #=================================================================================
+  # Response to  Infos create
+  # 
+  # Params:
   def create
-    @info = Info.new
-    @info.update(info_params)
-    redirect_to action: "edit", id: @info.id
+
+    max = Info.maximum("pos")
+    if max.nil?
+      max = 0
+    end
+    info = Info.new do |i|
+      i.pos = max + 1   
+    end
+    
+    info.update(info_params)
+
+    image = Image.new do |img|
+      img.category = 'main'
+    end
+    info.images << image
+
+    @website = Website.find(info.website_id);
+    @infos = Info.where({website_id: info.website_id})
+      .order(pos: :desc); 
+    respond_to do |format|
+      format.js
+    end
+    #redirect_to action: "edit", id: @info.id
   end
 
-  def destroy 
-    @info = Info.find(params[:id])
-    @info.destroy
-    redirect_to action: "index"
-  end
-
+  #=================================================================================
+  # Response to index
+  # 
+  # Params:
   def index
-    #render plain: params.inspect
     @website = Website.find(params[:website_id])
-    @infos = @website.infos
+    @infos = @website.infos.order(pos: :desc)
     @info_new = Info.new
-    @info_new.index = Info.count + 10
+  end
+
+  #=================================================================================
+  # Delete the Info
+  # 
+  # Params:
+  def destroy 
+    info = Info.find(params[:id])
+    @website = Website.find(info.website_id);
+    info.destroy
+    @infos = Info.where({website_id: @website.id})
+      .order(pos: :desc); 
+    respond_to do |format|
+      format.js
+    end
+    #redirect_to action: "index"
   end
 
   private
     def info_params
       params.require(:info).
-        permit(:website_id, :id, :index, :title, :markdown)
+        permit(:website_id, :id, :pos, :title, :markdown)
     end 
 
     def set_menu

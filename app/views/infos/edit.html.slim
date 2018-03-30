@@ -1,13 +1,13 @@
  
 div class="edit-container"
   //Image gallery
-  = render partial: 'layouts/image/gallery'
+  = render partial: 'layouts/image/gallery', locals: {markdown: true}
   //Info invite
   div class="row"
     div class="col s12 center invite"     
       div class="section"
         span class=""
-          == t('info.edit.invite')
+          == t('infos.edit.invite')
         a href="#{website_infos_path(@website)}" class="modal-trigger waves-effect waves-light btn right"
           == t('return_to_list')   
       div class="divider"
@@ -16,10 +16,10 @@ div class="edit-container"
         div class="row"
           //title
           div class="col s12 input-field center"
-            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('info.edit.form.title.tip')}"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('infos.edit.form.title.tip')}"
               i class="material-icons tip-icon" == 'create'
             = prop_form.text_field  :title, :class=>"validate materialize-textarea"
-            = prop_form.label       :title, "#{t('info.edit.form.title.label')}", :for=>"title"      
+            = prop_form.label       :title, "#{t('infos.edit.form.title.label')}", :for=>"title"      
       div class="col s12 center"     
         = prop_form.submit "#{t('confirm')}", :class=>"btn"
       //makdown

@@ -1,17 +1,17 @@
 div class="edit-container"
   //Image uploader
-  = render partial: 'layouts/image/uploader'
+  = render partial: 'layouts/image/update_upload'
   //Image gallery
-  = render partial: 'layouts/image/gallery'
+  = render partial: 'layouts/image/gallery', locals: {markdown: true}
   //Theme invite
   div class="row"
     div class="col s12 center invite"
       div class="section"
-        span class="" == t('theme.edit.invite')
+        span class="" == t('themes.edit.invite')
         a href="#{website_themes_path(@website)}" class="modal-trigger waves-effect waves-light btn right"
           == t('return_to_list')   
       div class="divider"
-    
+    //Main Image
     div class="col s12 m3 center"
       div class="row"
         div class="col s12 center"
@@ -27,16 +27,16 @@ div class="edit-container"
         div class="row"
           //title
           div class="col s12 input-field center"
-            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('theme.edit.form.title.tip')}"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('themes.edit.form.title.tip')}"
               i class="material-icons tip-icon" == 'create'
             = prop_form.text_field  :title, :class=>"validate materialize-textarea"
-            = prop_form.label       :title, "#{t('theme.edit.form.title.label')}", :for=>"title"  
+            = prop_form.label       :title, "#{t('themes.edit.form.title.label')}", :for=>"title"  
           //intro
           div class="col s12 input-field"
-            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('theme.edit.form.intro.tip')}"
+            a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('themes.edit.form.intro.tip')}"
               i class="material-icons tip-icon" == 'create'
             = prop_form.text_area  :intro, :class=>"validate materialize-textarea"
-            = prop_form.label       :intro, "#{t('theme.edit.form.intro.label')}", :for=>"project"  
+            = prop_form.label       :intro, "#{t('themes.edit.form.intro.label')}", :for=>"project"  
       //submit        
       div class="col s12 center"     
         = prop_form.submit "#{t('confirm')}", :class=>"btn"

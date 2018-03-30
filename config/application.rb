@@ -16,5 +16,7 @@ module AdminApp
     # -- all .rb files in that directory are automatically loaded.
     config.icons = config_for(:icons)
     config.scribae = config_for(:scribae)
+    #config.log_level = :warn
+    #config.active_record.logger = nil
   end
 end
