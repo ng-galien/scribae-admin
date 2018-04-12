@@ -12,7 +12,7 @@
           a onClick='Scribae.Image.selectGallery( {id:"#{image.id}", url:"#{image.upload.m.url}"} )'
             = image_tag image.upload.m.url, class: 'gallery-image'
         - else
-          span style="color: white;" == "[#{image.id}]- p #{image.pos}"
+          /span style="color: white;" == "[#{image.id}]- p #{image.pos}"
           = link_to [image], method: :delete, remote: true, class: 'gallery-delete-link',  data: {confirm: "#{t('confirm-delete')}" }
             i class="material-icons " == 'delete'
           = image_tag image.upload.m.url, class: 'gallery-image'

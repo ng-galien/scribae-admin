@@ -1,0 +1,22 @@
+div class="row preview"
+  /MENU
+  div class="header"
+    div class="col s6 center"
+      span class="invite" == "Preview control"
+    div class="col s6 control"
+      div class=""
+        = link_to preview_start_path(@preview), remote: true, class: "btn-floating"
+          i class="material-icons" == "play_arrow"
+        span == "Start"
+      div class=""
+        a class="btn-floating"
+          i class="material-icons" == "play_arrow"
+        span == "Stop"
+      div class=""
+        a class="btn-floating"
+          i class="material-icons" == "play_arrow"
+        span == "Preview"
+  div class="col s12 console"
+    div class="row output"
+      
+    

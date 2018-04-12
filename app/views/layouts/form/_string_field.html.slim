@@ -1,0 +1,5 @@
+a [class="prefix tooltipped" data-position="right" 
+    data-delay="50" data-tooltip=t("#{domain}.edit.form.#{field}.tip")]
+  i class="material-icons tip-icon" == 'create'
+= form.text_field  field, :class=>"validate"
+= form.label       field, t("#{domain}.edit.form.#{field}.label"), :for=>"#{field}"  

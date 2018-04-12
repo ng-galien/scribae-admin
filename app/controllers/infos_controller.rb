@@ -1,23 +1,25 @@
 class InfosController < ApplicationController
 
   include PreviewConcern
+  include MenuConcern
+  include ModelConcern
 
-  before_action :set_menu, only: [:index, :edit]
+  #=================================================================================
+  # Response to index
+  # 
+  # Params:
+  def index
+    @infos = @website.infos
+      .order(pos: :desc)
+    @info_new = Info.new
+  end
 
   #=================================================================================
   # Edit page
   # 
   # Params:
   def edit
-    @website = Website.find(params[:website_id])
-    @info = Info.find(params[:id])
-    @image_list = @info.images
-
-    @image_new = Image.new do |img|
-      img.category = 'content'
-      img.imageable_type = 'Info'
-      img.imageable_id = params[:id]
-    end
+    edit_model
     @mardown = true;
   end
 
@@ -29,7 +31,7 @@ class InfosController < ApplicationController
     @info = Info.find(params[:id])
     @info.update(info_params)
     website = Website.find(params[:website_id])
-    update_preview website.preview
+    #update_preview website.preview
     redirect_to action: "index"
   end
 
@@ -60,17 +62,6 @@ class InfosController < ApplicationController
     respond_to do |format|
       format.js
     end
-    #redirect_to action: "edit", id: @info.id
-  end
-
-  #=================================================================================
-  # Response to index
-  # 
-  # Params:
-  def index
-    @website = Website.find(params[:website_id])
-    @infos = @website.infos.order(pos: :desc)
-    @info_new = Info.new
   end
 
   #=================================================================================
@@ -86,7 +77,6 @@ class InfosController < ApplicationController
     respond_to do |format|
       format.js
     end
-    #redirect_to action: "index"
   end
 
   private
@@ -94,31 +84,4 @@ class InfosController < ApplicationController
       params.require(:info).
         permit(:website_id, :id, :pos, :title, :markdown)
     end 
-
-    def set_menu
-      @navigation = {
-        :path => [ { :label=>t('components.website.navbar'), :url=>websites_path } ],
-        :links => [],
-        :tabs => []        
-      }
-      action = params[:action]
-      if not ["create", "update"].include?(action) 
-        @website = Website.find(params[:website_id])
-        #PATH
-        @navigation[:path].push( { 
-          :label => @website.project, :url=>edit_website_path(@website) } )
-        @navigation[:path].push( { 
-          :label => "Informations", :url=>website_infos_path(@website) } )
-        #LINKS
-        @navigation[:links].push( { 
-          :label=>t('components.article.navbar'), :url=>website_articles_path(@website) } )
-        @navigation[:links].push( { 
-          :label=>t('components.theme.navbar'), :url=>website_themes_path(@website) } )
-        @navigation[:links].push( { 
-          :label=>t('components.information.navbar'), :url=>website_infos_path(@website) } )
-        @navigation[:links].push( { 
-          :label=>t('components.album.navbar'), :url=>website_albums_path(@website) } )
-      end
-    end
-
 end

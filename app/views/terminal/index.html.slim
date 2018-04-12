@@ -1,0 +1,12 @@
+div.action-cable data-channel="" data-type="" data-id=""
+div class="row terminal-container"
+  div class="col s12"
+    ul class="tabs"
+      li class="tab col s5 m4"
+        = link_to "preview", "#preview", class: "active"
+      li class="tab col s5 m4"
+        = link_to "git", "#git"
+  div#preview class="col s12"
+    = render partial: "/terminal/terminal", locals: {channel: "WebsiteNotificationsChannel", type: "#{@preview.class.name}", id: "#{@preview.id}", end_point: @preview}
+  div#git class="col s12"
+    = render partial: "/terminal/terminal", locals: {channel: "WebsiteNotificationsChannel", type: "#{@gitconfig.class.name}", id: "#{@gitconfig.id}", end_point: @gitconfig}

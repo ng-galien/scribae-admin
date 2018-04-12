@@ -1,15 +1,12 @@
 class CreateWebsites < ActiveRecord::Migration[5.1]
   def change
     create_table :websites do |t|
-
-      t.string :project
+      # General
+      t.integer :helper
+      t.string :name
       t.string :description
-      t.string :url
-      t.string :repo
-      t.string :token
       t.text :readme
-
-      t.string :prototype
+      # Site content
       t.string :site_title
       t.string :home_title
       t.string :home_icon

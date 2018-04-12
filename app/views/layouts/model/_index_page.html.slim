@@ -1,7 +1,20 @@
 /Create modal
 div id="create-modal" class="modal"
   div class="modal-content"
-    = render partial: "#{nested}/create_form"
+    div.row
+      div class="col s12 center wait wait-message"
+        span == t 'wait_message'
+      div class="col s12 center wait"
+        div class="preloader-wrapper big active"
+          div class="spinner-layer spinner-blue-only"
+            div class="circle-clipper left"
+              div class="circle"
+            div class="gap-patch"
+              div class="circle"
+            div class="circle-clipper right"
+              div class="circle"
+      div#create-form-container class="col s12 center"
+        = render partial: "#{nested}/create_form"
 /Sortable
 - if sort
   //Sortable

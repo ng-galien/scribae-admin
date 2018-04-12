@@ -1,0 +1,7 @@
+p
+  a [class="prefix tooltipped" data-position="right" 
+      data-delay="50" data-tooltip=t("#{domain}.edit.form.#{field}.tip")]
+    i class="material-icons tip-icon" == 'create'
+  label
+    = form.check_box field, {}, 'true', 'false'
+    span == t("#{domain}.edit.form.#{field}.label")

@@ -43,13 +43,12 @@ gem 'jquery-ui-rails'
 gem 'jquery-tablesorter'
 gem 'material_icons'
 gem 'dropzonejs-rails'
-gem 'materialize-sass'
-gem 'rugged'
+gem "github_api"
+gem "os"
 #gem 'ruby-debug-ide'
-gem 'spawnling'
-gem "jekyll"
-gem "jekyll-paginate"
-gem 'jekyll-livereload'
+gem "i18n-js"
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,0 +1,17 @@
+div class="row"
+  //title
+  div class="col s12 input-field center"
+    = render partial: 'layouts/form/string_field',
+        locals: {form: form, domain: :albums, field: :title} 
+  //intro
+  div class="col m9 input-field"
+    = render partial: 'layouts/form/string_field',
+        locals: {form: form, domain: :albums, field: :intro} 
+  //extern
+  div class="col m3 input-field center"
+    = render partial: 'layouts/form/boolean_field',
+        locals: {form: form, domain: :albums, field: :extern} 
+  //link
+  div class="col m9 input-field has-gallery"
+    = render partial: 'layouts/form/string_field',
+        locals: {form: form, domain: :albums, field: :link} 

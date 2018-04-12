@@ -1,0 +1,7 @@
+.navbar-path {
+  margin-left: 1rem;
+  a.breadcrumb::before {
+    margin-left: 0rem;
+    margin-right: 0rem;
+  }
+}

@@ -25,12 +25,18 @@ var Scribae = Scribae || {
   LOG_TRACE: 40,
   LOG_INFO: 50,
   LOG_NONE: 100,
+  
   log: function(level, msg) {
     if(level) {
       if(level > Scribae.LOG_LEVEL) {
         console.log(msg);
       }
     }
+  },
+  Channel: {
+    connected: function(channel, type, id) {},
+    disconnected: function(channel, type, id) {},
+    received: function(channel, type, id, data) {},
   }
 }
 
@@ -53,6 +59,11 @@ Scribae.Global.initController = function() {
   var element = document.getElementById('create-modal');
   if(element) {
     Scribae.Global.createModal = M.Modal.init(element, {});
+    $('.wait').hide();
+    $('#create-form-container form').on('submit', function() {
+      $('#create-form-container').hide();
+      $('.wait').show();
+    }); 
   }
   
   element = document.getElementById('sortable-modal');
@@ -68,6 +79,7 @@ Scribae.Global.initController = function() {
     });
   }
   $('.tooltipped').tooltip();
+  $('.materialboxed').materialbox();
   M.updateTextFields();
 }
 
@@ -97,14 +109,66 @@ Scribae.Global.updateIndexTable = function() {
 }
 
 Scribae.Global.updateIndexPage = function(sortable) {
+  
   if(Scribae.Global.createModal.isOpen) {
+    //Close modal and reset display
     Scribae.Global.createModal.close();
+    $('#create-form-container').show();
+    $('.wait').hide();
+    //Reset create text field
     var inputs = $("input[type='text']");
     inputs.val('');
+    M.updateTextFields();
   }
   Scribae.Global.updateIndexTable();
   if(sortable) {
     Scribae.Sortable.init();
   }
+}
+
+Scribae.Global.suscribe = function() {
+  $('.channel').each(function(){
+    var type = $(this).attr('data-type');
+    var id = $(this).attr('data-id');
+    var channel = $(this).attr('data-channel');
+    Scribae.log(Scribae.LOG_DEBUG, `susbcribe to => suscription:${channel}:${type}:${id}`);
+    App.cable.subscriptions.create(
+      {
+        channel: channel,
+        loggable_type: type,
+        loggable_id: parseInt(id),
+      },
+      {
+        connected: function() {
+          Scribae.log(Scribae.LOG_DEBUG, `suscription:${channel}:${type}:${id}:connected`);
+          Scribae.Channel.connected(channel, type, id);
+        },
+        disconnected: function() {
+          Scribae.log(Scribae.LOG_DEBUG, `suscription:${channel}:${type}:${id}:disconnected`);
+          Scribae.Channel.disconnected(channel, type, id);
+        },
+        received: function(data) {
+          Scribae.log(Scribae.LOG_DEBUG, `suscription:${channel}:${type}:${id}:received:${data}`);
+          Scribae.Channel.received(channel, type, id, data);
+        }
+      }
+    );
+  });
+  //App.preview_notifications = App.cable.subscriptions.create({
+  //  channel,
+  //  connected: function() {
+  //    // Called when the subscription is ready for use on the server
+  //    console.log('Connected to Preview channel');
+  //  },
+//
+  //disconnected: function() {
+  //  // Called when the subscription has been terminated by the server
+  //  console.log('Disconnected from Preview channel '  );
+  //},
+  //received: function(data) {
+  //  // Called when there's incoming data on the websocket for this channel
+  //  console.log('recieved from Preview: ' + data['message'])
+  //}
+  
 }
 

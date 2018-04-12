@@ -13,6 +13,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( websites.js websites.css articles.js article.css)
 
-%w( websites articles themes infos albums ).each do |controller|
+%w( websites articles themes infos albums terminal previews).each do |controller|
   Rails.application.config.assets.precompile += ["#{controller}.js", "#{controller}.css"]
 end

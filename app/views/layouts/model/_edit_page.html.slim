@@ -1,0 +1,47 @@
+div class="edit-container"
+  //Image uploader
+  - unless image_main.nil?
+    = render partial: 'layouts/image/update_upload'
+  //Image gallery
+  - if markdown
+    = render partial: 'layouts/image/gallery', locals: {markdown: true}
+  //Article invite
+  div class="row"
+    
+    div class="col s12 center invite"
+      div class="section"
+        span class="" == t("#{domain}.edit.invite")
+        = link_to t('return_to_list'), website_articles_path(@website), class: 'btn right' 
+      div class="divider"
+    - unless image_main.nil?
+      div class="col s12 m3 center"
+        div class="row"
+          div class="col s12 center"
+            - if image_main.upload.url != nil
+              = image_tag image_main.upload.m.url, id: 'image-main-preview', class: 'responsive-img z-depth-3 materialboxed'
+            - else
+              img#image-main-preview class='responsive-img z-depth-3'
+          div class="col s12 center"
+            a class="waves-effect waves-light btn modal-trigger" href="#image-main-modal" == 'Image' 
+    //Obj form
+    = form_for [ parent, obj ] do |obj_form|
+      - unless image_main.nil?
+        div class="col s12 m9"
+          = render partial: "#{domain}/edit_form", locals: {form: obj_form} 
+      - else
+        div class="col s12" 
+          = render partial: "#{domain}/edit_form", locals: {form: obj_form} 
+      //first submit
+      div class="col s12 center"     
+        = obj_form.submit "#{t('confirm')}", :class=>"btn"
+      - if markdown 
+        div class="col s12 markdown-container" 
+          = obj_form.text_area  :markdown, class: 'browser-default mde-editor'
+        //second submit
+        div class="col s12 center"     
+          = obj_form.submit "#{t('confirm')}", :class=>"btn"
+    - unless markdown
+      div class="col s12 center invite"
+        span class="" == t("#{domain}.edit..gallery.invite")
+      = render partial: 'layouts/image/gallery', locals: {markdown: markdown}
+

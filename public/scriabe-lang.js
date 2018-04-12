@@ -1,0 +1,2 @@
+obten=null;
+

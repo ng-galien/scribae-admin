@@ -8,10 +8,13 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_include_tag params[:controller]
     = stylesheet_link_tag "application", params[:controller], :media => "all"
-
+    javascript:
+      I18n.defaultLocale = "#{I18n.default_locale}";
+      I18n.locale = "#{I18n.locale}";
   body
     header 
-      == render partial: 'layouts/nav'
+      - unless @navigation.nil?
+        == render partial: 'layouts/nav'
     main
       == yield
     footer

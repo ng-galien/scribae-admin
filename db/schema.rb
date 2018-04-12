@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322130438) do
+ActiveRecord::Schema.define(version: 20180409062444) do
 
   create_table "albums", force: :cascade do |t|
     t.integer "website_id"
@@ -66,6 +66,19 @@ ActiveRecord::Schema.define(version: 20180322130438) do
     t.index ["website_id"], name: "index_components_on_website_id"
   end
 
+  create_table "gitconfigs", force: :cascade do |t|
+    t.integer "website_id"
+    t.string "repo"
+    t.string "user"
+    t.string "email"
+    t.boolean "initialized"
+    t.string "link"
+    t.datetime "last_commit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["website_id"], name: "index_gitconfigs_on_website_id"
+  end
+
   create_table "images", force: :cascade do |t|
     t.integer "pos"
     t.string "category"
@@ -105,14 +118,12 @@ ActiveRecord::Schema.define(version: 20180322130438) do
 
   create_table "previews", force: :cascade do |t|
     t.integer "website_id"
-    t.integer "pid"
-    t.float "updated"
-    t.boolean "running"
-    t.boolean "created"
-    t.string "root_path"
+    t.string "prototype"
+    t.string "name"
+    t.integer "status"
+    t.integer "process"
     t.string "url"
-    t.integer "port"
-    t.text "log"
+    t.datetime "last_commit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["website_id"], name: "index_previews_on_website_id"
@@ -132,6 +143,18 @@ ActiveRecord::Schema.define(version: 20180322130438) do
     t.index ["stylable_type", "stylable_id"], name: "index_styles_on_stylable_type_and_stylable_id"
   end
 
+  create_table "terminal_logs", force: :cascade do |t|
+    t.integer "helper"
+    t.string "info"
+    t.string "level"
+    t.text "message"
+    t.string "loggable_type"
+    t.integer "loggable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["loggable_type", "loggable_id"], name: "index_terminal_logs_on_loggable_type_and_loggable_id"
+  end
+
   create_table "themes", force: :cascade do |t|
     t.integer "website_id"
     t.integer "helper"
@@ -145,13 +168,10 @@ ActiveRecord::Schema.define(version: 20180322130438) do
   end
 
   create_table "websites", force: :cascade do |t|
-    t.string "project"
+    t.integer "helper"
+    t.string "name"
     t.string "description"
-    t.string "url"
-    t.string "repo"
-    t.string "token"
     t.text "readme"
-    t.string "prototype"
     t.string "site_title"
     t.string "home_title"
     t.string "home_icon"

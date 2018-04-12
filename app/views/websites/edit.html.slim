@@ -1,4 +1,6 @@
 
+div.subscription data-channel="WebsiteNotificationsChannel" data-type="#{@gitconfig.class}" data-id="#{@gitconfig.id}"
+div.subscription data-channel="WebsiteNotificationsChannel" data-type="#{@preview.class}" data-id="#{@preview.id}"
 div class="edit-container"
   
   //Image top modal
@@ -6,69 +8,48 @@ div class="edit-container"
     div class="modal-content"
       div class="row"
         div class="col s12 center"
-          span class="invite" == t 'website.edit.home.form.top_image.label'
+          span class="invite" == t 'websites.edit.home.form.top_image.label'
         div class="col s8 offset-s2 center"
           = form_for @image_top, remote: true, html: {id: 'image-top-form', class: 'dropzone'} do |img_form|
-            = img_form.hidden_field :category, class: 'browser-default'
+            = img_form.hidden_field :category, class: 'browser-default'      
             = img_form.hidden_field :imageable_type, class: 'browser-default'
-            = img_form.hidden_field :imageable_id, class: 'browser-default'
-            = img_form.hidden_field :name, class: 'browser-default'
-            = img_form.hidden_field :category, class: 'browser-default'
+            = img_form.hidden_field :imageable_id, class: 'browser-default'   
+            = img_form.hidden_field :name, class: 'browser-default'          
             div class="fallback"
               = img_form.file_field :upload, multiple: false, class: 'browser-default'
   //Image bottom modal
   div#image-bottom-modal class="website-image-modal modal"
     div class="modal-content"
-    = form_for @image_bottom, remote: true, html: {id: 'image-bottom-form', class: 'dropzone'} do |img_form|
-      = img_form.hidden_field :category, class: 'browser-default'
-      = img_form.hidden_field :imageable_type, class: 'browser-default'
-      = img_form.hidden_field :imageable_id, class: 'browser-default'
-      = img_form.hidden_field :name, class: 'browser-default'
-      = img_form.hidden_field :category, class: 'browser-default'
-      div class="fallback"
-        = img_form.file_field :upload, multiple: false, class: 'browser-default'  
+      div class="row"
+        div class="col s12 center"
+          span class="invite" == t 'websites.edit.home.form.top_image.label'
+        div class="col s8 offset-s2 center"
+          = form_for @image_bottom, remote: true, html: {id: 'image-bottom-form', class: 'dropzone'} do |img_form|
+            = img_form.hidden_field :category, class: 'browser-default'       ,id: "image_bottom_category"
+            = img_form.hidden_field :imageable_type, class: 'browser-default' ,id: "image_bottom_type"
+            = img_form.hidden_field :imageable_id, class: 'browser-default'   ,id: "image_bottom_id"
+            = img_form.hidden_field :name, class: 'browser-default'           ,id: "image_bottom_name"
+            div class="fallback"
+              = img_form.file_field :upload, multiple: false, class: 'browser-default'  
+  //Git Modal
+  div#git-settings class="modal"
+    = render partial: 'websites/modal/git'
+  //Git Modal
+  div#preview-settings class="modal"
+    = render partial: 'websites/modal/preview'
   //Settings modal
   div#website-settings class="modal"
     = form_for @website, remote: true, html: { class: '', id: 'settings-form' ,data: { type: :script } } do|form|
       //Project
       div class="container row"
         div class="col s12 center"     
-          span class="invite" == t 'website.edit.settings.invite'
-        div class="col s12 input-field"
-          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('website.edit.settings.form.project.tip')}"
-            i class="material-icons tip-icon" == 'create'
-          = form.text_field  :project, :class=>"validate"
-          = form.label       :project, "#{t('website.edit.settings.form.project.label')}", :for=>"project"
+          span class="invite" == t 'websites.edit.settings.invite'
         //Description
         div class="col s12 input-field"
-          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('website.edit.settings.form.description.tip')}"
+          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('websites.edit.settings.form.description.tip')}"
             i class="material-icons tip-icon" == 'create'
           = form.text_field   :description, :class=>"validate"
-          = form.label       :description, "#{t('website.edit.settings.form.description.label')}", :for=>"description"
-
-        //Url
-        div class="col s12 input-field"
-          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('website.edit.settings.form.description.tip')}"
-            i class="material-icons tip-icon" == 'create'
-          = form.text_field   :url, :class=>"validate"
-          = form.label       :url, "#{t('website.edit.settings.form.url.label')}", :for=>"description"
-
-        //Repo
-        div class="col s12 input-field"
-          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('website.edit.settings.form.description.tip')}"
-            i class="material-icons tip-icon" == 'create'
-          = form.text_field   :repo, :class=>"validate"
-          = form.label       :repo, "#{t('website.edit.settings.form.repo.label')}", :for=>"description"
-
-        //Token
-        div class="col s12 input-field"
-          a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('website.edit.settings.form.description.tip')}"
-            i class="material-icons tip-icon" == 'create'
-          = form.text_field   :token, :class=>"validate"
-          = form.label       :token, "#{t('website.edit.settings.form.token.label')}", :for=>"description"
-        
-        div class="col s12 center" 
-          = form.submit "#{t('confirm')}", :class=>"btn"
+          = form.label       :description, "#{t('websites.edit.settings.form.description.label')}", :for=>"description"
   //Pickers
   div#picker-container
     //Color
@@ -101,19 +82,9 @@ div class="edit-container"
         = comp_form.text_field :icon_color, class: 'browser-default'
         = comp_form.text_field :title, class: 'browser-default'
         = comp_form.text_field :intro, class: 'browser-default'
-  //Menu
-  div#menu-temp class="hide"
+  //Men
   div#menu-container class=""
-    = render partial: "websites/partial/menu"
-  //Info
-  /a#info-btn class="waves-effect waves-light btn btn-floating"
-    i class="material-icons" == "Info"
-  /div class="tap-target" data-target="info-btn"
-    div class="tap-target-content"
-      h5 == "Title"
-      p == "A bunch of text"
-    
-  
+    = render partial: "websites/menu"
   //Website preview
   div class="parallax-container"
     div class="section no-pad-bot"
@@ -140,7 +111,7 @@ div class="edit-container"
           //TOP_IMAGE
           div class="col s12 center"
             div data-field="image_top" class="image-item-container" 
-              span class="image-item tooltipped" data-tooltip="#{t 'website.edit.home.form.top_image.tip'}" data-position="right" data-delay="50"
+              span class="image-item tooltipped" data-tooltip="#{t 'websites.edit.home.form.top_image.tip'}" data-position="right" data-delay="50"
                 i#image-top-trigger data-edit="image_top" class="material-icons" 
                   == 'photo'
 
@@ -160,7 +131,7 @@ div class="edit-container"
           h5 title="tooltimmmmp"  = "Composants" 
         div class="col s12 center"
           = form_for @website, remote: true, html: { class: '', id: 'comp-show-form' ,data: { type: :script } } do |website_form|
-            = website_form.fields_for :components, :child_index => ""  do |comp_form|
+            = website_form.fields_for :components do |comp_form|#, :child_index => "" 
               label class="comp-show-label"
                 = comp_form.check_box :show, {}, 'true', 'false'
                 span == "#{comp_form.object.name}"
@@ -211,7 +182,7 @@ div class="edit-container"
           //BOTTOM_IMAGE
           div class="col s12 center"
             div data-field="image_bottom" class="image-item-container" 
-              span class="image-item tooltipped" data-tooltip="#{t 'website.edit.home.form.bottom_image.tip'}" data-position="right" data-delay="50"
+              span class="image-item tooltipped" data-tooltip="#{t 'websites.edit.home.form.bottom_image.tip'}" data-position="right" data-delay="50"
                 i#image-bottom-trigger data-edit="image_bottom" class="material-icons" 
                   == 'photo'
 

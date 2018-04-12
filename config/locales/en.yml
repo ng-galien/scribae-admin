@@ -40,6 +40,7 @@ en:
   confirm-delete: "Warning! Are you sure to delete?"
   confirm-build: "Warning! Are you sure to build?"
   return_to_list: "Return to list"
+  wait_message: "Please wait while processing..."
 
   icons:
     invite: "Choose an icon"
@@ -74,7 +75,7 @@ en:
   style:
     defaut:
       
-  website: 
+  websites: 
     navbar: "Projects"
     #Default values
     default: 
@@ -121,7 +122,6 @@ en:
           title: 'Sample article'
           intro: 'Read the article introduction'
           date: '01/01/2000'
-
     #Index page
     index:
       invite: "Welcome to Sribae website creator"
@@ -133,16 +133,17 @@ en:
     #Create form
     new:
       invite: "New Project"
+     
+
+    #Edit page
+    edit:
       form:
-        project: 
+        name: 
           label: "Name"
           tip: "The name of the project for your website"
         description: 
           label: "Description"
-          tip: "Write a short description of your project"      
-
-    #Edit page
-    edit:
+          tip: "Write a short description of your project" 
       menu:
         back: 'Return to websites list'
         settings: 'Open settings'
@@ -353,6 +354,51 @@ en:
         link: 
           label: "Website"
           tip: "The website where is the album"
+  git:
+    message:
+      sucess: "Operation sucessfull"
+      fail: "Operation failed"
+      init: "Initialize git repository"
+      ssh: "Configure SSH key"
+      create: "Create the remote repository on github.com"
+      configure: "Configure the local repository"
+  preview:
+    trigger: 
+      status: "status"
+      update: "update"
+      error: "error"
+      value:
+        run: "run"
+        stop: "stop"
+    message:
+      job:
+        start: "Start the preview job"
+        after: "After preview job"
+        static: "Create prototype structure"
+        config: "Create preview config"
+        components: "Update components"
+        home: "Update home page"
+        articles: "Update articles"
+        themes: "Update themes"
+        infos: "Update infos"
+        albums: "Update albums"
+      sucess: "Operation sucessfull"
+      fail: "Operation failed"
+      start: "Start the preview"
+      stop: "Stop the preview server"
+      bundle:
+        start: "Bundle is updating..."
+        error: "Bundle update fail!"
+        end: "Bundle update terminated"
+      jekyll: 
+        start: "Starting Jekyll.."
+        started: "Jekyll is started"
+        error: "Jekyll error while running!"
+        end: "Jekyll terminated"
+  terminal: 
+    info: "INFO:"
+    error: "ERROR"
+    cmd: "> EXEC:"
 
   time:
     formats:

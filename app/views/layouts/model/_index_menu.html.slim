@@ -15,7 +15,8 @@ div#toc-menu class="fixed-action-btn"
         span class="tooltipped" data-tooltip="#{t 'menu.new.tip' }" data-position="left" data-delay="50"
           i class="material-icons" == "add"
     li 
-      /span class="menu-item-text" == "#{t 'menu.back.label' }" 
-      a href="#{edit_website_path(@website)}" class="btn-floating blue darken-2" 
-        span class="tooltipped" data-tooltip="#{t 'menu.back.tip' }" data-position="left" data-delay="50"
-          i class="material-icons" == "language"
+      -unless @website.nil?
+        /span class="menu-item-text" == "#{t 'menu.back.label' }" 
+        a href="#{edit_website_path(@website)}" class="btn-floating blue darken-2" 
+          span class="tooltipped" data-tooltip="#{t 'menu.back.tip' }" data-position="left" data-delay="50"
+            i class="material-icons" == "language"

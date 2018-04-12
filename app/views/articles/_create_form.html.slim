@@ -1,17 +1,18 @@
-= form_for [@website, @article_new], remote: true do |form|
+= form_for [@website, Article.new], remote: true do |form|
   div class="row"
+    /Invite
     div class="col s12 center"
       h4 == t 'articles.new.invite'
+    /Title
+    div class="col s12 input-field"
+      = render partial: 'layouts/form/string_field',
+        locals: {form: form, domain: :articles, field: :title}
+    /Intro
     div class="col s12 input-field "
-      a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('articles.new.form.title.tip')}"
-        i class="material-icons tip-icon" == 'create'
-      = form.text_field  :title, :class=>"validate"
-      = form.label       :title, "#{t('articles.new.form.title.label')}", :for=>"title"  
-    div class="col s12 input-field "
-      a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('articles.new.form.intro.tip')}"
-        i class="material-icons tip-icon" == 'create'
-      = form.text_field  :intro, :class=>"validate"
-      = form.label       :intro, "#{t('articles.new.form.intro.label')}", :for=>"intro"  
-      = form.hidden_field :website_id, value: "#{@website.id}"
+      = render partial: 'layouts/form/string_field', 
+        locals: {form: form, domain: :articles, field: :intro} 
+    /Website id
+    = form.hidden_field :website_id, value: "#{@website.id}"
+    /Submit
     div class="col s12 center"
       = form.submit 'OK', :class=>"btn"

@@ -3,15 +3,27 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 */
 
+//Modals
 var settingsModal;
+var gitModal;
+var previewModal;
 
 var updateStatus = false;
 var FAB;
 var serverRunning = false
 
+
+
+function showTerminal(id) {
+  window.open(`/websites/$(id)/terminal`, 'Terminal', 
+  directories=0,titlebar=0,toolbar=0,location=0,status=0,     
+    menubar=0,scrollbars=no,resizable=no,
+      width=400,height=350);
+}
+
 function updateMenu() {
-  serverRunning = $("#menu-container").find('[data-status]').attr('data-status');
-  console.log('preview running '+serverRunning);
+  //serverRunning = $("#menu-container").find('[data-status]').attr('data-status');
+  //console.log('preview running '+serverRunning);
   var elem = document.querySelector('#menu-container .fixed-action-btn');
   FAB = M.FloatingActionButton.init(elem, {
     direction: 'bottom',
@@ -36,23 +48,36 @@ function checkStatus(data) {
   }
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
   console.log('websites -> ready');
+
+  Scribae.Global.suscribe();
   //=========================================================
   //MATERIALIZE INIT
   //Menu
   updateMenu();
+  var element = undefined;
+  
   //Parallax
   $('.parallax').parallax();
   //Setting modal
-  var element = document.getElementById('website-settings');
+  element = document.getElementById('website-settings');
   if(element) {
     settingsModal = M.Modal.init(element, {});
+  }
+  element = document.getElementById('git-settings');
+  if(element) {
+    gitModal = M.Modal.init(element, {});
+  }
+  element = document.getElementById('preview-settings');
+  if(element) {
+    previewModal = M.Modal.init(element, {});
   }
   //=========================================================
   //PREVIEW INIT
   Scribae.Global.initController();
   Scribae.Global.initIndexTable({});
+  Scribae.Global.updateIndexTable();
   //Image
   Scribae.Preview.Image.init();
   Scribae.Preview.Edit.init();
@@ -60,7 +85,7 @@ $(document).ready(function(){
   Scribae.Preview.Component.init();
   Scribae.Preview.Component.fit();
   //=========================================================
-  //FORM TRIG
+  //COMPS ENABLE TRIGGER
   $('#comp-show-form input[type=checkbox]').change(function () {
     console.log(this);
     $('#comp-show-form').submit();
@@ -95,18 +120,22 @@ $(document).ready(function(){
     Scribae.Preview.Edit.update();
   });
   //Timer for preview status
-  setInterval(function(){
-    var url = $("#menu-container").find('[data-status]').attr('data-link');
-    if(url && updateStatus) {
-      $.ajax({
-        url: url,
-        data: {},
-        contentType: 'application/json',
-        dataType: 'text',
-        success: checkStatus
-      });
-    }
-    }, 1000);
+  //setInterval(function(){
+  //  var url = $("#menu-container").find('[data-status]').attr('data-link');
+  //  if(url && updateStatus) {
+  //    $.ajax({
+  //      url: url,
+  //      data: {},
+  //      contentType: 'application/json',
+  //      dataType: 'text',
+  //      success: checkStatus
+  //    });
+  //  }
+  ////  }, 1000);
+  //$('#terminal-link').click(function(){
+  //  var id = $(this).attr('data-id');
+  //  showTerminal(id)
+  //});
 });
 
 

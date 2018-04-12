@@ -1,25 +1,25 @@
 class ThemesController < ApplicationController
 
   include PreviewConcern
+  include MenuConcern
+  include ModelConcern
 
-  before_action :set_menu, only: [:index, :edit]
+  #=================================================================================
+  # Response to index
+  # 
+  # Params:
+  def index
+    @themes = @website.themes
+      .order(pos: :desc)
+    @theme_new = Theme.new
+  end
 
   #=================================================================================
   # Edit page
   # 
   # Params:
   def edit
-    @website = Website.find(params[:website_id])
-    @theme = Theme.find(params[:id])
-
-    @image_list = @theme.images
-    @image_main = @image_list[0]
-    
-    @image_new = Image.new do |img|
-      img.category = 'content'
-      img.imageable_type = 'Theme'
-      img.imageable_id = params[:id]
-    end
+    edit_model
     @mardown = true;
   end
 
@@ -31,7 +31,7 @@ class ThemesController < ApplicationController
     @theme = Theme.find(params[:id])
     @theme.update(theme_params)
     website = Website.find(params[:website_id])
-    update_preview website.preview
+    #update_preview website.preview
     redirect_to action: "index"
   end
 
@@ -59,17 +59,6 @@ class ThemesController < ApplicationController
     respond_to do |format|
       format.js
     end
-    #redirect_to action: "edit", id: @theme.id
-  end
-
-  #=================================================================================
-  # Response to index
-  # 
-  # Params:
-  def index
-    @website = Website.find(params[:website_id])
-    @themes = @website.themes.order(pos: :desc)
-    @theme_new = Theme.new
   end
 
   #=================================================================================
@@ -81,7 +70,7 @@ class ThemesController < ApplicationController
     @website = Website.find(theme.website_id);
     theme.destroy
     @themes = Theme.where({website_id: @website.id})
-      .order(pos: :desc); 
+      .order(pos: :desc)
     respond_to do |format|
       format.js
     end
@@ -92,31 +81,4 @@ class ThemesController < ApplicationController
       params.require(:theme).
         permit(:website_id, :title, :intro, :markdown)
     end 
-
-    def set_menu
-      @navigation = {
-        :path => [ { :label=>t('components.website.navbar'), :url=>websites_path } ],
-        :links => [],
-        :tabs => []        
-      }
-      action = params[:action]
-      if not ["create", "update"].include?(action) 
-        @website = Website.find(params[:website_id])
-        #PATH
-        @navigation[:path].push( { 
-          :label => @website.project, :url=>edit_website_path(@website) } )
-        @navigation[:path].push( { 
-          :label => "Themes", :url=>website_themes_path(@website) } )
-        #LINKS
-        @navigation[:links].push( { 
-          :label=>t('components.article.navbar'), :url=>website_articles_path(@website) } )
-        @navigation[:links].push( { 
-          :label=>t('components.theme.navbar'), :url=>website_themes_path(@website) } )
-        @navigation[:links].push( { 
-          :label=>t('components.information.navbar'), :url=>website_infos_path(@website) } )
-        @navigation[:links].push( { 
-          :label=>t('components.album.navbar'), :url=>website_albums_path(@website) } )
-      end
-    end
-
 end

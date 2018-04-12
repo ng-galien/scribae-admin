@@ -16,7 +16,12 @@ module AdminApp
     # -- all .rb files in that directory are automatically loaded.
     config.icons = config_for(:icons)
     config.scribae = config_for(:scribae)
+    #config.active_job.queue_adapter = :inline
+    #config.active_job.queue_adapter = :sucker_punch
     #config.log_level = :warn
     #config.active_record.logger = nil
+    config.middleware.use I18n::JS::Middleware
+    #config.middleware.insert_before Rack::Sendfile,ActionDispatch::DebugLocks
   end
+  
 end

@@ -1,0 +1,10 @@
+
+div class="row"
+  //title
+  div class="col s12 input-field center"
+    = render partial: 'layouts/form/string_field',
+        locals: {form: form, domain: :themes, field: :title}
+  //intro
+  div class="col s12 input-field"
+    = render partial: 'layouts/form/string_field',
+        locals: {form: form, domain: :themes, field: :intro} 

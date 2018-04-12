@@ -1,0 +1,20 @@
+/Websites table
+thead
+  tr
+    th == 'Name'
+    th == 'Description'
+    th == 'Created'
+    th == ''
+    th == ''
+tbody
+  - list.each do |obj|
+    tr
+      td == obj.name
+      td == obj.description.truncate(25, omission: '...')
+      td == localize(obj.updated_at, :format => :default)
+      td
+        = link_to edit_website_path(obj)
+          i class="material-icons" == 'create'
+      td
+        = link_to website_path(obj), method: :delete, remote: true, data: {confirm: "#{t('confirm-delete')}" }
+          i class="material-icons" == 'delete' 

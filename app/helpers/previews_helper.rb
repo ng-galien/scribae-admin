@@ -1,34 +1,113 @@
-#========================================================
+require 'open3'
+require 'i18n'
+#=================================================================================
 # Helper for generating the website preview and running
 # Jekyll. 
-#========================================================
+#=================================================================================
 module PreviewsHelper
 
-  #========================================================
-  # Kill the process exists sending ctrl-c
+  include TerminalHelper
+
+  PREVIEW_STOP = 0;
+  PREVIEW_STARTING = 10;
+  PREVIEW_STARTED = 20;
+
+  def jekyll_thread preview
+    terminal_log preview, terminal_info(I18n.t('preview.message.start'))
+    Rails.application.executor.wrap do
+      Thread.new do
+        Rails.application.reloader.wrap do
+          Rails.application.executor.wrap do
+            start_jekyll preview
+          end
+        end
+      end
+    end
+  end
+  #=================================================================================
+  # Start the process
   # 
   # Params:
   # +pid+:: pid of the process
-  def kill_process pid
-    Process.kill "INT", pid
-    true
-  rescue Errno::ESRCH
-    false
+  def start_jekyll preview
+    path = get_dest_path preview
+    Dir.chdir path
+    Bundler.with_clean_env do
+      ActiveSupport::Dependencies.interlock.permit_concurrent_loads do
+        begin
+          continue = true
+          # Test if bundle was previously updated
+          out, status = Open3.capture2e("bundle check")
+          continue = status.success?
+          unless continue
+            raise "Bundle check failed"
+          end
+          bundle_updated = /The Gemfile's dependencies are satisfied/ =~ out
+          # Update the bundle
+          if bundle_updated.nil?
+            Open3.popen2e("bundle update") do |i, oe, t|
+              terminal_log preview, terminal_info(I18n.t('preview.message.bundle.start'))
+              #preview.status = PREVIEW_STARTING
+              #preview.pid = t.pid # pid of the started process.
+              #preview.save!
+              #terminal_log preview, terminal_trigger("#{t.pid}")
+              oe.each {|line|
+                #puts line
+                terminal_log preview, terminal_cmd(line)
+                #error = /warning/ =~ line
+              }
+              continue = t.value.success?
+              if continue
+                terminal_log preview, terminal_info(I18n.t('preview.message.bundle.end'))
+              else
+                terminal_log preview, terminal_info(I18n.t('preview.message.bundle.error'))
+              end
+            end
+            unless continue
+              return
+            end
+          end
+          Open3.popen2e("bundle exec jekyll serve") do |i, oe, t|
+            terminal_log preview, terminal_info(I18n.t('preview.message.jekyll.start'))
+            #preview.pid = t.pid # pid of the started process.
+            #preview.save!
+            preview.set_starting t.pid
+
+            #terminal_log preview, terminal_trigger(I18n.t('preview.trigger.pid'), "#{preview.pid}")
+            oe.each {|line|
+              #puts line
+              #error = /warning/ =~ line
+              terminal_log preview, terminal_cmd(line)
+
+              if /Server address: / =~ line
+                address = line.scan /Server address: (.*)/
+                preview.url = address[0][0]
+                preview.set_started
+                terminal_log preview, terminal_trigger(I18n.t('preview.trigger.status'), true)
+                terminal_log preview, terminal_info(I18n.t('preview.message.jekyll.started'))
+                
+              end
+              if /...done in ([0-9]*[.])?[0-9]+ seconds./ =~ line
+                duration = line.scan /...done in ([0-9]*[.])?[0-9]+ seconds./
+                terminal_log preview, terminal_trigger(
+                  I18n.t('preview.trigger.update'), "#{duration[0][0]}")
+              end
+            }
+          rescue Exception => error
+            #puts error.backtrace
+            preview.set_stopped
+            terminal_log preview, terminal_trigger(I18n.t('preview.trigger.error'), error.backtrace)
+            terminal_log preview, terminal_info(I18n.t('preview.message.jekyll.error'))
+          end
+        end
+        preview.set_stopped
+        terminal_log preview, terminal_trigger(I18n.t('preview.trigger.status'), false)
+        terminal_log preview, terminal_info(I18n.t('preview.message.jekyll.end'))
+      end
+    end
   end
 
-  #========================================================
-  # Test if the process exists
-  # 
-  # Params:
-  # +pid+:: pid of the process
-  def process_exists pid
-    Process.kill 0, pid
-    true
-  rescue Errno::ESRCH
-    false
-  end
-
-  #========================================================
+  #=================================================================================
   # Get the destination path of the preview
   # 
   # Params:
@@ -37,10 +116,10 @@ module PreviewsHelper
     conf = Rails.configuration.scribae['preview']
     return Rails.root.join(
       conf['target'], 
-      preview.id.to_s)
+      preview.name)
   end
 
-  #========================================================
+  #=================================================================================
   # Create config
   # 
   # Params:
@@ -49,7 +128,7 @@ module PreviewsHelper
   def create_config website, dest
 
     config = {
-      "title" => "#{website.project}",
+      "title" => "#{website.name}",
       "lang" => "",
       "email" => "",
       "description" => "#{website.description}",
@@ -58,7 +137,7 @@ module PreviewsHelper
       "url" => "",
       "markdown" => "kramdown",
       "sass" => {
-        "style" => "expanded"
+        "style" => "compresses"
       },
       "collections" => {
         "albums" => {
@@ -85,7 +164,7 @@ module PreviewsHelper
     end
   end
 
-  #========================================================
+  #=================================================================================
   # Create components pages
   # 
   # Params:
@@ -148,11 +227,12 @@ module PreviewsHelper
       if file
         file.close
       end
-      return updated
+      
     end
+    return updated
   end
   
-  #========================================================
+  #=================================================================================
   # Create home page
   # 
   # Params:
@@ -166,13 +246,13 @@ module PreviewsHelper
         imageable_id: website.id,
         name: 'top'
       }).first
-      copy_image top_image, dest, true
+      copy_image top_image, dest, true, true
       bottom_image = Image.where({
         imageable_type: 'Website',
         imageable_id: website.id,
         name: 'bottom'
       }).first
-      copy_image bottom_image, dest, true
+      copy_image bottom_image, dest, true, true
       file = File.open(path, "w")
       head = [
         "---",
@@ -231,136 +311,240 @@ module PreviewsHelper
     end
   end
 
-  #========================================================
+  #=================================================================================
+  # Create content
+  # 
+  # Params:
+  # +list+:: the content obj
+  # +dest+::
+  # +dir+::
+  # +content+::
+  def create_content( list, dest, dir, obj_to_filename, obj_to_content, copy_album=false )
+    # Clean the target directory
+    check_target_dir Rails.root.join(dest, dir), list, &obj_to_filename
+    list.each do |obj|
+      # The object destination path
+      obj_path = Rails.root.join dest, dir, obj_to_filename[obj]
+      image_ids = []
+
+      # Control the main image
+      img_main = Image.where({
+        imageable_type: obj.class.name,
+        imageable_id: obj.id,
+        category: 'main'
+      }).first
+      unless img_main.nil?
+        # Copy the main image
+        copy_image img_main, dest
+        image_ids.push "#{img_main.id}"
+      end
+      # Write if file doesn't exists or timestamp difference
+      exists = File.exist? obj_path
+      is_new = is_new( obj_path, obj.created_at, obj.updated_at )
+      if !exists or is_new
+        # Image arr, first is main, second is album
+        img_arr = [nil, nil]
+        if img_main.upload.url
+          img_arr[0] = "#{File.dirname(img_main.upload.url)}/m_img.jpeg"
+        end
+        # Copy the image list and add to it image array
+        if copy_album
+          images = obj.images.order(pos: :desc)
+          album_arr = []
+          images.each do |image|
+            img_item = copy_image image, dest, false, false
+            image_ids.push "#{image.id}"
+            unless img_item.nil?
+              album_arr.push "#{img_item}/m_img.jpeg"
+            end
+          end
+          img_arr[1] = album_arr
+        end
+        content = obj_to_content[obj, img_arr]
+        file = File.open(obj_path, "w")
+        file << content.join("\n")
+        # Copy markdown if exists
+        if obj.attributes.has_key? 'markdown'
+          image_ids.concat copy_content_image( obj.markdown, dest )
+          file << "#{obj.markdown}\n"
+        end
+        file.close
+      end
+      images_target_dir = File.join(dest, "upload/images/#{obj.class.name}/#{obj.id}")
+      clean_images images_target_dir, image_ids
+    end
+  end
+  
+  #=================================================================================
   # Create articles pages
   # 
   # Params:
   # +website+:: the site id
   # +dest+:: the site id
   def create_articles website, dest
-    articles = website.articles.select { |article| !article.fake }
-    obj_to_filename = lambda { |article|
-      "#{article.date.year}-#{article.date.month}-#{article.date.mday}-#{article.id}.md" 
+    obj_to_filename = lambda { |obj|
+      "#{obj.date.year}-#{obj.date.month}-#{obj.date.mday}-#{obj.title.parameterize}-#{obj.id}.md" 
     }
-    check_target_dir Rails.root.join(dest, "_posts"), articles, &obj_to_filename
-
-    articles.each do |article|
-      path = Rails.root.join(dest, "_posts", obj_to_filename[article])
-      exists = File.file?(path)
-      update = is_new path, article.created_at, article.updated_at
-      main_img = Image.where({
-        imageable_type: 'Article',
-        imageable_id: article.id,
-        category: 'main'
-      }).first
-
-      copy_main = nil
-      copy_main = copy_image main_img, dest
-      
-      if !exists or update
-
-        copy_content_image article.markdown, dest
-        file = File.open(path, "w")
-        head = [
-          "---",
-          "#--------------",
-          "# Article model",
-          "#--------------",
-          "# Fixed section do not modify",
-          "# Creation date",
-          "created: #{article.created_at.to_f}",
-          "# Last update",
-          "updated: #{article.updated_at.to_f}",
-          "# Layout",
-          "layout: post",
-          "#--------------",
-          "# Custom section",
-          "# Publication date",
-          "date: #{article.date}",
-          "# Title",
-          "title: #{article.title}",
-          "# Introduction text",
-          "intro: #{article.intro}",
-          "# Main image",
-          "main-img: #{copy_main}",
-          "# If the article is show on home page",
-          "featured: #{article.featured}",
-          "# Categories",
-          "categories: ",
-          "---"
-        ].join("\n") + "\n"
-        file << head
-        file << "#{article.markdown}\n"
-        file.close
-        
-      end
-    end
+    obj_to_content = lambda { |obj, img_arr|
+      [
+        "---",
+        "#--------------",
+        "# Article model",
+        "#--------------",
+        "# Fixed section do not modify",
+        "# Creation date",
+        "created: #{obj.created_at.to_f}",
+        "# Last update",
+        "updated: #{obj.updated_at.to_f}",
+        "# Layout",
+        "layout: post",
+        "#--------------",
+        "# Custom section",
+        "# Publication date",
+        "date: #{I18n.localize obj.date}",
+        "# Title",
+        "title: #{obj.title}",
+        "# Introduction text",
+        "intro: #{obj.intro}",
+        "# Main image",
+        "main-img: #{img_arr[0]}",
+        "# If the article is show on home page",
+        "featured: #{obj.featured}",
+        "# Categories",
+        "categories: ",
+        "---",
+        "",
+      ]
+    }
+    articles = website.articles.select { |article| !article.fake }
+    create_content articles, dest, "_posts", obj_to_filename, obj_to_content
   end
 
-  #========================================================
+  #=================================================================================
   # Create themes pages
   # 
   # Params:
   # +website+:: the website
   # +dest+:: the destination path
   def create_themes website, dest
-    themes = website.themes
-    obj_to_filename = lambda { |theme|
-      "theme-#{theme.id}.md" 
+    obj_to_filename = lambda { |obj|
+      "#{obj.title.parameterize}-#{obj.id}.md" 
     }
-    #clean target directory
-    check_target_dir Rails.root.join(dest, "_themes"), themes, &obj_to_filename
+    obj_to_content = lambda { |obj, img_arr|
+      [
+        "---",
+        "#--------------",
+        "# Theme model",
+        "#--------------",
+        "# Fixed section do not modify",
+        "# Creation date",
+        "created: #{obj.created_at.to_f}",
+        "# Last update",
+        "updated: #{obj.updated_at.to_f}",
+        "# Layout",
+        "layout: theme",
+        "#--------------",
+        "# Custom section",
+        "# Index",
+        "pos: #{obj.pos}",
+        "# Title",
+        "title: #{obj.title}",
+        "# Introduction text",
+        "intro: #{obj.intro}",
+        "# Main image",
+        "main-img: #{img_arr[0]}",
+        "# Categories",
+        "categories: ",
+        "---",
+        "",
+      ]
+    }
+    themes = website.themes
+    create_content themes, dest, "_themes", obj_to_filename, obj_to_content
+  end
 
-    themes.each do |theme|
-      path = Rails.root.join(dest, "_themes", obj_to_filename[theme])
-      exists = File.file?(path)
-      update = is_new path, theme.created_at, theme.updated_at
-      main_img = Image.where({
-        imageable_type: 'Theme',
-        imageable_id: theme.id,
-        category: 'main'
-      }).first
+  #=================================================================================
+  # Create info pages
+  # 
+  # Params:
+  # +website+:: the website
+  # +dest+:: the destination path
+  def create_infos website, dest
+    obj_to_filename = lambda { |obj|
+      "#{obj.title.parameterize}-#{obj.id}.md" 
+    }
+    obj_to_content = lambda { |obj, img_arr|
+      [
+        "---",
+        "#--------------",
+        "# Information section model",
+        "#--------------",
+        "# Fixed section do not modify",
+        "# Creation date",
+        "created: #{obj.created_at.to_f}",
+        "# Last update",
+        "updated: #{obj.updated_at.to_f}",
+        "#--------------",
+        "# Custom section",
+        "# Index",
+        "pos: #{obj.pos}",
+        "# Title",
+        "title: #{obj.title}",
+        "---",
+        "",
+      ]
+    }
+    infos = website.infos
+    create_content infos, dest, "_infos", obj_to_filename, obj_to_content
+  end
 
-      copy_main = nil
-      copy_main = copy_image main_img, dest
-      
-      if !exists or update
-
-        copy_content_image theme.markdown, dest
-        file = File.open(path, "w")
-        head = [
-          "---",
-          "#--------------",
-          "# Theme model",
-          "#--------------",
-          "# Fixed section do not modify",
-          "# Creation date",
-          "created: #{theme.created_at.to_f}",
-          "# Last update",
-          "updated: #{theme.updated_at.to_f}",
-          "# Layout",
-          "layout: theme",
-          "#--------------",
-          "# Custom section",
-          "# Index",
-          "pos: #{theme.pos}",
-          "# Title",
-          "title: #{theme.title}",
-          "# Introduction text",
-          "intro: #{theme.intro}",
-          "# Main image",
-          "main-img: #{copy_main}",
-          "# Categories",
-          "categories: ",
-          "---"
-        ].join("\n") + "\n"
-        file << head
-        file << "#{theme.markdown}\n"
-        file.close
-        
+  #=================================================================================
+  # Create album pages
+  # 
+  # Params:
+  # +website+:: the website
+  # +dest+:: the destination path
+  def create_albums website, dest
+    obj_to_filename = lambda { |obj|
+      "#{obj.title.parameterize}-#{obj.id}.md" 
+    }
+    obj_to_content = lambda { |obj, img_arr|
+      img_section = [
+        "# Image collection",
+        "images:"
+      ]
+      unless img_arr[1].nil?
+        img_arr[1].each do |img|
+          img_section.push "  - #{img}"
+        end
       end
-    end
-  end  
+      img_section.push "---"
+      img_section.push ""
+      [
+        "---",
+        "#--------------",
+        "# Information section model",
+        "#--------------",
+        "# Fixed section do not modify",
+        "# Creation date",
+        "created: #{obj.created_at.to_f}",
+        "# Last update",
+        "updated: #{obj.updated_at.to_f}",
+        "# Layout",
+        "layout: album",
+        "#--------------",
+        "# Custom section",
+        "# Index",
+        "pos: #{obj.pos}",
+        "# Title",
+        "title: #{obj.title}",
+        "# Main image",
+        "main-img: #{img_arr[0]}",
+      ] + img_section
+    }
+    albums = website.albums
+    create_content albums, dest, "_albums", obj_to_filename, obj_to_content, true
+  end
 
   #=================================================================================
   # Check in the target directory if one file lives without an existing oject
@@ -380,20 +564,25 @@ module PreviewsHelper
   end
 
   #=================================================================================
-  # Copy a specific image object to the preview folder
-  # The image version is always medium. See image_uploader.rb
+  # Copy an image object to the preview folder
+  # The image version is medium by default. 
+  # See image_uploader.rb
   # Params:
   # +image+:: the image model
   # +dest+:: the preview path
-  def copy_image image, dest, all=false
+  # +all+:: copy all version
+  def copy_image image, dest, ctrl= false, all=false
 
     if image and image.upload.url 
       img_url = image.upload.url
       dest_path = File.join(dest, img_url)
       dest_dir = File.dirname(dest_path)
       dest_info = File.join(dest_dir, "#{image.updated_at.to_f}")
-      if File.exists?(dest_info)
-        return false
+      if ctrl and File.exists?(dest_info)
+        return nil
+      end
+      if ctrl
+        FileUtils.rm_rf dest_dir
       end
       urls = [image.upload.m.url]
       if all
@@ -412,9 +601,11 @@ module PreviewsHelper
         FileUtils.mkdir_p(File.dirname(dest_path))
         FileUtils.cp src_path, dest_path
       end
-      info_file = File.new(dest_info, "w")
-      info_file.close
-      return true
+      if ctrl
+        info_file = File.new(dest_info, "w")
+        info_file.close
+      end
+      return File.dirname(image.upload.url)
     else
       return nil
     end
@@ -429,31 +620,50 @@ module PreviewsHelper
   # - s: size in percent as integer
   # - a: align method l|c|r as left, center, right
   # - o: string for further options 
+  # Return an array of images id in the markdown 
   # Params:
   # +markdown+:: the mardown text
   # +dest+:: the preview path
   def copy_content_image markdown, dest
     if markdown.nil?
-      return
+      return []
     end
     url_regex = /upload\/images\/[a-zA-Z]+\/(\d+)\/(\d+)+\/m_img.jpg/
     img_regex = /!\[{s:(\d+),a:"(c|l|r)",o:"(.*)"}\]\(\/(.*)\)/
-    res = markdown.scan img_regex
-    res.each do |scan| 
+    images = markdown.scan img_regex
+    id_array = []
+    images.each do |scan| 
       if scan.length == 4
         url = scan[3]
         url_match = url.scan url_regex
-        if url_match.length == 1 && url_match[0].length == 2
+        if url_match.length == 1 and url_match[0].length == 2
+          id_array.push "#{url_match[0][1]}"
           src_path = Rails.root.join("public", url)
           dest_path = File.join(dest, url)
-          if !dest_path.exists?
+          unless File.exists? dest_path
             FileUtils.mkdir_p(File.dirname(dest_path))
             FileUtils.cp src_path, dest_path
           end
         end
       end
-    end  
+    end
+    return id_array
   end
+
+  #=================================================================================
+  # Clean all images in list in the target path
+  # Params:
+  # +path+:: target dir to check
+  # +image_ids+:: array of images id (string) to keep
+  def clean_images path, image_ids
+    Dir.glob("#{path}/*/").each do |dir|
+      basename = Pathname.new(dir).basename.to_s
+      unless image_ids.include? basename
+        FileUtils.rm_rf dir
+      end
+    end
+  end
+
 
   #========================================================
   # Copy the static content
@@ -468,7 +678,7 @@ module PreviewsHelper
       #path.join('css'),
       target.join('_posts'),
       target.join('_themes'),
-      target.join('_info'),
+      target.join('_infos'),
       target.join('_albums')
     ]
     FileUtils.mkdir_p(paths)
@@ -480,12 +690,13 @@ module PreviewsHelper
           Rails.root.join("prototype", prototype, dir), 
           dest)
       end
-
     end
-    ['Gemfile'].each do |file|
-      FileUtils.cp_r(
-        Rails.root.join("prototype", prototype, file), 
-        Rails.root.join(target, file))
+    ['Gemfile', '.gitignore'].each do |file|
+      src = Rails.root.join("prototype", prototype, file)
+      dest = Rails.root.join(target, file)
+      if File.exist? src
+        FileUtils.cp_r src, dest
+      end
     end
   end
 

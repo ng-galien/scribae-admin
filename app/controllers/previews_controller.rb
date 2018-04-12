@@ -22,7 +22,8 @@ class PreviewsController < ApplicationController
     
     @preview = Preview.find(params[:preview_id])
     update_preview @preview
-    redirect_to action: 'status'
+    head :ok
+    #redirect_to action: 'status'
     
   end
 
@@ -32,6 +33,11 @@ class PreviewsController < ApplicationController
     @preview = Preview.find(params[:preview_id])
     StopJekyllJob.perform_later @preview
     redirect_to action: 'status'
+  end
+
+  def show
+    @preview = Preview.find(params[:id])
+    
   end
 
   #========================================================

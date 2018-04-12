@@ -1,0 +1,26 @@
+= form_tag "/gitconfigs/#{@gitconfig.id}/setup", remote: true
+  div class="container row"
+    /USER
+    div class="col s12 input-field"
+      a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip=""
+        i class="material-icons tip-icon" == 'create'
+      = text_field_tag  "user"
+      = label_tag       "user", "GIT USER"
+    /EMAIL
+    div class="col s12 input-field"
+      a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip=""
+        i class="material-icons tip-icon" == 'create'
+      = text_field_tag  "email"
+      = label_tag       "email", "GIT EMAIL"
+    /PASSWORD
+    div class="col s12 input-field"
+      a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip=""
+        i class="material-icons tip-icon" == 'create'
+      = password_field_tag  "password"
+      = label_tag       "password", "GIT PASSWORD"
+    div class="col s12 input-field"
+      = submit_tag "Configure git"
+    
+
+
+  

@@ -19,7 +19,7 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Define the filename output
   def filename 
-    "img.#{model.upload.file.extension}" if original_filename 
+    "img.jpg" if original_filename.present?
   end 
 
   def content_type_whitelist

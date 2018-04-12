@@ -1,5 +1,5 @@
 /Nested form for albums pos attribute, must be reloaded while image gallery update 
-= form_for @album, url: "/sortable/#{@album.id}/images" ,remote: true, html: { class: 'hide', id: 'sortable-gallery-form' ,data: { type: :script } } do |form|
+= form_for @model_obj, url: "/sortable/#{@model_obj.id}/images" ,remote: true, html: { class: 'hide', id: 'sortable-gallery-form' ,data: { type: :script } } do |form|
   = form.fields_for :images, :child_index => ""  do |attr_form|
     = attr_form.number_field :pos, class: 'browser-default'
   = form.submit
