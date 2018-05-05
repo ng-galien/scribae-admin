@@ -1,21 +1,42 @@
+// Website edit menu
+// Materialize Floating Action Button
+// http://materializecss.com/floating-action-button.html
+
 div class="fixed-action-btn"
   a class="btn-floating blue toolbar-main"
     i class="material-icons menu-icon" == "toc"
   ul
-    li class="preview-menu #{@preview.running? ? '' : 'hide' }"
-      = link_to preview_path(@preview), class: "btn-floating green darken-3", target: "_blank"
-        /a href="" target="_blank" class="btn-floating blue"
-        span class="tooltipped" data-tooltip="#{t 'websites.edit.menu.watch'}" data-position="left" data-delay="50"
-          i class="material-icons" == "pageview"
+    // Terminal link
     li 
-      = link_to website_terminal_index_path(@website), class: "btn-floating red darken-3", target: "_blank"
-        /a#terminal-link data-id="#{@website.id}" class="btn-floating orange darken-3"
+      = link_to website_terminal_index_path(@website), class: "btn-floating red darken-3 new-window", target: "_blank"
         span class="tooltipped" data-tooltip="Console" data-position="left" data-delay="50"
           i class="material-icons" == "bug_report"
-    li 
-      a href="#git-settings" class="modal-trigger btn-floating purple"
-        span class="tooltipped" data-tooltip="Preview" data-position="left" data-delay="50"
+    // Git Settings modal hide if gitconfig is initialized
+    li class="#{@gitconfig.is_initialized? ? 'hide' : '' }"
+      = link_to "#git-settings", class: "modal-trigger btn-floating purple"
+        span class="tooltipped" data-tooltip = "#{t 'git.menu.init.tip'}" data-position="left" data-delay="50"
           i class="material-icons" == "backup"
+    // Commit action show if gitconfig is initialized
+    li class="#{@gitconfig.is_initialized? ? '' : 'hide' }"
+      = link_to gitconfig_commit_path(@gitconfig), class: "modal-trigger btn-floating purple"
+        span class="tooltipped" data-tooltip = "#{t 'git.menu.commit.tip'}"  data-position="left" data-delay="50"
+          i class="material-icons" == "backup"
+    // Preview link
+    li class="#{@preview.is_started? ? '' : 'hide' }"
+      = link_to preview_path(@preview), class: "preview-link btn-floating green darken-3 new-window", target: "_blank"
+        span class="tooltipped" data-tooltip="#{t 'websites.edit.menu.preview'}" data-position="left" data-delay="50"
+          i class="material-icons" == "pageview"
+    // Style edit 
+    li 
+      = link_to "#style-settings", class: "modal-trigger btn-floating orange darken-3", target: "_blank"
+        span class="tooltipped" data-tooltip="#{t 'websites.edit.menu.style'}" data-position="left" data-delay="50"
+          i class="material-icons" == "color_lens"
+    // Colors edit 
+    li 
+      = link_to "#other-settings", class: "modal-trigger btn-floating blue darken-3", target: "_blank"
+        span class="tooltipped" data-tooltip="#{t 'websites.edit.menu.settings'}" data-position="left" data-delay="50"
+          i class="material-icons" == "edit"
+    // Back to website index
     li 
       a href="#{websites_path}" class="btn-floating blue darken-3" 
         span class="tooltipped" data-tooltip="#{t 'websites.edit.menu.back'}" data-position="left" data-delay="50"

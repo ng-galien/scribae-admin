@@ -1,0 +1,44 @@
+div class="row"
+  div class="col s12 center"
+    span class="invite" == "Change colors"
+  div class="col s12 center"
+    span class="spacer"
+  = form_for @style, remote: true, html: { id: 'style-form' ,data: { type: :script } } do |style_form|
+    // Navbar
+    div class="col s6 color-container"
+      = render partial: 'layouts/form/color_field',
+          locals: {form: style_form, domain: :websites, field: :navbar}
+    // Primary
+    div class="col s6 color-container"
+      = render partial: 'layouts/form/color_field',
+          locals: {form: style_form, domain: :websites, field: :primary}
+    // Secondary
+    div class="col s6 color-container"
+      = render partial: 'layouts/form/color_field',
+          locals: {form: style_form, domain: :websites, field: :secondary}
+    // Background
+    div class="col s6 color-container"
+      = render partial: 'layouts/form/color_field',
+          locals: {form: style_form, domain: :websites, field: :background}
+    // Icon
+    div class="col s6 color-container"
+      = render partial: 'layouts/form/color_field',
+          locals: {form: style_form, domain: :websites, field: :icon}
+    // Text
+    div class="col s6 color-container"
+      = render partial: 'layouts/form/color_field',
+          locals: {form: style_form, domain: :websites, field: :text}
+    // Decoration
+    div class="col s6 color-container"
+      = render partial: 'layouts/form/color_field',
+          locals: {form: style_form, domain: :websites, field: :decoration}
+    div class="col s12 input-field"
+      = render partial: 'layouts/form/string_field',
+          locals: {form: style_form, domain: :websites, field: :helper}
+    div class="col s12 color-spacer"
+    div class="col s12 center"
+      = style_form.submit t('confirm'), :class=>'btn'
+      
+
+
+      

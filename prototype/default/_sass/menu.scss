@@ -1,5 +1,5 @@
 .breadcrumb {
-    color: $theme_secondary;
+    color: $scribae-style-secondary;
 }
 
 .nav-path-main {
@@ -7,33 +7,38 @@
     font-size: 1.7rem;
   }
   
-  .nav-path {
-    font-weight: 400;
-    font-size: 1.5rem;
-  }
+.nav-path {
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  padding-left: 1rem;
+  font-weight: 400;
+  font-size: 1.4rem; 
+}
+
+.nav-side-item {
+
+}
+
+.nav-dropdown-content {
+
+    @extend .dropdown-content;
+    min-width: 13rem;
+}
+
+.nav-dropdown-item span {
+    color: $primary-color;
+}
+
+.nav-dropdown-head {
+    border-bottom-width: 1px;
+    border-bottom-color: $scribae-style-primary;
+    border-bottom-style: solid;
+}
+
+.menu-main-icon {
+  color: $scribae-style-icon;
   
-  .nav-link {
-    padding-left: 1rem;
-    font-weight: 400;
-    font-size: 1.4rem; 
-  }
-  
-  .nav-side-item {
-  
-  }
-  
-  .nav-dropdown-content {
-  
-      @extend .dropdown-content;
-      min-width: 13rem;
-  }
-  
-  .nav-dropdown-item span {
-      color: $primary-color;
-  }
-  
-  .nav-dropdown-head {
-      border-bottom-width: 1px;
-      border-bottom-color: $theme_primary;
-      border-bottom-style: solid;
-  }
+}

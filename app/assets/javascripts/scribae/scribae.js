@@ -21,14 +21,14 @@ var Scribae = Scribae || {
   LOG_LEVEL: 0,
   LOG_ALL: 10,
   LOG_FUNCTION: 20,
-  LOG_DEBUG: 30,
+  LOG_DEBUG: 12,
   LOG_TRACE: 40,
   LOG_INFO: 50,
   LOG_NONE: 100,
   
   log: function(level, msg) {
     if(level) {
-      if(level > Scribae.LOG_LEVEL) {
+      if(level >= Scribae.LOG_LEVEL) {
         console.log(msg);
       }
     }
@@ -154,21 +154,14 @@ Scribae.Global.suscribe = function() {
       }
     );
   });
-  //App.preview_notifications = App.cable.subscriptions.create({
-  //  channel,
-  //  connected: function() {
-  //    // Called when the subscription is ready for use on the server
-  //    console.log('Connected to Preview channel');
-  //  },
-//
-  //disconnected: function() {
-  //  // Called when the subscription has been terminated by the server
-  //  console.log('Disconnected from Preview channel '  );
-  //},
-  //received: function(data) {
-  //  // Called when there's incoming data on the websocket for this channel
-  //  console.log('recieved from Preview: ' + data['message'])
-  //}
-  
 }
+Scribae.Global.initNewWindowLinks = function() {
+  $('.new-window').click(function() {
+    var width = window.innerWidth * 0.66 ;
+    // define the height in
+    var height = width * window.innerHeight / window.innerWidth ;
+    // Ratio the hight to the width as the user screen ratio
+    window.open(this.href , '_blank', 'width=' + width + ', height=' + height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2));
 
+});
+}

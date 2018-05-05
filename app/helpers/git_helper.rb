@@ -19,8 +19,7 @@ module GitHelper
   # +pid+:: pid of the process
   def git_setup gitconfig, password 
     
-     
-    gitconfig.terminal_logs << git_info_log(t 'git.message.init' )
+    terminal_add gitconfig terminal_info(I18n.t('git.message.init'))
 
     cmd_res = false
     #Github client
@@ -36,15 +35,15 @@ module GitHelper
       
       unless key_exists
         
-        gitconfig.terminal_logs << git_info_log(t 'git.message.ssh')
+        terminal_add gitconfig terminal_info(I18n.t('git.message.ssh'))
         cmds = [
           ["ssh-keygen -t rsa -b 4096 -f ~/.ssh/#{gitconfig.repo} -C \"#{gitconfig.email}\" -q -N \"\"", nil, true],
           ["eval \"$(ssh-agent -s)\"", /Agent pid (\d*)/, true],
           ["ssh-add #{option} ~/.ssh/#{gitconfig.repo}", /Identity added: (.*)/, true]
         ]
-        cmd_res = run_commands cmds, gitconfig.terminal_logs
+        cmd_res = run_commands cmds, gitconfig
       end
-      has_key = cmd_res and File.exist? key_path
+      has_key = cmd_res && File.exist?(key_path)
       if has_key
         # Get the ssh key
         out, status = Open3.capture2e("cat ~/.ssh/#{gitconfig.repo}.pub")
@@ -54,7 +53,7 @@ module GitHelper
           cmds = [
             ["ssh -T -q git@github.com", /Hi (.*)! You've successfully authenticated, but GitHub does not provide shell access./, true]
           ]
-          cmd_res = run_commands cmds, gitconfig.terminal_logs
+          cmd_res = run_commands cmds, gitconfig
         end
       end
     end
@@ -63,7 +62,7 @@ module GitHelper
       .select{|repo| repo.name == gitconfig.repo}
     unless repos.length == 1
       # Create the repo
-      gitconfig.terminal_logs << git_info(t 'git.message.create')
+      terminal_add gitconfig terminal_info(I18n.t('git.message.create'))
       github_res = github.repos.create name: gitconfig.repo
       repo = github_res.body
     else
@@ -77,7 +76,7 @@ module GitHelper
     end
     Dir.chdir repo_path
     # Configure the git repository 
-    gitconfig.terminal_logs << git_info(t 'git.message.configure')
+    terminal_add gitconfig terminal_info(I18n.t('git.message.configure'))
     cmds = [
       ["git init", nil, true],
       ["git config user.name \"#{gitconfig.user}\"", nil, true],
@@ -86,7 +85,7 @@ module GitHelper
       ["git branch gh-pages", nil, true],
       ["git checkout gh-pages", nil, true]
     ]
-    cmd_res = run_commands cmds, gitconfig.terminal_logs
+    cmd_res = run_commands cmds, gitconfig
     # Save the config
     
     if cmd_res
@@ -99,6 +98,7 @@ module GitHelper
   
   def git_commit gitconfig
     #change dir to preview path
+    terminal_add gitconfig terminal_info(I18n.t('git.message.commit'))
     preview_dir = Rails.configuration.scribae['preview']['target']
     repo_path = Rails.root.join(preview_dir, gitconfig.repo)
     if Dir.exist? repo_path
@@ -108,19 +108,23 @@ module GitHelper
         ["git commit -m \"master commit\"", nil, false],
         ["git push origin master", nil, true]
       ]
-      run_commands cmds, gitconfig.terminal_logs
+      run_commands cmds, gitconfig
     end
   end
 
-  def run_commands cmds, log_collection
+  #========================================================
+  # Run an array of commands
+  # 
+  # Params:
+  # +cmds+:: message of the log   
+  def run_commands cmds, logs_end_point
     cmds.each do |arr|
+      terminal_add logs_end_point terminale_cmd(I18n.t(cmd))
       cmd = arr[0]
       regex = arr[1]
       ctrl_status = arr[2]
       out, status = Open3.capture2e(cmd)
-      puts "#{cmd} => status=#{status}, out=#{out}"
-      
-      log_collection << git_cmd_log( out )
+      terminal_add logs_end_point terminale_cmd(I18n.t(out))
       if ctrl_status
         unless status.success?
           return false

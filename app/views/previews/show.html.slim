@@ -1,1 +1,17 @@
-iframe.preview-iframe src="#{@preview.url}"
+= render partial: 'terminal/channel', locals: {ch_name: "WebsiteNotificationsChannel", ch_type: "#{@preview.class.name}", ch_id: "#{@preview.id}"}
+
+div#wait-container class="row #{@preview.is_started? ? 'hide' : '' }"
+  div class="col s12 center wait-message"
+    span == t 'preview.wait'
+  div class="col s12 center"
+    div class="preloader-wrapper big active"
+      div class="spinner-layer spinner-blue-only"
+        div class="circle-clipper left"
+          div class="circle"
+        div class="gap-patch"
+          div class="circle"
+        div class="circle-clipper right"
+          div class="circle"
+  
+div#iframe-container class="row #{@preview.is_started? ? '' : 'hide' }"
+  iframe#iframe-preview src="#{@preview.url}"

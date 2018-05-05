@@ -1,5 +1,5 @@
-div class="channel hide" data-channel="#{channel}" data-type="#{type}" data-id="#{id}"
-div id="#{type}" class="terminal"
+= render partial: 'terminal/channel', locals: {ch_name: ch_name, ch_type: ch_type, ch_id: ch_id}
+div id="#{ch_type}" class="terminal"
   - end_point.terminal_logs.each do |log|
     - if log.helper < 30
       div class="col s12 terminal-log"

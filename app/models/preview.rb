@@ -1,3 +1,4 @@
+#=================================================================================
 class Preview < ApplicationRecord
   
   include ProcessHelper
@@ -5,43 +6,48 @@ class Preview < ApplicationRecord
   include Loggable
   belongs_to :website
 
-  def set_starting pid
-    self.process = pid
+  #=================================================================================
+  def set_starting process
+    puts "set pid #{process}"
+    self.process = process
     self.status = 10
     self.save!
   end
 
+  #=================================================================================
   def set_started
     self.status = 20
     self.save!
   end
 
-  def set_stopped
-    self.status = 0
-    self.process = 0
-    self.save!
-  end
-
+  #=================================================================================
   def is_stopped?
-    !! (self.status == 0 and self.process == 0)
+    !! (self.status == 0 && self.process == 0)
   end
 
-  def is_running?
-    !! (self.status == 20 and self.process > 0)
+  #=================================================================================
+  def is_started?
+    !! (self.status == 20 && self.process > 0)
   end
 
+  #=================================================================================
   def is_starting? 
-    !! (self.status > 0  and !self.running?)
+    !! (self.status > 0  && !self.is_started?)
   end
 
+  #=================================================================================
   def stop
-    if process_exists? self.process
-      ActiveSupport::Dependencies.interlock.permit_concurrent_loads do
+    if !self.process.nil? && self.process > 0
+      if process_exists? self.process
         process_stop self.process
-        self.set_stopped
-        self.terminal_logs.destroy_all
+        self.process = 0
+        self.status = 0
+        self.save!
       end
     end
+    self.process = 0
+    self.status = 0
+    self.save!
   end
 
 end

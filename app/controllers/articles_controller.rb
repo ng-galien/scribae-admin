@@ -1,6 +1,5 @@
 class ArticlesController < ApplicationController
   
-  include PreviewConcern
   include MenuConcern
   include ModelConcern
 
@@ -29,32 +28,31 @@ class ArticlesController < ApplicationController
   # 
   # Params:
   def update
-    @article = Article.find(params[:id])
-    @article.update(article_params)
+    @model_obj.update(article_params)
     @website = Website.find(params[:website_id])
     #update_preview website.preview
     redirect_to action: "index"
   end
 
   #=================================================================================
-  # Response to Article create
+  # Response to create
   # 
   # Params:
 
   def create
-    article = Article.new do |art|
-      art.fake = false
-      art.featured = false
+    @model_obj = Article.new do |obj|
+      obj.fake = false
+      obj.featured = false
+      obj.date = DateTime.now
     end
-    article.date = DateTime.now
-    article.update(article_params)  
+    @model_obj.update(article_params)  
     image = Image.new do |img|
       img.category = 'main'
     end
-    article.images << image
-    @website = Website.find(article.website_id);
+    @model_obj.images << image
+    @website = Website.find(@model_obj.website_id);
     @articles = Article
-      .where(website_id: article.website_id, fake: false)
+      .where(website_id: @model_obj.website_id, fake: false)
       .order(created_at: :desc); 
     respond_to do |format|
       format.js
@@ -66,11 +64,10 @@ class ArticlesController < ApplicationController
   # 
   # Params:  
   def destroy
-    article = Article.find(params[:id])
-    @website = Website.find(article.website_id);
-    article.destroy
+    @website = Website.find(@model_obj.website_id);
+    @model_obj.destroy
     @articles = Article
-      .where(website_id: article.website_id, fake: false)
+      .where(website_id: @model_obj.website_id, fake: false)
       .order(created_at: :desc); 
     respond_to do |format|
       format.js
@@ -83,4 +80,5 @@ class ArticlesController < ApplicationController
       params.require(:article).
         permit(:website_id, :fake, :date, :featured, :title, :intro, :markdown)
     end 
+
 end

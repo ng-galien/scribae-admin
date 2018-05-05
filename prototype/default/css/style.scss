@@ -1,15 +1,31 @@
 ---
 # Only the main Sass file needs front matter
 ---
-//Define primary colors
-$theme_primary: #f36451;
-$theme_secondary: #ffffff;
-$theme_background: #000000;
-$theme_md: #f36451;
-$theme_img_txt: white;
-//Import components
-@import "theme";
-@import "materialize";
-@import "menu";
-@import "home";
-@import "general";
+
+
+$scribae-style-navbar: #ffffff;
+
+$scribae-style-primary: #ffffff;
+
+$scribae-style-secondary: #000000;
+
+$scribae-style-background: #ffffff;
+
+$scribae-style-icon: #21a8af;
+
+$scribae-style-text: #000000;
+
+$scribae-style-decoration: #000000;
+
+
+
+
+@import 'materialize';
+@import 'general';
+@import 'menu';
+@import 'home';
+//@import 'articles';
+//@import 'themes';
+//@import 'infos';
+//@import 'albums';
+//@import 'maps';

@@ -546,6 +546,8 @@ Scribae.Preview.Image = {
             $('#'+image+'-src-'+size[0]).attr('srcset', response.upload[size[0]].url+'?v=' + new Date().getTime());
           });
           $('#'+image+'-src-default').attr('srcset', response.upload.url+'?v=' + new Date().getTime());
+          file.previewElement.remove(); 
+          $('.dropzone').removeClass('dz-started');
           Scribae.Preview.Image.imageModal[image].close();
         });
         Scribae.Preview.Image.imageDrop[image].on("complete", function(file) {

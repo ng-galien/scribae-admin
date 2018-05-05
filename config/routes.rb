@@ -17,7 +17,8 @@ Rails.application.routes.draw do
   # Routes for image controller
   resources :images, defaults: { format: 'js' }  
 
-
+   # Routes for style controller
+   resources :styles, defaults: { format: 'js' }  
 
   # Routes for github controller
   resources :gitconfigs, only: [], defaults: { format: 'js' }, shallow: true do

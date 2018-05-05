@@ -1,0 +1,19 @@
+.color-spacer {
+  //height: 50px;
+}
+
+.color-container {
+  display: inline-block;
+  padding: 2rem;
+}
+.color-input {
+  margin: 0 2rem 2rem 0;
+  //padding: 0.5rem;
+  height: 3rem;
+  
+}
+.minicolors-swatch-color {
+  //border: 1px solid red
+  border-radius: 1rem;
+  @extend .z-depth-3;
+}

@@ -1,6 +1,9 @@
 require 'fileutils'
 require 'yaml'
 
+#=================================================================================
+# Job for creating the preview and start jekyll
+#=================================================================================
 class PreviewJob < ApplicationJob
   queue_as :default
 
@@ -11,7 +14,7 @@ class PreviewJob < ApplicationJob
     
     website = job.arguments.first
     preview = Preview.where(website_id: website.id).first
-    terminal_log preview, terminal_info(I18n.t('preview.message.job.after'))
+    terminal_add preview, terminal_info(I18n.t('preview.message.job.after'))
     if preview.is_stopped?
       jekyll_thread preview
     end
@@ -19,44 +22,38 @@ class PreviewJob < ApplicationJob
 
   def perform(*args)
     # Get objects args
-    
-    website = args[0]
-    config = args[1]
-    preview = Preview.where(website_id: website.id).first
-    terminal_log preview, terminal_info(I18n.t('preview.message.job.start'))
-    # Stop the server if we must write config
-    if config and preview.is_started?
-      preview.stop
-    end
+    ActiveSupport::Dependencies.interlock.permit_concurrent_loads do
+      website = args[0]
+      all = args.length == 2 or args[1] or false
+      preview = Preview.where(website_id: website.id).first
+      preview.terminal_logs.destroy_all
+      terminal_add preview, terminal_trigger(I18n.t('preview.trigger.clear'), "")
+      terminal_add preview, terminal_info(I18n.t('preview.message.job.start'))
+      # Stop the server if we must write config
+      if all && preview.is_started?
+        preview.stop
+      end
 
-    dest = get_dest_path preview
-    # Copy static content and config
-    if preview.is_stopped?
-      terminal_log preview, terminal_info(I18n.t('preview.message.job.static'))
-      copy_static_content preview.prototype, dest
-      terminal_log preview, terminal_info(I18n.t('preview.message.job.config'))
-      create_config website, dest
+      dest = get_dest_path preview
+      # Copy static content and config
+      if preview.is_stopped?
+        terminal_add preview, terminal_info(I18n.t('preview.message.job.static'))
+        copy_static_content website
+        terminal_add preview, terminal_info(I18n.t('preview.message.job.config'))
+        create_config website
+      end
+      
+      # call create on each modules activated in Scribae
+      if all
+        modules = Rails.configuration.scribae['modules']
+        modules.each do |module_name|
+          update_domain website, module_name.singularize.capitalize
+          #send("create_#{module_name}", website)
+        end
+      end
+      update_domain website, "Component", true
+      update_home website, true
+      update_style website
     end
-    
-    # Create/update all content
-    # Components
-    terminal_log preview, terminal_info(I18n.t('preview.message.job.components'))
-    update_home = create_comps website, dest
-    # Home
-    terminal_log preview, terminal_info(I18n.t('preview.message.job.home'))
-    create_home website, dest, update_home
-    # Articles
-    terminal_log preview, terminal_info(I18n.t('preview.message.job.articles'))
-    create_articles website, dest
-    # Themes
-    terminal_log preview, terminal_info(I18n.t('preview.message.job.themes'))
-    create_themes website, dest
-    # Infos
-    terminal_log preview, terminal_info(I18n.t('preview.message.job.infos'))
-    create_infos website, dest
-    # Albums
-    terminal_log preview, terminal_info(I18n.t('preview.message.job.albums'))
-    create_albums website, dest
-
   end  
 end

@@ -49,6 +49,7 @@ class ImagesController < ApplicationController
     @image.update(update_params)
     @image.upload = params[:file]
     @image.save!
+    ImageJob.perform_later @image
     render json: @image
   end
 

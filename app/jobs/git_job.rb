@@ -1,4 +1,6 @@
-
+#=================================================================================
+# Job for creating the preview and start jekyll
+#=================================================================================
 class GitJob < ApplicationJob
 
   queue_as :default
@@ -10,6 +12,7 @@ class GitJob < ApplicationJob
   end
 
   def perform(*args)
+
     config = args[0]
     unless config.initialized
       password = args[1]

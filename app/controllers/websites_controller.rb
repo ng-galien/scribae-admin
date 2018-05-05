@@ -3,8 +3,6 @@ require 'fileutils'
 class WebsitesController < ApplicationController
   
   include MenuConcern
-  include PreviewConcern
-
 
   #=================================================================================
   def init
@@ -19,7 +17,7 @@ class WebsitesController < ApplicationController
     @websites = Website.all
       .order(created_at: :desc)
     @website_neraiw = Website.new
-    StopPreviewJob.perform_later
+    StopPreviewJob.perform_later 
   end
 
   #=================================================================================
@@ -57,7 +55,8 @@ class WebsitesController < ApplicationController
     
     @preview = @website.preview
     @gitconfig = @website.gitconfig
-    PreviewJob.perform_later @website, false
+    @style = @website.style
+    PreviewJob.perform_later @website, true
   end
 
   #=================================================================================
@@ -71,66 +70,20 @@ class WebsitesController < ApplicationController
     respond_to do |format|
       format.js
     end
+    PreviewJob.perform_later @website
   end
 
   #=================================================================================
-  # Response to create
-  # 
+  # Create a new website
+  # First create a save the record, after fill dependencies
   # Params:
   def create
     @website = Website.new(create_params)
-    sample @website
     @website.save!
-    #Preview
-    parameterized = @website.name.parameterize
-    @website.preview = Preview.new do |preview|
-      preview.prototype = "default"
-      preview.name = parameterized
-      preview.status = 0
-      preview.pid = 0
-    end
-    @website.gitconfig = Gitconfig.new do |git|
-      git.repo = parameterized
-    end
-    #@website.save!
-    #articles
-    articles = Article.where({website_id: @website.id})
-    articles.each do |article|
-      image = Image.new do |img|
-        img.category = 'article_main'
-      end
-      article.images << image
-      #article.save!
-    end
+    # create default values
+    @website.create_default
+    @website.save!
     
-    #FileUtils.cp(
-    #  Rails.root.join('app', 'assets', 'images', 'parallax.jpg'),
-    #  Rails.root.join('app', 'assets', 'images', "parallax-1.jpg"))
-    bg_file = File.open(Rails.root.join('app', 'assets', 'images', 'parallax.jpg'))
-    #background top image
-    ['top', 'bottom'].each do |name|
-      image = Image.new do |img|
-        img.name = name
-        img.category = 'bg'
-        img.upload = bg_file
-      end 
-      @website.images << image
-    end
-
-    #image.save!
-    ##background top image
-    ##FileUtils.cp(
-    ##  Rails.root.join('app', 'assets', 'images', 'parallax.jpg'),
-    ##  Rails.root.join('app', 'assets', 'images', "parallax-2.jpg"))
-    #image = Image.new do |img|
-    #  img.name = 'bottom'
-    #  img.category = 'bg'
-    #end 
-    #@website.images << image
-    #File.open(Rails.root.join('app', 'assets', 'images', 'parallax-1.jpg')) do |f|
-    #  image.upload = f
-    #end
-    #image.save!
     @websites = Website.all
       .order(created_at: :desc)
     respond_to do |format|

@@ -1,6 +1,6 @@
 #========================================================
-# Helper for generating the website preview and running
-# Jekyll. 
+# Helper for generating Terminal logs
+# 
 #========================================================
 module TerminalHelper
 
@@ -8,14 +8,23 @@ module TerminalHelper
   ERROR = 10
   CMD = 20
   TRIGGER = 30
-  
-  def terminal_log end_point, log
-    end_point.terminal_logs << log
-  end
+
   #========================================================
-  # Create a log object for git message
+  # Add a log object to an endpoint which contains a TerminalLog list
   # 
   # Params:
+  # +end_point+:: the end point which logs are inserted
+  # +log+:: the log object
+  def terminal_add end_point, log
+    end_point.terminal_logs << log
+  end
+
+  #========================================================
+  # Create a log object
+  # 
+  # Params:
+  # +helper+:: helper of the log
+  # +info+:: info of the log
   # +message+:: message of the log
   def terminal_message helper, info, message 
     TerminalLog.new do |log|
@@ -26,7 +35,7 @@ module TerminalHelper
   end
 
   #========================================================
-  # Create a log object for git terminal command
+  # Shorthand for info type TerminalLog
   # 
   # Params:
   # +message+:: message of the log 
@@ -35,7 +44,7 @@ module TerminalHelper
   end
 
   #========================================================
-  # Create a log object for jekyll message
+  # Shorthand for error type TerminalLog
   # 
   # Params:
   # +message+:: message of the log
@@ -44,7 +53,7 @@ module TerminalHelper
   end
 
   #========================================================
-  # Create a log object for jekyll message
+  # Shorthand for command type TerminalLog
   # 
   # Params:
   # +message+:: message of the log
@@ -53,18 +62,14 @@ module TerminalHelper
   end
 
   #========================================================
-  # Create a log object for jekyll message
+  # Shorthand for trigger type TerminalLog
   # 
   # Params:
-  # +message+:: message of the log
+  # +trigger+:: message of the log
+  # +data+:: data of the log
   def terminal_trigger trigger, data
     terminal_message TRIGGER, trigger, data
   end
 end
 
-  #45 k€
-  #motivation
-  #connaissance projet/produit
-  #boite à outils 
-  #flexible
 

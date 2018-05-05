@@ -1,6 +1,5 @@
 class InfosController < ApplicationController
 
-  include PreviewConcern
   include MenuConcern
   include ModelConcern
 

@@ -6,6 +6,7 @@ thead
     th == 'Created'
     th == ''
     th == ''
+    th == ''
 tbody
   - list.each do |obj|
     tr
@@ -18,3 +19,6 @@ tbody
       td
         = link_to website_path(obj), method: :delete, remote: true, data: {confirm: "#{t('confirm-delete')}" }
           i class="material-icons" == 'delete' 
+      td
+        = link_to website_terminal_index_path(obj), target: "_blank", class: "new-window"
+          i class="material-icons" == 'bug_report' 

@@ -2,18 +2,9 @@ module StylesConcern
   extend ActiveSupport::Concern
   
   included do
-  
-    def default_style
-      style = Style.new do |s|
-        s.primary = ''
-        s.secondary = ''
-        s.background = ''
-        s.icon = ''
-        s.text = ''
-        s.decoration = ''
-      end
-      return style
-    end
+    #before_action :get_existing_model, only: [:update]
+    #after_action :save_style, only: [:update]
   end
-  
+  private
+
 end

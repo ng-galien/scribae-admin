@@ -23,22 +23,25 @@ Scribae.Image.initMain = function() {
   if(element) {
     Scribae.Image.mainModal = M.Modal.init(element, {});
   }
-  //Dropzone
-  console.log('initdropzone');
+  // Initialize Dropzone
+  Scribae.log(Scribae.LOG_DEBUG, 'initdropzone');
+
+  //Drop zone for main image
   element =  document.getElementById(IMG_MAIN_FORM_ID);
   if (typeof(element) != 'undefined' && element != null) {
     Scribae.Image.mainDrop = new Dropzone("#"+IMG_MAIN_FORM_ID);
     Scribae.Image.mainDrop.on("addedfile", function(file) {
-      console.log('addedfile: ' + file);
+      Scribae.log(Scribae.LOG_DEBUG, 'addedfile: ' + file);
     });
     Scribae.Image.mainDrop.on("success", function(file, response) {
-      console.log('success: ' + file);
-      console.log(response);
+      Scribae.log(Scribae.LOG_DEBUG, 'success: ' + file);
+
       $('#'+IMG_MAIN_PREVIEW_ID).attr('src', response.upload.m.url+'?v=' + new Date().getTime());
       if(Scribae.Image.mainModal) {
         Scribae.Image.mainModal.close();
       }
-      
+      file.previewElement.remove(); 
+      $('.dropzone').removeClass('dz-started');
     });
     Scribae.Image.mainDrop.on("complete", function(file) {
       console.log('complete: ' + file);
@@ -62,13 +65,11 @@ Scribae.Image.initGallery = function(reload) {
       console.log('addedfile: ' + file)
     });
     Scribae.Image.galleryDrop.on("success", function(file, response) {
-      console.log('image added to Gallery: ' + file);
-      //console.log(response);
+
+      Scribae.log(Scribae.LOG_DEBUG, 'image added to Gallery: ' + file);
       eval(response);
-      setTimeout(function() {
-        $("#"+GALLERY_FORM_ID).find('div.dz-success').remove();
-        $("#"+GALLERY_FORM_ID).find('div.dz-message').show();
-      }, 100);
+      file.previewElement.remove(); 
+      $('.dropzone').removeClass('dz-started');
     });
     Scribae.Image.galleryDrop.on("complete", function(file) {
       console.log('complete: ' + file);

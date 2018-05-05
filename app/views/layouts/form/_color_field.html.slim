@@ -1,0 +1,9 @@
+//Field for a color
+
+div class="color-label"
+  a [class="prefix tooltipped" data-position="right" 
+      data-delay="50" data-tooltip=t("#{domain}.edit.form.#{field}.tip")]
+    i class="material-icons tip-icon" == 'create'
+  = form.label field, t("#{domain}.edit.form.#{field}.label") , class: 'color-label'
+div class="color-input"
+  = form.hidden_field field, class: 'browser-default'

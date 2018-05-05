@@ -4,7 +4,7 @@ default: &default
     - themes
     - infos
     - albums
-    - maps
+    # - maps
   preview:
     target: preview
     dirs:

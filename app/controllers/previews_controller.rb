@@ -1,10 +1,8 @@
 class PreviewsController < ApplicationController
 
-  include PreviewConcern
   
   skip_before_action :verify_authenticity_token
   
-  before_action :set_menu
 
   #========================================================
   #
@@ -37,20 +35,11 @@ class PreviewsController < ApplicationController
 
   def show
     @preview = Preview.find(params[:id])
-    
   end
 
   #========================================================
   #PRIVATE METHODS
   #========================================================
   private
-
-  def set_menu
-    @navigation = {
-      :path => [ { :label=>t('components.website.navbar'), :url=>websites_path } ],
-      :links => [],
-      :tabs => []        
-    }
-  end
 
 end

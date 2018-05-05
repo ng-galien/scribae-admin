@@ -1,0 +1,13 @@
+
+div class="modal-content"
+  div class="row"
+    div class="col s12 center"
+      span class="invite" == t 'websites.edit.home.form.top_image.label'
+    div class="col s8 offset-s2 center"
+      = form_for @image_top, remote: true, html: {id: 'image-top-form', class: 'dropzone'} do |img_form|
+        = img_form.hidden_field :category, class: 'browser-default'      
+        = img_form.hidden_field :imageable_type, class: 'browser-default'
+        = img_form.hidden_field :imageable_id, class: 'browser-default'   
+        = img_form.hidden_field :name, class: 'browser-default'          
+        div class="fallback"
+          = img_form.file_field :upload, multiple: false, class: 'browser-default'

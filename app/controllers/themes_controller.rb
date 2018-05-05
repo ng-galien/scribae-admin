@@ -1,6 +1,5 @@
 class ThemesController < ApplicationController
 
-  include PreviewConcern
   include MenuConcern
   include ModelConcern
 
@@ -28,8 +27,7 @@ class ThemesController < ApplicationController
   # 
   # Params:
   def update
-    @theme = Theme.find(params[:id])
-    @theme.update(theme_params)
+    @model_obj.update(theme_params)
     website = Website.find(params[:website_id])
     #update_preview website.preview
     redirect_to action: "index"
@@ -40,21 +38,20 @@ class ThemesController < ApplicationController
   # 
   # Params:
   def create
-
     max = Theme.maximum("pos")
     if max.nil?
       max = 0
     end
-    theme = Theme.new do |t|
-      t.pos = max + 1   
+    @model_obj = Theme.new do |obj|
+      obj.pos = max + 1   
     end
-    theme.update(theme_params)
+    @model_obj.update(theme_params)
     image = Image.new do |img|
       img.category = 'main'
     end
-    theme.images << image
-    @website = Website.find(theme.website_id);
-    @themes = Theme.where({website_id: theme.website_id})
+    @model_obj.images << image
+    @website = Website.find(@model_obj.website_id);
+    @themes = Theme.where({website_id: @model_obj.website_id})
       .order(pos: :desc); 
     respond_to do |format|
       format.js
@@ -66,9 +63,8 @@ class ThemesController < ApplicationController
   # 
   # Params:
   def destroy
-    theme = Theme.find(params[:id])
-    @website = Website.find(theme.website_id);
-    theme.destroy
+    @website = Website.find(@model_obj.website_id);
+    @model_obj.destroy
     @themes = Theme.where({website_id: @website.id})
       .order(pos: :desc)
     respond_to do |format|
@@ -77,8 +73,10 @@ class ThemesController < ApplicationController
   end
 
   private
+
     def theme_params
       params.require(:theme).
         permit(:website_id, :title, :intro, :markdown)
     end 
+
 end

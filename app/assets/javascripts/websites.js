@@ -4,15 +4,14 @@
 */
 
 //Modals
-var settingsModal;
+
 var gitModal;
-var previewModal;
+var settingsModal;
+var styleModal;
 
 var updateStatus = false;
 var FAB;
 var serverRunning = false
-
-
 
 function showTerminal(id) {
   window.open(`/websites/$(id)/terminal`, 'Terminal', 
@@ -49,9 +48,9 @@ function checkStatus(data) {
 }
 
 $(document).ready(function() {
-  console.log('websites -> ready');
+  Scribae.LOG_LEVEL = Scribae.LOG_TRACE;
+  Scribae.log(Scribae.LOG_INFO, "websites -> ready");
 
-  Scribae.Global.suscribe();
   //=========================================================
   //MATERIALIZE INIT
   //Menu
@@ -60,30 +59,56 @@ $(document).ready(function() {
   
   //Parallax
   $('.parallax').parallax();
+
   //Setting modal
   element = document.getElementById('website-settings');
   if(element) {
     settingsModal = M.Modal.init(element, {});
   }
+
   element = document.getElementById('git-settings');
   if(element) {
     gitModal = M.Modal.init(element, {});
   }
-  element = document.getElementById('preview-settings');
+
+  element = document.getElementById('style-settings');
   if(element) {
-    previewModal = M.Modal.init(element, {});
+    styleModal = M.Modal.init(element, {
+      onOpenEnd: function() {
+        setTimeout(function() {
+          Scribae.Color.updateWidth();
+        }, 10);
+      }
+    });
   }
   //=========================================================
   //PREVIEW INIT
+  Scribae.Global.initNewWindowLinks();
   Scribae.Global.initController();
   Scribae.Global.initIndexTable({});
   Scribae.Global.updateIndexTable();
   //Image
   Scribae.Preview.Image.init();
   Scribae.Preview.Edit.init();
+  //Colors
+  Scribae.Color.initFormImput();
   //Scribae.Preview.Edit.update();
   Scribae.Preview.Component.init();
   Scribae.Preview.Component.fit();
+  //Terminal triggers
+  Scribae.Terminal.triggers.preview.run = function() {
+    Scribae.log(Scribae.LOG_TRACE, "preview run: ");
+    var links = $('.preview-link');
+    links.parent().removeClass('hide');        
+  }
+  Scribae.Terminal.triggers.preview.update = function(enlapsed) {
+    Scribae.log(Scribae.LOG_TRACE, "preview update: "+ enlapsed);
+  }
+  Scribae.Terminal.triggers.preview.error = function(error) {
+    Scribae.log(Scribae.LOG_TRACE, "preview update: "+ error);
+  }
+  var silent = true;
+  Scribae.Terminal.init(silent);
   //=========================================================
   //COMPS ENABLE TRIGGER
   $('#comp-show-form input[type=checkbox]').change(function () {
@@ -112,6 +137,12 @@ $(document).ready(function() {
     }, 200);
   });
 
+  $('#style-form').on('ajax:success', function(event, xhr, status, error) {
+    console.log('style-form ajax:sucess!');
+    setTimeout(function(){
+      styleModal.close();
+    }, 100);
+  });
   //=========================================================
   //UPDATE
 
@@ -119,23 +150,7 @@ $(document).ready(function() {
   $(window).resize(function() {
     Scribae.Preview.Edit.update();
   });
-  //Timer for preview status
-  //setInterval(function(){
-  //  var url = $("#menu-container").find('[data-status]').attr('data-link');
-  //  if(url && updateStatus) {
-  //    $.ajax({
-  //      url: url,
-  //      data: {},
-  //      contentType: 'application/json',
-  //      dataType: 'text',
-  //      success: checkStatus
-  //    });
-  //  }
-  ////  }, 1000);
-  //$('#terminal-link').click(function(){
-  //  var id = $(this).attr('data-id');
-  //  showTerminal(id)
-  //});
+  
 });
 
 

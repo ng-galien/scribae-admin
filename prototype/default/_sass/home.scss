@@ -2,10 +2,11 @@
 Home page
 */
 
-$home-background: $theme_background;
+$home-background: $scribae-style-background;
 
-.home-container {
+.home-items-container {
     background: $home-background;
+    padding: 3rem 1rem 2rem 3rem;
 }
 
 .home-container .container {
@@ -17,7 +18,7 @@ $home-background: $theme_background;
     color: white !important;
     //font-family: 'Lora', serif;
     font-weight: 500 !important;
-    font-size: 5rem !important;
+    font-size: 8rem !important;
     text-shadow: 2px 2px 8px #000000;
     @media all and (max-width: 600px) {
         font-size: 4rem !important;
@@ -37,7 +38,7 @@ $home-background: $theme_background;
   color: white !important;
   //background-color:#ffffff50;
   text-shadow: 1px 1px 3px #000000;
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: 400 !important;
   @media all and (max-width: 600px) {
     font-size: 2rem !important;
@@ -46,7 +47,7 @@ $home-background: $theme_background;
 }
 
 .home-post-title {
-    color: $primary-color !important;
+    color: $scribae-style-primary !important;
     font-size: 2rem;
 }
 
@@ -69,7 +70,6 @@ $home-background: $theme_background;
       // styles for medium screens and larger
       text-align: center;
     }
-    
     margin-top: 20px;
 }
 
@@ -105,24 +105,24 @@ $home-background: $theme_background;
   margin: 0.5rem;
   font-size: 2.0rem !important;
   font-weight: 500 !important;
-  color: darken($primary-color, 10%) !important;
+  color: $scribae-style-text !important;
 }
 
 .parallax-container {
   @media #{$small-and-down} {
-    height: 400px;
+    height: 100vh;
   }
   @media #{$medium-and-up} {
     // styles for medium screens and larger
-     height: 500px;
+     height: 50vh;
   }
   @media #{$large-and-up} {
     // styles for large screens and up
-    height: 600px;
+    height: 70vh;
   }
   @media #{$extra-large-and-up} {
     // styles for extra large screens and up
-    height: 700px;
+    height: 70vh;
   }
 }
 

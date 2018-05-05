@@ -1,6 +1,5 @@
 class AlbumsController < ApplicationController
   
-  include PreviewConcern
   include MenuConcern
   include ModelConcern
   
@@ -32,8 +31,7 @@ class AlbumsController < ApplicationController
   # 
   # Params:
   def update
-    @album = Album.find(params[:id])
-    @album.update(album_params)
+    @model_obj.update(album_params)
     website = Website.find(params[:website_id])
     redirect_to action: "index"
   end
@@ -48,19 +46,19 @@ class AlbumsController < ApplicationController
     if max.nil?
       max = 0
     end
-    album = Album.new do |a|
+    @model_obj = Album.new do |a|
       a.pos = max + 1   
     end
-    album.update(album_params)
+    @model_obj.update(album_params)
     
     image = Image.new do |img|
       img.category = 'main'
       img.pos = 0
     end
-    album.images << image
 
-    @website = Website.find(album.website_id);
-    @albums = Album.where({website_id: album.website_id})
+    @model_obj.images << image
+    @website = Website.find(@model_obj.website_id);
+    @albums = Album.where({website_id: @model_obj.website_id})
       .order(pos: :desc); 
     respond_to do |format|
       format.js
@@ -72,9 +70,8 @@ class AlbumsController < ApplicationController
   # 
   # Params:
   def destroy
-    album = Album.find(params[:id])
-    @website = Website.find(album.website_id);
-    album.destroy
+    @website = Website.find(@model_obj.website_id);
+    @model_obj.destroy
     @albums = Album.where({website_id: @website.id})
       .order(pos: :desc); 
     respond_to do |format|

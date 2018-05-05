@@ -2,12 +2,12 @@
 layout: default 
 --- 
 {% assign no_pagin_pages =  site.pages 
-  | where: "nav-link", "true" 
+  | where: "show", "true" 
   | where_exp: "item", "item.layout != 'home'"
-  | where_exp: "item", "item.layout != 'posts'" %}
+  | where_exp: "item", "item.layout != 'articles'" %}
 {% assign post_pages = site.pages 
-  | where: "nav-link", "true" 
-  | where_exp: "item", "item.layout == 'posts'" 
+  | where: "show", "true" 
+  | where_exp: "item", "item.layout == 'articles'" 
   | where_exp: "item", "item.url == '/posts/'" 
 %} 
 {% assign items = no_pagin_pages 
@@ -58,20 +58,20 @@ layout: default
 </div>
 
 <!-- Menu item zone -->
-<div class="home-container">
-    <div class="container">
+<div class="home-items-container">
+    <div class="">
         <!-- Items zone -->
         <div class="section">
             <div class="row">
-                {% assign idx = 1 %}
+                <div class=""></div>
                 {% for item in items %}
                 {% assign icon_theme = "menu-icon-" | append: item.theme %}
                 <div class="{{ item_col }} hoverable fixed-height">
                     <div class="home-item">
                         <div class="">
-                            <a class={{ icon_theme }} href={{ item.url | relative_url }}>
-                                {% assign icon_color = 'color:#' | append: item.icon-color | append: ';' }} %}
-                                <i class="material-icons icon large" style="{{ icon_color }}" >{{ item.icon }}</i>
+                            <a class="" href={{ item.url | relative_url }}>
+                                {% assign icon_color = '#' | append: item.icon_color | append: ';'  %}
+                                <i style="color: {{icon_color}}"  class="material-icons icon large" >{{ item.icon }}</i>
                             </a>
                             <p class="home-item-title">{{ item.title }}</p>
                             <p class="home-item-desc">

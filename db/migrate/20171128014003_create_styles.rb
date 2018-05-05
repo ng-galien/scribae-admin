@@ -1,6 +1,8 @@
 class CreateStyles < ActiveRecord::Migration[5.1]
   def change
     create_table :styles do |t|
+      t.string :helper
+      t.string :navbar
       t.string :primary
       t.string :secondary
       t.string :background

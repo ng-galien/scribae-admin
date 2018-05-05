@@ -144,12 +144,35 @@ en:
         description: 
           label: "Description"
           tip: "Write a short description of your project" 
+        helper:
+          label: "Additional style"
+          tip: "Tip"
+        navbar:
+          label: "Navbar color"
+          tip: "Tip"
+        primary: 
+          label: "Primary color"
+          tip: "Tip"
+        secondary: 
+          label: "Secondary color"
+          tip: "Tip"
+        background: 
+          label: "Background color"
+          tip: "Tip"
+        icon: 
+          label: "Icon color"
+          tip: "Tip"
+        text: 
+          label: "Text color"
+          tip: "Tip"
+        decoration: 
+          label: "Decoration color"
+          tip: "Tip"
       menu:
         back: 'Return to websites list'
-        settings: 'Open settings'
-        start: 'Start the preview'
-        stop: 'Stop the preview'
-        watch: 'Open the preview'
+        settings: 'Edit settings'
+        style: 'Edit colors style'
+        preview: 'open the preview'
       invite: "Website main page edition"
       parameters: "Parameters"
       
@@ -355,6 +378,24 @@ en:
           label: "Website"
           tip: "The website where is the album"
   git:
+    menu:
+      init:
+        label:
+        tip: "Initialize remote website"
+      commit:
+        label:
+        tip: "Publish to remote website"
+    form:
+      invite: "Configure the Github account"
+      user:
+        label: "Account name"
+        tip: "Your account login"
+      email:
+        label: "Account email"
+        tip: "Your account email"
+      password:
+        label: "User password"
+        tip: "Your account password (not stored by Scribae)"
     message:
       sucess: "Operation sucessfull"
       fail: "Operation failed"
@@ -362,11 +403,15 @@ en:
       ssh: "Configure SSH key"
       create: "Create the remote repository on github.com"
       configure: "Configure the local repository"
+      commit: "Commit the repository"
   preview:
+    wait: "Waiting for site editing"
     trigger: 
+      clear: "clear"
       status: "status"
       update: "update"
       error: "error"
+      page: "page"
       value:
         run: "run"
         stop: "stop"
@@ -376,12 +421,13 @@ en:
         after: "After preview job"
         static: "Create prototype structure"
         config: "Create preview config"
-        components: "Update components"
+        component: "Update components"
         home: "Update home page"
-        articles: "Update articles"
-        themes: "Update themes"
-        infos: "Update infos"
-        albums: "Update albums"
+        article: "Update articles"
+        theme: "Update themes"
+        info: "Update infos"
+        album: "Update albums"
+        style: "Update style"
       sucess: "Operation sucessfull"
       fail: "Operation failed"
       start: "Start the preview"

@@ -130,6 +130,8 @@ ActiveRecord::Schema.define(version: 20180409062444) do
   end
 
   create_table "styles", force: :cascade do |t|
+    t.string "helper"
+    t.string "navbar"
     t.string "primary"
     t.string "secondary"
     t.string "background"
