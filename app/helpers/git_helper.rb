@@ -5,7 +5,7 @@
 require 'fileutils'
 require 'github_api'
 require 'pp'
-require 'Open3'
+require 'open3'
 require 'os'
 
 module GitHelper

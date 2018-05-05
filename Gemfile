@@ -45,6 +45,7 @@ gem 'material_icons'
 gem 'dropzonejs-rails'
 gem "github_api"
 gem "os"
+gem "pp"
 #gem 'ruby-debug-ide'
 gem "i18n-js"
 
