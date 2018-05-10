@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   #end
   
   #resources :images, :defaults => { :format => :json }
-
   # Routes for sortable controller
   patch 'sortable/:website_id/themes', to: 'sortable#themes', defaults: { format: 'js' }  
   patch 'sortable/:website_id/infos', to: 'sortable#infos', defaults: { format: 'js' } 

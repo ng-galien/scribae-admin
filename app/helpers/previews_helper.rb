@@ -26,6 +26,7 @@ module PreviewsHelper
         Rails.application.reloader.wrap do
           Rails.application.executor.wrap do
             start_jekyll preview
+            #test_jekyll preview
           end
         end
       end
@@ -47,13 +48,13 @@ module PreviewsHelper
           # Test if bundle was previously updated
           out, status = Open3.capture2e("bundle check")
           continue = status.success?
-          unless continue
-            raise "Bundle check failed"
-          end
+          #unless continue
+          #  raise "Bundle check failed"
+          #end
           bundle_updated = BUNDLE_CHECK_REGEX =~ out
           # Update the bundle
           if bundle_updated.nil?
-            Open3.popen2e("bundle update") do |i, oe, t|
+            Open3.popen2e("bundle update jekyll") do |i, oe, t|
               terminal_add preview, terminal_info(I18n.t('preview.message.bundle.start'))
               oe.each {|line|
                 #puts line
@@ -139,7 +140,7 @@ module PreviewsHelper
       "email" => "",
       "description" => "#{website.description}",
       "repository" => "#{website.gitconfig.link}",
-      "baseurl" => "",
+      "baseurl" => "/scribae",
       "url" => "",
       "markdown" => "kramdown",
       "sass" => {
@@ -323,16 +324,17 @@ module PreviewsHelper
       file << "---\n"
       file << "# Only the main Sass file needs front matter\n"
       file << "---\n"
+      file << "@charset 'utf-8';"
       file << style.to_scss
-      file << "@import 'materialize';\n"
-      file << "@import 'general';\n"
-      file << "@import 'menu';\n"
-      file << "@import 'home';\n"
-      file << "@import 'articles';\n"
-      file << "@import 'themes';\n"
-      file << "@import 'infos';\n"
-      file << "@import 'albums';\n"
-      file << "@import 'maps';\n"
+      file << "@import 'materialize';"
+      file << "@import 'general';"
+      file << "@import 'menu';"
+      file << "@import 'home';"
+      file << "@import 'articles';"
+      file << "@import 'themes';"
+      file << "@import 'infos';"
+      file << "@import 'albums';"
+      file << "@import 'maps';"
       file << ""
     end
     if trigger
@@ -446,7 +448,9 @@ module PreviewsHelper
   # +target+:: the target directory
   # +erase+:: erase
   def copy_static_content website, erase=false
+    
     preview = website.preview
+
     target = get_dest_path preview
     prototype = preview.prototype
     paths = [
@@ -467,7 +471,7 @@ module PreviewsHelper
           dest)
       end
     end
-    ['Gemfile', '.gitignore'].each do |file|
+    ['Gemfile', 'Gemfile.lock', '.gitignore'].each do |file|
       src = Rails.root.join("prototype", prototype, file)
       dest = Rails.root.join(target, file)
       if File.exist? src

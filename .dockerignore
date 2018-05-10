@@ -1,0 +1,109 @@
+.git
+.gitignore
+README.md
+
+#
+# OS X
+#
+.DS_Store
+.AppleDouble
+.LSOverride
+# Icon must end with two \r
+Icon
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+#
+# Rails
+#
+.env
+.env.sample
+*.rbc
+capybara-*.html
+log
+tmp
+db/*.sqlite3
+db/*.sqlite3-journal
+public/system
+coverage/
+spec/tmp
+**.orig
+
+.bundle
+
+.ruby-version
+.ruby-gemset
+
+.rvmrc
+
+# if using bower-rails ignore default bower_components path bower.json files
+vendor/assets/bower_components
+*.bowerrc
+bower.json
+#files to exclude
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Ignore upload 
+/public/upload/
+
+# Ignore deploy 
+/preview
+
+# Ignore private data
+/private
+
+# Ignore sass
+/.sass-cache
+
+# Ignore prototype temp
+/prototype/default/_site
+/prototype/default/.sass-cache
+/prototype/default/tmp
+/prototype/default/upload
+/prototype/default/Gemfile.lock
+/prototype/default/albums.md
+/prototype/default/index.md
+/prototype/default/info.md
+/prototype/default/themes.md
+/prototype/default/video.md
+/prototype/default/_config.yml
+/prototype/default/posts
+/prototype/default/_themes
+/prototype/default/_posts
+/prototype/default/_info
+/prototype/default/_albums
+
+
+# Ignore vscode
+/.vscode
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+/node_modules
+
+/yarn-error.log
+
+.byebug_history
+
+.DS_Store
+# Ignore encrypted secrets key file.
+config/secrets.yml.key
+

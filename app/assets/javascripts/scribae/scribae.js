@@ -64,6 +64,9 @@ Scribae.Global.initController = function() {
       $('#create-form-container').hide();
       $('.wait').show();
     }); 
+    $('#create-form-container form').on('ajax:success', function() {
+      Scribae.Global.initNewWindowLinks();
+    }); 
   }
   
   element = document.getElementById('sortable-modal');

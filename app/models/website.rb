@@ -79,10 +79,10 @@ class Website < ApplicationRecord
       style.navbar = "#ffffff"
       style.primary = "#ffffff"
       style.secondary = "#000000"
-      style.background = "#000000"
-      style.icon = "#ffffff"
+      style.background = "#ffffff"
+      style.icon = "#000000"
       style.text = "#000000"
-      style.decoration = "#000000"
+      style.decoration = "#ffffff"
     end
   end
 

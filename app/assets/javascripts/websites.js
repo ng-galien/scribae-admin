@@ -123,6 +123,7 @@ $(document).ready(function() {
       Scribae.Preview.Edit.update();
     }, 200);
   });
+  
   $('#settings-form').on('ajax:success', function(event, xhr, status, error) {
     console.log('settings-form ajax:sucess!');
     setTimeout(function(){

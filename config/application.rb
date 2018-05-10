@@ -11,6 +11,10 @@ module AdminApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
+    config.middleware.insert(0, Rack::ReverseProxy) do
+      reverse_proxy_options force_ssl: false, replace_response_host: true
+      reverse_proxy /^\/scribae(\/?.*)$/, 'http://127.0.0.1:4000/scribae/$1'
+    end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
