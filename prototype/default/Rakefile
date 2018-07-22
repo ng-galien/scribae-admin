@@ -1,8 +1,0 @@
-task :default do
-  server  = Process.spawn("jekyll serve --watch")
-  trap("INT") do
-    [server].each { |pid| Process.kill(9, pid) rescue Errno::ESRCH }
-    exit 0
-  end
-  [server].each { |pid| Process.wait(pid) }
-end

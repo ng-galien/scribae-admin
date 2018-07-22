@@ -73,8 +73,8 @@ module PreviewsHelper
             end
           end
           # Start Jekyll server 
-          Open3.popen2e("bundle exec jekyll serve") do |i, oe, t|
-            terminal_add preview, terminal_info(I18n.t('preview.message.jekyll.start'))
+          Open3.popen2e("bundle exec jekyll serve ") do |i, oe, t|
+            terminal_add preview, terminal_info(I18n.t('preview.message.jekyll.start --config _config_local.yml'))
             preview.set_starting t.pid
             oe.each {|line|
               #puts line
@@ -132,15 +132,16 @@ module PreviewsHelper
   # Params:
   # +website+:: the site id
   # +dest+:: the site id
-  def create_config website
+  def create_config website, local=true
     dest = get_dest_path website.preview
+    baseurl = local ? "/scribae" :  "/#{website.gitconfig.base_url}"
     config = {
       "title" => "#{website.site_title}",
       "lang" => "",
       "email" => "",
       "description" => "#{website.description}",
-      "repository" => "#{website.gitconfig.link}",
-      "baseurl" => "/scribae",
+      "repository" => "#{website.gitconfig.repo_link}",
+      "baseurl" => baseurl,
       "url" => "",
       "markdown" => "kramdown",
       "sass" => {
@@ -166,7 +167,8 @@ module PreviewsHelper
       #"profile" => true,
       #"incremental" => true
     }
-    File.open(File.join(dest, '_config.yml'),'w') do |f| 
+    dest_file = local ? "_config_local.yml" : "_config.yml"
+    File.open(File.join(dest, dest_file),'w') do |f| 
       f.write config.to_yaml
     end
   end

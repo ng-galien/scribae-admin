@@ -6,7 +6,7 @@ class GitconfigsController < ApplicationController
   #========================================================
   #
   def setup
-    pp git_params
+    #pp git_params
     config = Gitconfig.find(git_params[:gitconfig_id])  
     config.user = git_params[:user]
     config.email = git_params[:email]
@@ -17,7 +17,9 @@ class GitconfigsController < ApplicationController
   end
 
   def commit
-    @config = Preview.find(params[:gitconfig_id]) 
+    #pp git_params
+    config = Gitconfig.find(git_params[:gitconfig_id])  
+    GitJob.perform_later config, nil
     head :ok
   end
 

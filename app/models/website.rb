@@ -61,7 +61,10 @@ class Website < ApplicationRecord
       preview.status = 0
     end
     self.gitconfig = Gitconfig.new do |git|
-      git.repo = parameterized
+      git.base_url = parameterized
+      git.initialized = false
+      git.repo_link = ""
+      git.website_link = ""
     end
     # Background images
     bg_file = File.open(Rails.root.join('app', 'assets', 'images', 'parallax.jpg'))

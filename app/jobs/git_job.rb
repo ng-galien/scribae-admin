@@ -6,6 +6,7 @@ class GitJob < ApplicationJob
   queue_as :default
   
   include GitHelper
+  include PreviewsHelper
 
   after_perform do |job|
 
@@ -16,9 +17,11 @@ class GitJob < ApplicationJob
     config = args[0]
     unless config.initialized
       password = args[1]
-      git_cmd_setup config, password
+      git_setup config, password
     else
-      git_cmd_commit config
+      website = config.website
+      create_config website, false
+      git_commit config
     end
   end
 

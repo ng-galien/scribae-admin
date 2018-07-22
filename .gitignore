@@ -25,23 +25,7 @@
 /bin
 
 # Ignore prototype temp
-/prototype/default/_site
-/prototype/default/.sass-cache
-/prototype/default/tmp
-/prototype/default/upload
-/prototype/default/Gemfile.lock
-/prototype/default/albums.md
-/prototype/default/index.md
-/prototype/default/info.md
-/prototype/default/themes.md
-/prototype/default/video.md
-/prototype/default/_config.yml
-/prototype/default/posts
-/prototype/default/_themes
-/prototype/default/_posts
-/prototype/default/_info
-/prototype/default/_albums
-
+prototype/*
 
 # Ignore vscode
 /.vscode

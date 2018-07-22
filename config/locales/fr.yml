@@ -29,39 +29,39 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
-  yes: "Yes"
-  no: "No"
-  confirm: "Confirm"
-  save: "Save"
-  cancel: "Cancel"
-  delete: "Delete"
-  edit: "Edit"
-  confirm-delete: "Warning! Are you sure to delete?"
-  confirm-build: "Warning! Are you sure to build?"
-  return_to_list: "Return to list"
-  wait_message: "Please wait while processing..."
+fr:
+  yes: "Oui"
+  no: "Non"
+  confirm: "Confirmer"
+  save: "Sauvegarder"
+  cancel: "Annuler"
+  delete: "Supprimer"
+  edit: "Editer"
+  confirm-delete: "Attention! Etes vous certain de supprimer?"
+  confirm-build: "Attention! Etes-vous certain de construire?"
+  return_to_list: "Retour à la liste"
+  wait_message: "Attendre pendant le traitement..."
 
   icons:
-    invite: "Choose an icon"
+    invite: "Choisir un icone"
   #Menu
   menu:
     back:
       label: "Project"
-      tip: "Back to project"
+      tip: "Retour au project"
     new:
-      label: "New"
-      tip: "Create new item"
+      label: "Nouveau"
+      tip: "Créer un nouveau"
     sort:
-      label: "Sort"
-      tip: "Sort items"
+      label: "Trier"
+      tip: "Tirer les élàments"
   #Sortable
   sortable:
-    invite: "Drag to sort items"
+    invite: "Glisser pour trier"
   #Components
   components:
     website:
-      navbar: "Projects"
+      navbar: "Projets"
     article: 
       navbar: "Articles"
     theme: 
@@ -71,49 +71,49 @@ en:
     album: 
       navbar: "Albums"
     map: 
-      navbar: "Maps"
+      navbar: "Cartes"
   style:
     defaut:
       
   websites: 
-    navbar: "Projects"
+    navbar: "Projets"
     #Default values
     default: 
       site_title: ""
-      home_title: "Home"
+      home_title: "Accueil"
       home_icon: "home"
-      top_title: "Top title"
-      top_intro: "Top intro"
-      bottom_title: "Bottom title"
-      bottom_intro: "Bottom intro"
-      featured_title: "Featured posts"
-      markdown: '# Content title \n\n Write the content here'
+      top_title: "Titre premier"
+      top_intro: "Introduction première"
+      bottom_title: "Titre second"
+      bottom_intro: "Introduction second"
+      featured_title: "Articles en une"
+      markdown: ""
       #Default pages
       components:
         articles:
           title: 'Articles'
-          intro: 'Follow latest articles'
+          intro: 'Suivre les denriers articles'
           icon: 'flash_on'
           show: true
 
         themes:
           title: 'Theme'
-          intro: 'Discover the themes'
+          intro: 'Découvrez les themes'
           icon: 'accessible'
           show: true
         infos:
           title: 'Information'
-          intro: 'Full information'
+          intro: 'En savoir plus'
           icon: 'info_outline'
           show: true
         albums:
           title: 'Albums'
-          intro: 'See the albums'
+          intro: 'Voir les albums'
           icon: 'camera_roll'
           show: true
         maps:
-          title: 'Map'
-          intro: 'Explore maps'
+          title: 'Carte'
+          intro: 'Explorer les cartes'
           icon: 'camera_roll'
           show: false
       #Default article
@@ -124,17 +124,16 @@ en:
           date: '01/01/2000'
     #Index page
     index:
-      invite: "Welcome to Sribae website creator"
-      empty: "No projects, you must first create a new one"
-      create: "Create a new project"
-      select: "Enter in Website"
-      edit: "Edit website"
+      invite: "Bienvenue dans l'éditeur Scribae"
+      empty: "Aucun projet, commencer par créer un projet"
+      create: "Créer un mouvea projet"
+      select: "Entrer dans le projet"
+      edit: "Editer le site"
 
     #Create form
     new:
-      invite: "New Project"
+      invite: "Nouveau projet"
      
-
     #Edit page
     edit:
       form:
@@ -378,11 +377,6 @@ en:
           label: "Website"
           tip: "The website where is the album"
   git:
-    trigger:
-      init: "init"
-      error: "error"
-      created: "created"
-      commited: "commited"
     menu:
       init:
         label:
@@ -401,8 +395,6 @@ en:
       password:
         label: "User password"
         tip: "Your account password (not stored by Scribae)"
-      configure: "Configure git repository"
-      commit: "Commit git repository"
     message:
       sucess: "Operation sucessfull"
       fail: "Operation failed"

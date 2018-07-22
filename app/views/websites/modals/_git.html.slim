@@ -1,4 +1,21 @@
-= form_tag "/gitconfigs/#{@gitconfig.id}/setup", remote: true do |form|
+
+= render partial: 'layouts/model/preloader'
+/= form_tag "/gitconfigs/#{@gitconfig.id}/commit", id: 'git-form-commit', class: "" do |form|
+div class="container row #{@gitconfig.is_initialized? ? '' : 'hide' }"
+  //Invite
+  div class="col s12 center"
+    span class="invite" == t 'git.form.invite'
+  div class="col s12 center"
+    span class="spacer"
+  div class="col s6"
+    = link_to  "Repository", @gitconfig.repo_link, target: "_blank"
+  div class="col s6"
+    = link_to "Website",  @gitconfig.website_link, target: "_blank"
+  div class="col s12 center input-field"
+    = link_to gitconfig_commit_path(@gitconfig), class: "btn", remote: true
+      span class="tooltipped" data-tooltip = "#{t 'git.menu.commit.tip'}"  data-position="left" data-delay="50"
+          i class="material-icons" == "backup"
+= form_tag "/gitconfigs/#{@gitconfig.id}/setup", remote: true, id: 'git-form-create', class: "#{@gitconfig.is_initialized? ? 'hide' : '' }"  do |form|
   div class="container row"
     // Invite
     div class="col s12 center"
@@ -24,8 +41,8 @@
       = password_field_tag  "password"
       = label_tag       "password", t('git.form.password.label')
     div class="col s12 center input-field"
-      = submit_tag "Configure git", class: "btn"
-    
+      = submit_tag t('git.form.configure'), class: "btn"
+        
 
 
   

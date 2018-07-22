@@ -8,8 +8,6 @@ class ImageJob < ApplicationJob
     # control if we have an image in args
     begin
       args.length == 1 or !args[0].nil? or raise ArgumentError 'Argument is invalid'
-        
-      end
       image = args[0]
       model_obj = image.imageable_type
       .classify

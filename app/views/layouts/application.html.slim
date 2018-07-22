@@ -9,8 +9,10 @@ html
     = javascript_include_tag params[:controller]
     = stylesheet_link_tag "application", params[:controller], :media => "all"
     javascript:
+      console.log("#{I18n.locale}");
       I18n.defaultLocale = "#{I18n.default_locale}";
       I18n.locale = "#{I18n.locale}";
+      
   body
     header 
       - unless @navigation.nil?

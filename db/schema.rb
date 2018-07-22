@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409062444) do
+ActiveRecord::Schema.define(version: 2018_04_09_062444) do
 
   create_table "albums", force: :cascade do |t|
     t.integer "website_id"
@@ -72,7 +72,8 @@ ActiveRecord::Schema.define(version: 20180409062444) do
     t.string "user"
     t.string "email"
     t.boolean "initialized"
-    t.string "link"
+    t.string "repo_link"
+    t.string "website_link"
     t.datetime "last_commit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

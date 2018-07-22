@@ -48,7 +48,7 @@ function checkStatus(data) {
 }
 
 $(document).ready(function() {
-  Scribae.LOG_LEVEL = Scribae.LOG_TRACE;
+  Scribae.LOG_LEVEL = Scribae.LOG_DEBUG;
   Scribae.log(Scribae.LOG_INFO, "websites -> ready");
 
   //=========================================================
@@ -106,6 +106,10 @@ $(document).ready(function() {
   }
   Scribae.Terminal.triggers.preview.error = function(error) {
     Scribae.log(Scribae.LOG_TRACE, "preview update: "+ error);
+  }
+  //Git 
+  Scribae.Terminal.triggers.git.init = function() {
+    $('.preloader').removeClass('hide'); 
   }
   var silent = true;
   Scribae.Terminal.init(silent);

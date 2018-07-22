@@ -21,11 +21,15 @@ Scribae.Terminal = Scribae.Terminal || {
       error: function(backtrace) {}
     },
     git: {
-      commit: function() {}
+      init: function() {},
+      error: function(message) {},
+      created: function(message) {},
+      commited: function(message) {}
     }
   },
 
   init: function(silent) {
+
     Scribae.log(Scribae.LOG_DEBUG, "Terminal::init => silent="+silent);
     Scribae.Channel.connected = function(channel, type, id) {
     };
@@ -108,8 +112,21 @@ Scribae.Terminal = Scribae.Terminal || {
           break;
         }
         break;
-      case I18n.t("gitconfig"):
-          
+      case "git":
+        switch(data.info) {
+          case I18n.t("git.trigger.error"):
+            Scribae.Terminal.triggers.git.error(data.nessage);
+          break;
+          case I18n.t("git.trigger.created"):
+            Scribae.Terminal.triggers.git.created(data.message);
+          break;
+          case I18n.t("git.trigger.commited"):
+            Scribae.Terminal.triggers.git.commited(data.message);
+          break;
+          case I18n.t("git.trigger.init"):
+            Scribae.Terminal.triggers.git.init();
+          break;
+        }
         break;
     }
   }

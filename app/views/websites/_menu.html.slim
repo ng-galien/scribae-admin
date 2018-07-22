@@ -11,13 +11,13 @@ div class="fixed-action-btn"
       = link_to website_terminal_index_path(@website), class: "btn-floating red darken-3 new-window", target: "_blank"
         span class="tooltipped" data-tooltip="Console" data-position="left" data-delay="50"
           i class="material-icons" == "bug_report"
-    // Git Settings modal hide if gitconfig is initialized
-    li class="#{@gitconfig.is_initialized? ? 'hide' : '' }"
+    // Git Settings modal
+    li class=""
       = link_to "#git-settings", class: "modal-trigger btn-floating purple"
         span class="tooltipped" data-tooltip = "#{t 'git.menu.init.tip'}" data-position="left" data-delay="50"
           i class="material-icons" == "backup"
     // Commit action show if gitconfig is initialized
-    li class="#{@gitconfig.is_initialized? ? '' : 'hide' }"
+    /li class="#{@gitconfig.is_initialized? ? '' : 'hide' }"
       = link_to gitconfig_commit_path(@gitconfig), class: "modal-trigger btn-floating purple"
         span class="tooltipped" data-tooltip = "#{t 'git.menu.commit.tip'}"  data-position="left" data-delay="50"
           i class="material-icons" == "backup"
