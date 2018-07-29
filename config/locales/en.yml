@@ -383,6 +383,7 @@ en:
       error: "error"
       created: "created"
       commited: "commited"
+      clear: "clear"
     menu:
       init:
         label:
@@ -412,16 +413,18 @@ en:
       configure: "Configure the local repository"
       commit: "Commit the repository"
   preview:
-    wait: "Waiting for site editing"
+    ui:
+      stopped: "Preview is stopped, edit the project to start it"
+      starting: "Preview is starting... wait few seconds"
+      started: "Preview is running"
     trigger: 
+      start: "start"
+      run: "run"
+      stop: "stop"
       clear: "clear"
-      status: "status"
       update: "update"
       error: "error"
       page: "page"
-      value:
-        run: "run"
-        stop: "stop"
     message:
       job:
         start: "Start the preview job"

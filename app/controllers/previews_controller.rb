@@ -35,6 +35,8 @@ class PreviewsController < ApplicationController
 
   def show
     @preview = Preview.find(params[:id])
+    @preloader_msg = "MESSAGE"
+    @preloader_show = true
   end
 
   #========================================================

@@ -14,7 +14,7 @@ module AdminApp
 
     config.middleware.insert(0, Rack::ReverseProxy) do
       reverse_proxy_options force_ssl: false, replace_response_host: true
-      reverse_proxy /^\/scribae(\/?.*)$/, 'http://127.0.0.1:4000/$1'
+      reverse_proxy /^\/scribae(\/?.*)$/, 'http://127.0.0.1:4000/scribae/$1'
     end
 
     # Locales

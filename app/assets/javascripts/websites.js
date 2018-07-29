@@ -97,9 +97,14 @@ $(document).ready(function() {
   Scribae.Preview.Component.fit();
   //Terminal triggers
   Scribae.Terminal.triggers.preview.run = function() {
-    Scribae.log(Scribae.LOG_TRACE, "preview run: ");
+    Scribae.log(Scribae.LOG_TRACE, "website:preview:run");
     var links = $('.preview-link');
     links.parent().removeClass('hide');        
+  }
+  Scribae.Terminal.triggers.preview.stop = function() {
+    Scribae.log(Scribae.LOG_TRACE, "website:preview:stop");
+    var links = $('.preview-link');
+    links.parent().addClass('hide');        
   }
   Scribae.Terminal.triggers.preview.update = function(enlapsed) {
     Scribae.log(Scribae.LOG_TRACE, "preview update: "+ enlapsed);

@@ -1,6 +1,6 @@
 class SaveStyleJob < ApplicationJob
   queue_as :default
-  include PreviewsHelper
+  include PreviewHelper
 
   after_perform do |job|
     

@@ -30,7 +30,7 @@ Scribae.Time.updateDateItem = function(val, select_id, item) {
   var y_filter = '[value=' + val + ']';
   var y_opt = $(y_select + ' option'+ y_filter);
   if(y_opt.length < 1) {
-    console.log('Does not exists');
+    //console.log('Does not exists');
     $(y_select).append($("<option></option>")
       .attr("value",val)
       .text(val));

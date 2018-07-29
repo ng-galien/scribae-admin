@@ -1,6 +1,6 @@
 class DeleteJob < ApplicationJob
   queue_as :default
-  include PreviewsHelper
+  include PreviewHelper
 
   def perform(*args)
     begin

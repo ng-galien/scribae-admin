@@ -10,6 +10,7 @@ require 'os'
 
 module GitHelper
   
+  include ProcessHelper
   include TerminalHelper
 
   #========================================================
@@ -132,32 +133,4 @@ module GitHelper
     end
   end
 
-  #========================================================
-  # Run an array of commands
-  # 
-  # Params:
-  # +cmds+:: message of the log   
-  def run_commands cmds, logs_end_point
-    cmds.each do |arr|
-      cmd = arr[0]
-      regex = arr[1]
-      ctrl_status = arr[2]
-      terminal_add logs_end_point, terminal_cmd(cmd)
-      out, status = Open3.capture2e(cmd)
-      terminal_add logs_end_point, terminal_cmd(out)
-      if ctrl_status
-        unless status.success?
-          return false
-        end
-      end
-      unless regex.nil?
-        match = regex.match out
-        if match.nil?
-          return false
-        end
-      end
-    end
-    true
-  end
-  
 end

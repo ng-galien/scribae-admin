@@ -1,5 +1,5 @@
 
-= render partial: 'layouts/model/preloader'
+= render partial: 'template/model/preloader'
 /= form_tag "/gitconfigs/#{@gitconfig.id}/commit", id: 'git-form-commit', class: "" do |form|
 div class="container row #{@gitconfig.is_initialized? ? '' : 'hide' }"
   //Invite

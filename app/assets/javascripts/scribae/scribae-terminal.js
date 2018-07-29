@@ -10,17 +10,18 @@ Scribae.Terminal = Scribae.Terminal || {
 
   },
   triggers: {
-    clear: function() {
 
-    },
     preview: {
-      status: function(status) {},
-      run: function(status) {},
-      stop: function(status) {},
+      start: function() {},
+      run: function() {},
+      stop: function() {},
+      clear: function() {},
       update: function(enlapsed) {},
-      error: function(backtrace) {}
+      error: function(backtrace) {},
+      page: function(url) {}
     },
     git: {
+      clear: function() {},
       init: function() {},
       error: function(message) {},
       created: function(message) {},
@@ -50,7 +51,6 @@ Scribae.Terminal = Scribae.Terminal || {
       } else {
         Scribae.log(Scribae.LOG_DEBUG, "Terminal::addLog => "+data.message);
         Scribae.Terminal.addLog(data);
-
       }
     } 
     else {
@@ -88,27 +88,25 @@ Scribae.Terminal = Scribae.Terminal || {
     switch(type) {
       case "preview":
         switch(data.info) {
-          case I18n.t(type+".trigger.status"):
-            switch(data.message) {
-              case I18n.t("preview.trigger.value.run"):
-                Scribae.Terminal.triggers.preview.run();
-              break;
-              case I18n.t("preview.trigger.value.stop"):
-                Scribae.Terminal.triggers.preview.stop();
-              break;
-              default:
-                Scribae.Terminal.triggers.preview.status(data.message); 
-                break;
-            }
+          case I18n.t("preview.trigger.start"):
+            Scribae.Terminal.triggers.preview.start();
           break;
-          case I18n.t("preview.trigger.update"):
-            Scribae.Terminal.triggers.preview.update(parseFloat(data.message));
+          case I18n.t("preview.trigger.run"):
+            Scribae.Terminal.triggers.preview.run();
           break;
-          case I18n.t("preview.trigger.error"):
-            Scribae.Terminal.triggers.preview.error(data.message);
+          case I18n.t("preview.trigger.stop"):
+            Scribae.Terminal.triggers.preview.stop();
           break;
           case I18n.t("preview.trigger.clear"):
             Scribae.Terminal.clearLogs(data);
+          break;
+          case I18n.t("preview.trigger.update"):
+            Scribae.Terminal.triggers.preview.update(parseFloat(data.message));
+          break;          
+          case I18n.t("preview.trigger.error"):
+            Scribae.Terminal.triggers.preview.error(data.message);
+          break;
+          case I18n.t("preview.trigger.page"):
           break;
         }
         break;
@@ -125,6 +123,9 @@ Scribae.Terminal = Scribae.Terminal || {
           break;
           case I18n.t("git.trigger.init"):
             Scribae.Terminal.triggers.git.init();
+          break;
+          case I18n.t("git.trigger.clear"):
+            Scribae.Terminal.triggers.git.clear();
           break;
         }
         break;

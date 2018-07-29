@@ -2,7 +2,7 @@
 # Used when an image is updated from image controller
 class ImageJob < ApplicationJob
   queue_as :default
-  include PreviewsHelper
+  include PreviewHelper
 
   def perform(*args)
     # control if we have an image in args

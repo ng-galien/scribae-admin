@@ -7,7 +7,8 @@ require 'yaml'
 class PreviewJob < ApplicationJob
   queue_as :default
 
-  include PreviewsHelper
+  include PreviewHelper
+  include JekyllHelper
   include TerminalHelper
 
   after_perform do |job|

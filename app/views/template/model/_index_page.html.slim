@@ -20,12 +20,12 @@ div id="create-modal" class="modal"
   //Sortable
   div#sortable-modal class="modal"
     div#sortable-container
-      = render partial: "layouts/model/sortable", locals: {parent: parent, list: list, nested: nested}
+      = render partial: "template/model/sortable", locals: {parent: parent, list: list, nested: nested}
 /Content
 div class="container"
   /menu
   div
-    = render partial: "layouts/model/index_menu", locals: {sortable: sort}
+    = render partial: "template/model/index_menu", locals: {sortable: sort}
   div class="row"
     div class="col s12 center invite"
       span == t("#{nested}.index.invite")

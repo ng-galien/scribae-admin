@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 2018_04_09_062444) do
 
   create_table "gitconfigs", force: :cascade do |t|
     t.integer "website_id"
-    t.string "repo"
+    t.string "base_url"
     t.string "user"
     t.string "email"
     t.boolean "initialized"

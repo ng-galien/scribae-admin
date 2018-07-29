@@ -7,3 +7,4 @@
 //= require scribae/scribae-preview
 //= require scribae/scribae-sortable
 //= require scribae/scribae-color
+//= require scribae/scribae-ui

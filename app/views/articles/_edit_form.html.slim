@@ -6,7 +6,7 @@ div class="row"
     = form.label           :date, "date"
   //title
   div class="col s12 input-field center"
-    = render partial: 'layouts/form/string_field',
+    = render partial: 'template/form/string_field',
         locals: {form: form, domain: :articles, field: :title}  
   //date
   div class="col m6 input-field center"
@@ -24,9 +24,9 @@ div class="row"
       == t('articles.edit.form.time.label')
   //featured
   div class="col m3 input-field center"
-    = render partial: 'layouts/form/boolean_field',
+    = render partial: 'template/form/boolean_field',
         locals: {form: form, domain: :articles, field: :featured} 
   //intro
   div class="col s12 input-field"
-    = render partial: 'layouts/form/string_field',
+    = render partial: 'template/form/string_field',
         locals: {form: form, domain: :articles, field: :intro}  

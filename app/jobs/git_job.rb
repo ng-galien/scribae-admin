@@ -6,7 +6,7 @@ class GitJob < ApplicationJob
   queue_as :default
   
   include GitHelper
-  include PreviewsHelper
+  include PreviewHelper
 
   after_perform do |job|
 

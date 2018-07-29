@@ -41,6 +41,13 @@ var Scribae = Scribae || {
   }
 }
 
+Scribae.Object = function(id) {
+  this._id = id;
+}
+Scribae.null = function(arg) {
+  return (arg === undefined) || (arg === null);
+}
+
 Scribae.Global = Scribae.Global || {
   RESP_IMG: [
     ['xl', 1600],

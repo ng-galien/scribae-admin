@@ -1,10 +1,10 @@
 div class="edit-container"
   //Image uploader
   - unless image_main.nil?
-    = render partial: 'layouts/image/update_upload'
+    = render partial: 'template/image/update_upload'
   //Image gallery
   - if markdown
-    = render partial: 'layouts/image/gallery', locals: {markdown: true}
+    = render partial: 'template/image/gallery', locals: {markdown: true}
   //Article invite
   div class="row"
     
@@ -43,5 +43,5 @@ div class="edit-container"
     - unless markdown
       div class="col s12 center invite"
         span class="" == t("#{domain}.edit..gallery.invite")
-      = render partial: 'layouts/image/gallery', locals: {markdown: markdown}
+      = render partial: 'template/image/gallery', locals: {markdown: markdown}
 

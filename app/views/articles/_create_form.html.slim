@@ -5,11 +5,11 @@
       h4 == t 'articles.new.invite'
     /Title
     div class="col s12 input-field"
-      = render partial: 'layouts/form/string_field',
+      = render partial: 'template/form/string_field',
         locals: {form: form, domain: :articles, field: :title}
     /Intro
     div class="col s12 input-field "
-      = render partial: 'layouts/form/string_field', 
+      = render partial: 'template/form/string_field', 
         locals: {form: form, domain: :articles, field: :intro} 
     /Website id
     = form.hidden_field :website_id, value: "#{@website.id}"

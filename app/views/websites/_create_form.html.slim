@@ -5,11 +5,11 @@
       h4 == t 'websites.new.invite'
     //Name
     div class="col s12 input-field"
-      = render partial: 'layouts/form/string_field',
+      = render partial: 'template/form/string_field',
         locals: {form: form, domain: :websites, field: :name}
     //Description
     div class="col s12 input-field"
-      = render partial: 'layouts/form/string_field',
+      = render partial: 'template/form/string_field',
         locals: {form: form, domain: :websites, field: :description}
     div class="col s12 center" 
       = form.submit "#{t('confirm')}", :class=>"btn"
