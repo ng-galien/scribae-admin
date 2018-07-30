@@ -30,7 +30,7 @@ RUN touch /app/Gemfile.lock
 # Install rails and jekyll with Bundler 
 RUN bundle install --system --jobs=4
 COPY . /app
-RUN cd /app/prototype/default && bundle install --system --jobs=4
+RUN cd /app/prototypes/default && bundle install --system --jobs=4
 # Entry point script
 COPY ./entry-point.sh /
 RUN ["chmod", "+x", "./entry-point.sh"]

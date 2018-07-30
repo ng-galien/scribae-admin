@@ -1,6 +1,6 @@
 class PreviewsController < ApplicationController
 
-  
+  include PreloaderConcern
   skip_before_action :verify_authenticity_token
   
 
@@ -33,10 +33,26 @@ class PreviewsController < ApplicationController
     redirect_to action: 'status'
   end
 
+  #========================================================
+  #
+  def update_prototype
+    @preview = Preview.find(params[:preview_id])
+    PrototypeJob.perform_later @preview.website
+    head :ok
+  end
+
   def show
     @preview = Preview.find(params[:id])
-    @preloader_msg = "MESSAGE"
-    @preloader_show = true
+    if @preview.is_started?
+      @preloader_show = false
+      @preloader_msg = t 'preview.ui.started'
+    elsif @preview.is_starting?
+      @preloader_show = true
+      @preloader_msg = t 'preview.ui.starting'
+    elsif @preview.is_stopped?
+      @preloader_show = true
+      @preloader_msg = t 'preview.ui.stopped'
+    end
   end
 
   #========================================================

@@ -6,6 +6,7 @@
 //Modals
 
 var gitModal;
+var gitPreloader;
 var settingsModal;
 var styleModal;
 
@@ -112,9 +113,19 @@ $(document).ready(function() {
   Scribae.Terminal.triggers.preview.error = function(error) {
     Scribae.log(Scribae.LOG_TRACE, "preview update: "+ error);
   }
-  //Git 
-  Scribae.Terminal.triggers.git.init = function() {
-    $('.preloader').removeClass('hide'); 
+  //Git
+  gitPreloader = new Scribae.UI.Preloader('#git-preloader');
+  Scribae.Terminal.triggers.git.create = function() {
+     gitPreloader.show(I18n.t('preview.ui.create'));
+  }
+  Scribae.Terminal.triggers.git.created = function() {
+    gitPreloader.hide(I18n.t('preview.ui.created'));
+  }
+  Scribae.Terminal.triggers.git.push = function() {
+    gitPreloader.show(I18n.t('preview.ui.push'));
+  }
+  Scribae.Terminal.triggers.git.pushed = function() {
+    gitPreloader.show(I18n.t('preview.ui.pushed'));
   }
   var silent = true;
   Scribae.Terminal.init(silent);

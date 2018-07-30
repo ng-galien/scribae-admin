@@ -1,24 +1,10 @@
 = render partial: 'terminal/channel', locals: {ch_name: "WebsiteNotificationsChannel", ch_type: "#{@preview.class.name}", ch_id: "#{@preview.id}"}
-ruby:
 
-  def show_preloader
-    @preview.is_starting?
-  end
-  def show_iframe
-    @preview.is_started?
-  end
-  def message_txt
-    #"stopped:#{@preview.is_stopped?};starting:#{@preview.is_starting?};started:#{@preview.is_started?}"
-    if @preview.is_started?
-      t 'preview.ui.started'
-    elsif @preview.is_starting?
-      t 'preview.ui.starting'
-    elsif @preview.is_stopped?
-       t 'preview.ui.stopped'
-    end
-  end
 div#preview-preloader
   = render partial: 'template/ui/preloader'
+div class="row"
+  div class="col s12 center"
+    = link_to t('preview.update_prototype'), preview_prototype_path(@preview), class: "btn", remote: true
 /div class="row"
   div class="col s12 center preview-info"
     span#preview-message == "#{message_txt}"

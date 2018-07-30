@@ -3,6 +3,7 @@ require 'fileutils'
 class WebsitesController < ApplicationController
   
   include MenuConcern
+  include PreloaderConcern
 
   #=================================================================================
   def init

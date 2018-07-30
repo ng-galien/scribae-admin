@@ -20,7 +20,7 @@ module GitHelper
   # +pid+:: pid of the process
   def git_setup gitconfig, password 
 
-    terminal_add gitconfig, terminal_trigger(I18n.t('git.trigger.init'), "")
+    terminal_add gitconfig, terminal_trigger(I18n.t('git.trigger.create'), "")
     terminal_add gitconfig, terminal_info(I18n.t('git.message.init'))
 
     cmd_res = false
@@ -115,7 +115,8 @@ module GitHelper
   # +cmds+:: message of the log 
   def git_commit gitconfig
     #change dir to preview path
-    terminal_add gitconfig, terminal_info(I18n.t('git.message.commit'))
+    #terminal_add gitconfig, terminal_info(I18n.t('git.message.push'))
+    terminal_add gitconfig, terminal_trigger(I18n.t('git.trigger.push'), "")
     preview_dir = Rails.configuration.scribae['preview']['target']
     repo_path = Rails.root.join(preview_dir, gitconfig.repo)
     if Dir.exist? repo_path
@@ -125,10 +126,9 @@ module GitHelper
         ["git commit -m \"gh-pages commit\"", nil, false],
         ["git push origin gh-pages", nil, true]
       ]
-
       cmd_res = run_commands cmds, gitconfig
       if cmd_res
-        terminal_add gitconfig, terminal_trigger(I18n.t('git.trigger.commited'), "")
+        terminal_add gitconfig, terminal_trigger(I18n.t('git.trigger.pushed'), "")
       end
     end
   end

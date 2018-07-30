@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :previews, only: [:show], shallow: true do
       get 'start', to: 'previews#start', defaults: { format: 'js' }
       get 'stop', to: 'previews#stop', defaults: { format: 'js' }
+      get 'prototype', to: 'previews#update_prototype', defaults: { format: 'js' }
     end
     
     resources :terminal, only: [:index]

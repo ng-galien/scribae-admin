@@ -359,14 +359,11 @@ module PreviewHelper
       target.join('_albums')
     ]
     FileUtils.mkdir_p(paths)
-    ['_sass', '_themes', '_layouts', '_includes', 'assets', 'css', 'fonts'].each do |dir|
+    ['_sass', '_layouts', '_includes', 'assets', 'css', 'fonts'].each do |dir|
       dest = File.join(target, dir)
-      if !File.directory?(dest)
-        #FileUtils.remove_dir(dest, true)
-        FileUtils.cp_r(
-          Rails.root.join(proto_dir, proto_name, dir), 
-          dest)
-      end
+      FileUtils.cp_r(
+        Rails.root.join(proto_dir, proto_name, dir), 
+        dest, :remove_destination => erase, :verbose => true)
     end
     ['Gemfile', 'Gemfile.lock', '.gitignore'].each do |file|
       src = Rails.root.join(proto_dir, proto_name, file)

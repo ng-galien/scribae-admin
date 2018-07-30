@@ -22,10 +22,11 @@ Scribae.Terminal = Scribae.Terminal || {
     },
     git: {
       clear: function() {},
-      init: function() {},
       error: function(message) {},
+      create: function(message) {},
       created: function(message) {},
-      commited: function(message) {}
+      push: function(message) {},
+      pushed: function(message) {}
     }
   },
 
@@ -115,14 +116,17 @@ Scribae.Terminal = Scribae.Terminal || {
           case I18n.t("git.trigger.error"):
             Scribae.Terminal.triggers.git.error(data.nessage);
           break;
+          case I18n.t("git.trigger.create"):
+            Scribae.Terminal.triggers.git.create(data.message);
+          break;
           case I18n.t("git.trigger.created"):
             Scribae.Terminal.triggers.git.created(data.message);
           break;
-          case I18n.t("git.trigger.commited"):
-            Scribae.Terminal.triggers.git.commited(data.message);
+          case I18n.t("git.trigger.push"):
+            Scribae.Terminal.triggers.git.push(data.message);
           break;
-          case I18n.t("git.trigger.init"):
-            Scribae.Terminal.triggers.git.init();
+          case I18n.t("git.trigger.pushed"):
+            Scribae.Terminal.triggers.git.pushed();
           break;
           case I18n.t("git.trigger.clear"):
             Scribae.Terminal.triggers.git.clear();

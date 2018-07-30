@@ -378,11 +378,17 @@ en:
           label: "Website"
           tip: "The website where is the album"
   git:
+    ui:
+      create: "Creating your Git repository, wait a while..."
+      created: "Git repository created!"
+      push: "Pushing the website online, wait a while..."
+      push: "Website pushed successfully!"
     trigger:
-      init: "init"
       error: "error"
+      create: "create"
       created: "created"
-      commited: "commited"
+      push: "push"
+      pushed: "pushed"
       clear: "clear"
     menu:
       init:
@@ -413,6 +419,7 @@ en:
       configure: "Configure the local repository"
       commit: "Commit the repository"
   preview:
+    update_prototype: "Update prototype"
     ui:
       stopped: "Preview is stopped, edit the project to start it"
       starting: "Preview is starting... wait few seconds"
