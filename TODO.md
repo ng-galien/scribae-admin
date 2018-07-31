@@ -12,11 +12,20 @@
 ### Prototype
 
 * Utilisation de rysnc pour le contenu static des prototypes
+
+> rsync -av prototypes/default/ preview/test
+> rsync -av prototypes/librairies/js  preview/test/assets/
+> rsync -av prototypes/librairies/sass/  preview/test/_sass/
+> rsync -av prototypes/librairies/css  preview/test/css/
+> rsync -av prototypes/librairies/fonts/  preview/test/fonts/
+
 * Scinder l'arborescence des prototype avec les librairies / modèées html
 * Revoir entièrement le prototype par défaut avec
   1. Debug des objets liquid
   2. CSS
   3. Articles avec images
+
+
 
 ## Version ultérieure
 

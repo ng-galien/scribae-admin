@@ -34,7 +34,6 @@ git clone --recurse-submodules https://github.com/ng-galien/scribae-admin.git
 ## Git submodule
 
 
-
 ## BUG:
 pour la gallery des albums
 mettre à jour le formulaire des positions dans le js erb de image
