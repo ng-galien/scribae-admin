@@ -1,5 +1,13 @@
-a [class="prefix tooltipped" data-position="right" 
+a [class="prefix tooltipped scribae-form-field" data-position="right" 
     data-delay="50" data-tooltip=t("#{domain}.edit.form.#{field}.tip")]
-  i class="material-icons tip-icon" == 'create'
-= form.text_field  field, :class=>"validate"
-= form.label       field, t("#{domain}.edit.form.#{field}.label"), :for=>"#{field}"  
+  = fa_icon "quote-left"
+  /i class="material-icons tip-icon" == 'create'
+
+- if defined? validate_opts
+  = form.text_field  field, validate_opts
+  = form.label field, t("#{domain}.edit.form.#{field}.label"), :for=>"#{field}" 
+  span [class="helper-text" data-error=t("#{domain}.edit.form.#{field}.validation.error")
+    data-success=t("#{domain}.edit.form.#{field}.validation.success")]
+- else
+  = form.text_field  field
+  = form.label field, t("#{domain}.edit.form.#{field}.label"), :for=>"#{field}" 

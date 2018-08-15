@@ -14,7 +14,7 @@ gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -50,6 +50,7 @@ gem "os"
 gem "i18n-js"
 gem 'http_accept_language'
 gem 'rails-i18n', '~> 5.1'
+gem "font-awesome-rails"
 
 gem "rack-reverse-proxy", require: "rack/reverse_proxy"
 

@@ -73,4 +73,5 @@ $(document).ready(function() {
     initTimePicker();
     initDatePicker();
   }
+  $('select').formSelect();
 });

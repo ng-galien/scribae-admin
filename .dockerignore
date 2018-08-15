@@ -39,11 +39,13 @@ spec/tmp
 **.orig
 
 .bundle
-
 .ruby-version
 .ruby-gemset
 
 .rvmrc
+
+Gemfile.lock
+package-lock.json
 
 # if using bower-rails ignore default bower_components path bower.json files
 vendor/assets/bower_components
@@ -58,7 +60,7 @@ bower.json
 /db/*.sqlite3-journal
 
 # Ignore upload 
-/public/upload/
+/public/upload/images/*
 
 # Ignore deploy 
 /preview
@@ -69,27 +71,18 @@ bower.json
 # Ignore sass
 /.sass-cache
 
-# Ignore prototype temp
-/prototype/default/_site
-/prototype/default/.sass-cache
-/prototype/default/tmp
-/prototype/default/upload
-/prototype/default/Gemfile.lock
-/prototype/default/albums.md
-/prototype/default/index.md
-/prototype/default/info.md
-/prototype/default/themes.md
-/prototype/default/video.md
-/prototype/default/_config.yml
-/prototype/default/posts
-/prototype/default/_themes
-/prototype/default/_posts
-/prototype/default/_info
-/prototype/default/_albums
+# Ignore prototype node modules
+/prototypes/mode_modules
+
+/tmp
+/test
+/vendor
+/log
 
 
 # Ignore vscode
 /.vscode
+
 
 # Ignore all logfiles and tempfiles.
 /log/*

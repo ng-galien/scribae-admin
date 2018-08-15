@@ -1,3 +1,20 @@
+.fixed-action-btn{
+  right: 10px;/*desired value*/
+  top: 5px;
+}
+#toc-menu {
+  max-height: 50px;
+} 
+#toc-menu li {
+  display: inline-block;
+} 
+.menu-item-text {
+  font-weight: 600;
+  color: #120142
+}
+#preview-preloader {
+  min-height: 50px;
+}
 #iframe-preview {
   width: 100vw;
   height: 100vh;

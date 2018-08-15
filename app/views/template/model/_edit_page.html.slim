@@ -6,40 +6,35 @@ div class="edit-container"
   - if markdown
     = render partial: 'template/image/gallery', locals: {markdown: true}
   //Article invite
-  div class="row"
-    
+  div class="row"    
     div class="col s12 center invite"
-      div class="section"
-        span class="" == t("#{domain}.edit.invite")
-        = link_to t('return_to_list'), website_articles_path(@website), class: 'btn right' 
-      div class="divider"
+      span class="" == t("#{domain}.edit.invite")
     - unless image_main.nil?
-      div class="col s12 m3 center"
+      div class="section col s12 m3 center"
         div class="row"
           div class="col s12 center"
             - if image_main.upload.url != nil
               = image_tag image_main.upload.m.url, id: 'image-main-preview', class: 'responsive-img z-depth-3 materialboxed'
             - else
-              img#image-main-preview class='responsive-img z-depth-3'
+              img#image-main-preview class='responsive-img z-depth-3 materialboxed'
           div class="col s12 center"
-            a class="waves-effect waves-light btn modal-trigger" href="#image-main-modal" == 'Image' 
+            = link_to "#image-main-modal", class: "modal-trigger" do
+              span class="tooltipped" data-tooltip="Upload image" data-position="right" data-delay="50"
+                i class="material-icons large" 
+                  == 'photo'
     //Obj form
     = form_for [ parent, obj ] do |obj_form|
+      = render partial: "template/model/edit_menu", locals: {parent: parent, domain: domain, obj: obj, form: obj_form}
+
       - unless image_main.nil?
         div class="col s12 m9"
           = render partial: "#{domain}/edit_form", locals: {form: obj_form} 
       - else
         div class="col s12" 
           = render partial: "#{domain}/edit_form", locals: {form: obj_form} 
-      //first submit
-      div class="col s12 center"     
-        = obj_form.submit "#{t('confirm')}", :class=>"btn"
       - if markdown 
         div class="col s12 markdown-container" 
           = obj_form.text_area  :markdown, class: 'browser-default mde-editor'
-        //second submit
-        div class="col s12 center"     
-          = obj_form.submit "#{t('confirm')}", :class=>"btn"
     - unless markdown
       div class="col s12 center invite"
         span class="" == t("#{domain}.edit..gallery.invite")

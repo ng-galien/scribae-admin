@@ -1,17 +1,15 @@
 = form_for [@website, @album_new], remote: true do |form|
   div class="row"
-    div class="col s12 center"
+    /Invite
+    div class="col s12 center scribae-form-invite"
       h4 == t 'albums.new.invite'
+    /Title
     div class="col s12 input-field "
-      a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('albums.new.form.title.tip')}"
-        i class="material-icons tip-icon" == 'create'
-      = form.text_field  :title, :class=>"validate"
-      = form.label       :title, "#{t('albums.new.form.title.label')}", :for=>"title"  
+      = render partial: 'template/form/string_field', locals: {form: form, domain: :albums, field: :title, validate_opts: {:class => 'validate', :required => true, :minlength => 4} }
+    /Intro
     div class="col s12 input-field "
-      a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('albums.new.form.intro.tip')}"
-        i class="material-icons tip-icon" == 'create'
-      = form.text_field  :intro, :class=>"validate"
-      = form.label       :intro, "#{t('albums.new.form.intro.label')}", :for=>"intro"  
-      = form.hidden_field :website_id, value: "#{@website.id}"
+      = render partial: 'template/form/string_field', locals: {form: form, domain: :albums, field: :intro} 
+    /Website id
+    = form.hidden_field :website_id, value: "#{@website.id}"
     div class="col s12 center"
-      = form.submit 'OK', :class=>"btn"
+      = render partial: 'template/form/submit'

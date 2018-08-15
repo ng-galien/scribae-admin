@@ -1,2 +1,2 @@
-$('#sortable-list').html('<%= escape_javascript( render partial: "layouts/model/sortable_list", locals: {list: @albums} ) %>')
+$('#sortable-list').html('<%= escape_javascript( render partial: "template/model/sortable_list", locals: {list: @albums} ) %>')
 $('#index-table').html('<%= escape_javascript( render partial: "albums/index_table", locals: {list: @albums, parent: @website} ) %>')

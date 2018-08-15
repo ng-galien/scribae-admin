@@ -1,22 +1,23 @@
-div#toc-menu class="fixed-action-btn"
+/Index menu
+div#toc-menu class="fixed-action-btn toc-menu-navbar"
   /span == "sortable: #{sortable}"
-  a class="btn-floating blue toolbar-main"
-    i class="material-icons menu-icon" == "toc"
+  a class="btn-floating toc-main"
+    = fa_icon "navicon", class: "menu-icon"
   ul
-    - if sortable
+    - unless @website.nil?
+      li 
+        a href="#{edit_website_path(@website)}" class="btn-floating blue darken-3" 
+          span class="tooltipped" data-tooltip="#{t 'menu.back.tip' }" data-position="left" data-delay="50"
+            = fa_icon "arrow-left"
+    - if sortable 
       li 
         /span class="menu-item-text" == "#{t 'menu.sort.label' }" 
-        a href="#sortable-modal" class="modal-trigger btn-floating orange darken-2"
+        a href="#sortable-modal" class="modal-trigger btn-floating orange darken-3"
           span class="tooltipped" data-tooltip= "#{t 'menu.sort.tip' }" data-position="left" data-delay="50"
-            i class="material-icons" == "import_export"
+            = fa_icon "sort" 
     li 
       /span class="menu-item-text" == "#{t 'menu.new.label' }" 
-      a href="#create-modal" class="modal-trigger btn-floating green darken-2"
+      a href="#create-modal" class="modal-trigger btn-floating green darken-1"
         span class="tooltipped" data-tooltip="#{t 'menu.new.tip' }" data-position="left" data-delay="50"
-          i class="material-icons" == "add"
-    li 
-      -unless @website.nil?
-        /span class="menu-item-text" == "#{t 'menu.back.label' }" 
-        a href="#{edit_website_path(@website)}" class="btn-floating blue darken-2" 
-          span class="tooltipped" data-tooltip="#{t 'menu.back.tip' }" data-position="left" data-delay="50"
-            i class="material-icons" == "language"
+          = fa_icon "plus"
+     

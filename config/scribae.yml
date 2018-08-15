@@ -7,19 +7,7 @@ default: &default
     # - maps
   preview:
     target: preview
-    dirs:
-      - _sass
-      - _themes
-      - _layout
-      - _includes
-      - assets
-      - css
-      - fonts
-      - images
-    files:
-      build: build.yml
-      config: _config.yml
-      log: jekyll.log
+    prototypes_dir: "prototypes"
 
 development:
   <<: *default

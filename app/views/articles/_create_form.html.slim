@@ -1,18 +1,17 @@
 = form_for [@website, Article.new], remote: true do |form|
   div class="row"
     /Invite
-    div class="col s12 center"
+    div class="col s12 center scribae-form-invite"     
       h4 == t 'articles.new.invite'
     /Title
     div class="col s12 input-field"
-      = render partial: 'template/form/string_field',
-        locals: {form: form, domain: :articles, field: :title}
+      = render partial: 'template/form/string_field', locals: {form: form, domain: :articles, field: :title,\ 
+      validate_opts: {:class => 'validate', :required => true, :minlength => 4} }
     /Intro
     div class="col s12 input-field "
-      = render partial: 'template/form/string_field', 
-        locals: {form: form, domain: :articles, field: :intro} 
+      = render partial: 'template/form/string_field', locals: {form: form, domain: :articles, field: :intro} 
     /Website id
     = form.hidden_field :website_id, value: "#{@website.id}"
     /Submit
     div class="col s12 center"
-      = form.submit 'OK', :class=>"btn"
+      = render partial: 'template/form/submit'

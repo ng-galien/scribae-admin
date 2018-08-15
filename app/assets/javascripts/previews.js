@@ -32,5 +32,13 @@ $(document).ready(function() {
   }
   var silent = false;
   Scribae.Terminal.init(silent);
+  var element = document.getElementById('toc-menu');
+  if(element) {
+    Scribae.Global.tocMenu = M.FloatingActionButton.init(element, {
+      direction: 'left',
+      hoverEnabled: false,
+      toolbarEnabled: false
+    });
+  };
 
 });

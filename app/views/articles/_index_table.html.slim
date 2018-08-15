@@ -1,17 +1,22 @@
 thead
     tr
-      th == 'Title'
-      th == 'Intro'
-      th == 'Featured'
-      th == 'Edition'
-      th == 'Modified'
+      th == t('articles.index.table.title')
+      /th == 'Intro'
+      th == t('articles.index.table.theme')
+      th == t('articles.index.table.featured')
+      th == t('articles.index.table.edited')
+      th == t('articles.index.table.updated')
       th == ''
       th == ''
 tbody
   - list.each do |obj|
     tr
       td == obj.title
-      td == obj.intro.truncate(15, omission: '...')
+      /td == obj.intro.truncate(15, omission: '...')
+      - if obj.theme.nil?
+        td == t('empty')
+      - else
+        td == obj.theme.title
       td == obj.featured
       td == localize(obj.date, :format => :default)
       td == localize(obj.updated_at, :format => :default)

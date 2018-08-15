@@ -49,7 +49,7 @@ function checkStatus(data) {
 }
 
 $(document).ready(function() {
-  Scribae.LOG_LEVEL = Scribae.LOG_DEBUG;
+  Scribae.LOG_LEVEL = Scribae.LOG_NONE;
   Scribae.log(Scribae.LOG_INFO, "websites -> ready");
 
   //=========================================================
@@ -113,8 +113,11 @@ $(document).ready(function() {
   Scribae.Terminal.triggers.preview.error = function(error) {
     Scribae.log(Scribae.LOG_TRACE, "preview update: "+ error);
   }
+  //=========================================================
   //Git
+  //Preloader
   gitPreloader = new Scribae.UI.Preloader('#git-preloader');
+  //Triggers
   Scribae.Terminal.triggers.git.create = function() {
      gitPreloader.show(I18n.t('preview.ui.create'));
   }
@@ -127,8 +130,8 @@ $(document).ready(function() {
   Scribae.Terminal.triggers.git.pushed = function() {
     gitPreloader.show(I18n.t('preview.ui.pushed'));
   }
-  var silent = true;
-  Scribae.Terminal.init(silent);
+
+  Scribae.Terminal.init(true);
   //=========================================================
   //COMPS ENABLE TRIGGER
   $('#comp-show-form input[type=checkbox]').change(function () {

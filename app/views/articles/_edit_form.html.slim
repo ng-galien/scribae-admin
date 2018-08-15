@@ -8,6 +8,10 @@ div class="row"
   div class="col s12 input-field center"
     = render partial: 'template/form/string_field',
         locals: {form: form, domain: :articles, field: :title}  
+  //intro
+  div class="col s12 input-field"
+    = render partial: 'template/form/string_field',
+        locals: {form: form, domain: :articles, field: :intro}  
   //date
   div class="col m6 input-field center"
     a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('articles.edit.form.date.tip')}"
@@ -16,17 +20,20 @@ div class="row"
     label for="input_text_date"
       == t('articles.edit.form.date.label')
   //time
-  div class="col m3 input-field center"
+  div class="col m6 input-field center"
     a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t('articles.edit.form.time.tip')}"
       i class="material-icons tip-icon" == 'create'
     input#input_text_article_time type="text"
     label for="input_text_time"
       == t('articles.edit.form.time.label')
   //featured
-  div class="col m3 input-field center"
+  div class="col m8 input-field"
+    a [class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip=""]
+      i class="material-icons tip-icon" == 'create'
+    = form.collection_select :theme_id, Theme.all, :id, :title
+    label for="" == "select"
+  //featured
+  div class="col m4 input-field center"
     = render partial: 'template/form/boolean_field',
         locals: {form: form, domain: :articles, field: :featured} 
-  //intro
-  div class="col s12 input-field"
-    = render partial: 'template/form/string_field',
-        locals: {form: form, domain: :articles, field: :intro}  
+

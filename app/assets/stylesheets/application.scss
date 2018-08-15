@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  * require jquery-tablesorter/theme.dropbox
  *= require_self
+ *= require font-awesome
  *= require material_icons_unicode
  *= require dropzone/dropzone
  *= require jquery-ui
@@ -21,13 +22,15 @@
 
 $nav-bar-offset: 0px;
 
-@import 'materialize';
+@import 'materialize-custom';
 
 @import 'scribae/global';
 @import 'scribae/navigation';
 @import 'scribae/image';
 @import 'scribae/picker';
 @import 'scribae/edit';
+@import 'scribae/markdown';
+@import 'scribae/form';
 
 body {
   display: flex;

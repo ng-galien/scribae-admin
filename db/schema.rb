@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 2018_04_09_062444) do
 
   create_table "articles", force: :cascade do |t|
     t.integer "website_id"
+    t.integer "theme_id"
     t.integer "helper"
     t.boolean "fake"
     t.datetime "date"
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 2018_04_09_062444) do
     t.text "markdown"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["theme_id"], name: "index_articles_on_theme_id"
     t.index ["website_id"], name: "index_articles_on_website_id"
   end
 

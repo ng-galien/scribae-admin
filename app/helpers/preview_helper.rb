@@ -7,7 +7,7 @@ require 'i18n'
 module PreviewHelper
 
   include TerminalHelper
-
+  include ProcessHelper
 
   #=================================================================================
   # Get the destination path of the preview
@@ -19,6 +19,26 @@ module PreviewHelper
     return Rails.root.join(
       conf['target'], 
       website.name.parameterize)
+  end
+
+  #=================================================================================
+  # Update site data
+  # Create data file of the website configuration
+  # Params:
+  # +website+:: the site id
+  # +dest+:: the site id
+  def update_data website
+    dest = get_dest_path website.preview
+    data_dir = File.join(dest, "_data")
+    FileUtils.mkdir_p(data_dir)
+    data_file = File.join(data_dir, "scribae.json")
+    comps = Component.all
+    data = {
+      "components" => comps
+    }
+    File.open(data_file,'w') do |f| 
+      f.write data.to_json
+    end
   end
 
   #=================================================================================
@@ -59,6 +79,7 @@ module PreviewHelper
       "permalink" => "/posts/:year-:month-:day-:title",
       "paginate" => 10,
       "paginate_path" => "/posts/page-:num/",
+      "local" => local
       #"profile" => true,
       #"incremental" => true
     }
@@ -339,6 +360,7 @@ module PreviewHelper
 
 
   #========================================================
+  # DEPRECIATED
   # Copy the static content
   # Copy the directory structure of static content of the model
   # Params:
@@ -373,9 +395,16 @@ module PreviewHelper
       end
     end
   end
-
-  def chekout_prototype
-    
+  
+  #========================================================
+  # Params:
+  # +website
+  def update_prototype website
+    conf = Rails.configuration.scribae['preview']
+    preview = website.preview
+    Dir.chdir Rails.root.join(conf['prototypes_dir'])
+    cmds = [["./copy_model.sh #{preview.prototype} #{preview.name}", nil, true]] 
+    run_commands cmds, preview
   end
 
   #========================================================

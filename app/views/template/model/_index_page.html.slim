@@ -33,5 +33,5 @@ div class="container"
     div class="col s12 center empty-index-table"
       span == t("#{nested}.index.empty")
     div class="col s12 center"
-      table#index-table class = "striped centered"
+      table#index-table class = "highlight responsive-table"
         = render partial: "#{nested}/index_table", locals: {parent: parent, list: list}

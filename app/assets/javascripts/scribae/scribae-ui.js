@@ -14,11 +14,11 @@ Scribae.UI = Scribae.UI || {
  * @param {string} id 
  */
 Scribae.UI.Preloader = function(id) {
-  console.log(id);
+  //console.log(id);
   this._spinner = $(id).find('.preloader-wrapper').first();
   this._message = $(id).find('.preloader-message').first();
-  console.log(this._spinner);
-  console.log(this._message);
+  //console.log(this._spinner);
+  //console.log(this._message);
 }
 
 /**

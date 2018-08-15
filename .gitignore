@@ -22,10 +22,6 @@
 
 # Ignore sass
 /.sass-cache
-/bin
-
-# Ignore prototype temp
-prototype/*
 
 # Ignore vscode
 /.vscode

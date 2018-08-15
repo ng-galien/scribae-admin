@@ -7,7 +7,7 @@
       div class="row"
         div#gallery-detail class=""
           div class="col s6"
-            img#galery-preview class="responsive-img"
+            img#galery-preview class="responsive-img "
           div class="col s6"
             div class="row"
               div class="col s6"
@@ -34,17 +34,17 @@
                 a#gallery-insert class="btn right" == 'select'
                 a#gallery-return class="btn" == 'back'
         div#new-upload-container class="col s8 offset-s2"
-          = render partial: 'layouts/image/new_upload'
+          = render partial: 'template/image/new_upload'
         div#gallery-content class="row"
-          = render partial: 'layouts/image/gallery_content', locals: {markdown: markdown}
+          = render partial: 'template/image/gallery_content', locals: {markdown: markdown}
 
 - else
   div#pos-form-container
-    = render partial: 'layouts/image/sort_form'
+    = render partial: 'template/image/sort_form'
   div#gallery class=''
     div class='container'
       div class="row"
         div#new-upload-container class="col s8 offset-s2"
-          = render partial: 'layouts/image/new_upload'
+          = render partial: 'template/image/new_upload'
       div#gallery-content class="row"
-        = render partial: 'layouts/image/gallery_content', locals: {markdown: markdown}
+        = render partial: 'template/image/gallery_content', locals: {markdown: markdown}

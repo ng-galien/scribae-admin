@@ -1,6 +1,28 @@
-.fixed-action-btn{
-  right: 20px;/*desired value*/
-  top: 80px;
+.fixed-action-btn {
+  
+}
+
+.toc-menu-navbar {
+  right: 10px;/*desired value*/
+  top: 74px;
+
+}
+.toc-menu-absolute {
+  right: 10px;/*desired value*/
+  top: 10px;
+}
+.btn-floating {
+  @extend .z-depth-2;
+}
+
+.toc-main {
+  background-color: $primary_color;
+}
+.toc-main :hover {
+
+}
+.toc-main i {
+  font-size: 1.5em;
 }
 
 #toc-menu li {

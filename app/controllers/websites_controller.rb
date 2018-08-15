@@ -17,7 +17,10 @@ class WebsitesController < ApplicationController
   def index   
     @websites = Website.all
       .order(created_at: :desc)
-    @website_neraiw = Website.new
+    @website_new = Website.new
+    @black_list = Website.select('name')
+      .map(&:name).map{ |name| name.chars.map { |c| "[#{c.upcase}#{c.downcase}]" }.join('')}
+      .map{ |word| "\\b#{word}\\b" }.join('|')
     StopPreviewJob.perform_later 
   end
 

@@ -78,7 +78,7 @@ class ArticlesController < ApplicationController
 
     def article_params
       params.require(:article).
-        permit(:website_id, :fake, :date, :featured, :title, :intro, :markdown)
+        permit(:website_id, :fake, :date, :featured, :title, :intro, :markdown, :theme_id)
     end 
 
 end

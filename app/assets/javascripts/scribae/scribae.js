@@ -81,6 +81,7 @@ Scribae.Global.initController = function() {
   if(element) {
     Scribae.Global.sortableModal = M.Modal.init(element, {});
   }
+  
   element = document.getElementById('toc-menu');
   if(element) {
     Scribae.Global.tocMenu = M.FloatingActionButton.init(element, {
@@ -88,7 +89,7 @@ Scribae.Global.initController = function() {
       hoverEnabled: false,
       toolbarEnabled: false
     });
-  }
+  };
   $('.tooltipped').tooltip();
   $('.materialboxed').materialbox();
   M.updateTextFields();
@@ -117,6 +118,8 @@ Scribae.Global.updateIndexTable = function() {
     $('.empty-index-table').css('display', 'block');
     $("#index-table").css('opacity', 0);
   }
+  $('input').removeClass('valid');
+  $('input').removeClass('invalid');
 }
 
 Scribae.Global.updateIndexPage = function(sortable) {

@@ -1,22 +1,15 @@
 = render partial: 'terminal/channel', locals: {ch_name: "WebsiteNotificationsChannel", ch_type: "#{@preview.class.name}", ch_id: "#{@preview.id}"}
+div#toc-menu class="fixed-action-btn"
+  a class="btn-floating blue toolbar-main"
+    i class="material-icons menu-icon" == "toc"
+  ul
+    li
+      = link_to preview_prototype_path(@preview), class: "btn-floating orange", remote: true  do 
+        span class="tooltipped" data-tooltip="#{t 'preview.update_prototype' }" data-position="left" data-delay="50"
+          i class="material-icons" == "save"
 
 div#preview-preloader
   = render partial: 'template/ui/preloader'
-div class="row"
-  div class="col s12 center"
-    = link_to t('preview.update_prototype'), preview_prototype_path(@preview), class: "btn", remote: true
-/div class="row"
-  div class="col s12 center preview-info"
-    span#preview-message == "#{message_txt}"
-  div#preloader-container class="col s12 center #{show_preloader ? '' : 'hide' }"
-    div class="preloader-wrapper big active"
-      div class="spinner-layer spinner-blue-only"
-        div class="circle-clipper left"
-          div class="circle"
-        div class="gap-patch"
-          div class="circle"
-        div class="circle-clipper right"
-          div class="circle"
   
-div#iframe-container class="row #{show_iframe ? '' : 'hide' }"
+div#iframe-container class="row #{@preview.is_started? ? '' : 'hide' }"
   iframe#iframe-preview src="/scribae"

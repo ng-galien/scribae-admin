@@ -1,5 +1,7 @@
 #!/bin/bash
-cp -r /app /scribae-admin && cd /scribae-admin/app \
+rsync -av /tmp/scribae-admin/db/ /scribae-admin/db/ \
+&& mkdir -p /scribae-admin/public/upload/images \
+&& cd /scribae-admin \
 && bundle check || bundle install \
-&& bundle exec rails db:migrate RAILS_ENV=development \
+&& rake db:exists && rake db:migrate || rake db:setup \
 && bundle exec rails server -p 3000 -b '0.0.0.0'

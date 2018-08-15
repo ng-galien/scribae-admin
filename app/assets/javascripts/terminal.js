@@ -7,4 +7,12 @@ $(document).ready(function(){
   Scribae.log(Scribae.LOG_DEBUG, 'terminal -> ready');
   var silent = false;
   Scribae.Terminal.init(silent);
+  var element = document.getElementById('toc-menu');
+  if(element) {
+    Scribae.Global.tocMenu = M.FloatingActionButton.init(element, {
+      direction: 'left',
+      hoverEnabled: false,
+      toolbarEnabled: false
+    });
+  };
 });

@@ -1,5 +1,14 @@
 {
   "name": "admin-app",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "modernizr": "~3.6.0",
+    "jquery-minicolors": "~2.1.10",
+    "jquery-lazy": "~1.7.9",
+    "jquery-match-height": "~0.7.2",
+    "materialize-css": "next",
+    "simplemde": "~1.11.2",
+    "pubsub": "~3.2.1",
+    "jquery-validation": "~1.17.0"
+  }
 }

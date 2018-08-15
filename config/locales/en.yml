@@ -37,11 +37,39 @@ en:
   cancel: "Cancel"
   delete: "Delete"
   edit: "Edit"
+  empty: "none"
   confirm-delete: "Warning! Are you sure to delete?"
   confirm-build: "Warning! Are you sure to build?"
   return_to_list: "Return to list"
   wait_message: "Please wait while processing..."
-
+  submit: "Submit"
+  #Templates
+  templates:
+    model:
+      edit-menu:
+        save: 
+          color: 'red'
+          tip: "Save changes"
+        preview: 
+          color: 'orange darken-1'
+          tip: "Show preview"
+        list: 
+          color: 'green'
+          tip: "Return to list"
+        project: 
+          color: 'blue'
+          tip: "Return to project"
+      edit-page:
+        return: "Return to list"
+        submit: "Save changes"
+      index-menu:
+      index-page:
+      preloader:
+        message: "Please wait a while.."
+      sortable-list:
+      sortable: 
+        invite: "Drag to sort items"
+        submit: "Save changes"
   icons:
     invite: "Choose an icon"
   #Menu
@@ -55,9 +83,6 @@ en:
     sort:
       label: "Sort"
       tip: "Sort items"
-  #Sortable
-  sortable:
-    invite: "Drag to sort items"
   #Components
   components:
     website:
@@ -72,9 +97,10 @@ en:
       navbar: "Albums"
     map: 
       navbar: "Maps"
+  #Style
   style:
     defaut:
-      
+  #Websites
   websites: 
     navbar: "Projects"
     #Default values
@@ -140,7 +166,10 @@ en:
       form:
         name: 
           label: "Name"
-          tip: "The name of the project for your website"
+          tip: "Project name, only characters or digit and '_' for space"
+          validation:
+            success: "Project's name is valid"
+            error: "Project's name is invalid or already exists"
         description: 
           label: "Description"
           tip: "Write a short description of your project" 
@@ -263,7 +292,7 @@ en:
           readme: 
             label: "Read me of the repo"
             tip: ""
-
+  #Articles
   articles:
     navbar: "Articles"
     #Index Page
@@ -271,6 +300,12 @@ en:
       invite: "Article list"
       create: "Create article"
       empty: "No article, create a new one"
+      table: 
+        title: "Title"
+        theme: "Theme"
+        featured: "Featured"
+        edited: "Edition date"
+        updated: "Last update"
     new:
       invite: "Create new article"
       form:
@@ -286,6 +321,9 @@ en:
         title: 
           label: "Title"
           tip: "Write the main title of the article"
+          validation:
+            success: "Article's title is valid"
+            error: "Article's title is empty or too short"
         image: 
           label: "Image"
           tip: "Select an illustration for the article"
@@ -304,7 +342,7 @@ en:
         markdown:
           label: "Article content"
           tip: "The content of the article"
-
+  #Themes
   themes:
     
     index:
@@ -326,10 +364,13 @@ en:
         title: 
           label: "Title"
           tip: "tip"
+          validation:
+            success: "Theme's title is valid"
+            error: "Theme's title is empty or too short"
         intro: 
           label: "Introduction"
           tip: "tip"
-  
+  #Info
   infos:
     index: 
       invite: "Section list"
@@ -347,7 +388,10 @@ en:
         title: 
           label: "Title"
           tip: "Write the title of the section"
-  
+          validation:
+            success: "Section's title is valid"
+            error: "Section's title is empty or too short"
+  #Albums
   albums:
     index: 
       invite: "Album list"
@@ -377,6 +421,7 @@ en:
         link: 
           label: "Website"
           tip: "The website where is the album"
+  #Git
   git:
     ui:
       create: "Creating your Git repository, wait a while..."
@@ -418,6 +463,7 @@ en:
       create: "Create the remote repository on github.com"
       configure: "Configure the local repository"
       commit: "Commit the repository"
+  #Preview
   preview:
     update_prototype: "Update prototype"
     ui:
@@ -458,11 +504,12 @@ en:
         started: "Jekyll is started"
         error: "Jekyll error while running!"
         end: "Jekyll terminated"
+  #Terminal
   terminal: 
     info: "INFO:"
     error: "ERROR"
     cmd: "> EXEC:"
-
+  #Time format
   time:
     formats:
       default: "%d/%m/%y %H:%M"

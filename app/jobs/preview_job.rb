@@ -39,9 +39,10 @@ class PreviewJob < ApplicationJob
       # Copy static content and config
       if preview.is_stopped?
         terminal_add preview, terminal_info(I18n.t('preview.message.job.static'))
-        copy_static_content website
+        update_prototype website
         terminal_add preview, terminal_info(I18n.t('preview.message.job.config'))
         create_config website
+        update_data website
       end
       
       # call create on each modules activated in Scribae

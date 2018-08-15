@@ -1,3 +1,4 @@
+RAILS_ENV = 'development'
 # Load the Rails application.
 require_relative 'application'
 

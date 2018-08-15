@@ -12,6 +12,7 @@ class ImagesController < ApplicationController
     @image.update(update_params)
     @image.upload = params[:file]
     @image.save!
+    from_model @image
     #puts "type=#{@image.imageable_type}, id=#{@image.imageable_id}"
     set_gallery @image.imageable_type, @image.imageable_id
     @markdown = @image.imageable_type != 'Album';
@@ -28,6 +29,7 @@ class ImagesController < ApplicationController
   # Params:
   def destroy
     @image = Image.find(params[:id])
+    from_model @image
     imageable_id = @image.imageable_id
     imageable_type = @image.imageable_type
     @image.destroy
@@ -49,17 +51,23 @@ class ImagesController < ApplicationController
     @image.update(update_params)
     @image.upload = params[:file]
     @image.save!
+    from_model @image
     ImageJob.perform_later @image
     render json: @image
   end
 
   private
 
+    def from_model image
+      @model_obj = image.imageable_type
+      .classify
+      .constantize
+      .find(image.imageable_id)
+    end
+
     def set_gallery imageable_type, imageable_id
 
       if imageable_type == 'Album' 
-        @album = Album.find(imageable_id)
-  
         @image_list = Image.where({
           imageable_type: imageable_type,
           imageable_id:   imageable_id,

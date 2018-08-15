@@ -26,10 +26,7 @@ git clone --recurse-submodules https://github.com/ng-galien/scribae-admin.git
 
 ## Docker
 
-> docker build -t scribae-admin .
-> docker run -itP scribae-admin
-> docker tag scribae-admin:latest nggalien/scribae-admin
-> docker push nggalien/scribae-admin:latest
+
 
 ## Git submodule
 

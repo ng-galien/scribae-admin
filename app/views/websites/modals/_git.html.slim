@@ -15,7 +15,7 @@ div class="container row #{@gitconfig.is_initialized? ? '' : 'hide' }"
     = link_to gitconfig_commit_path(@gitconfig), class: "btn", remote: true
       span class="tooltipped" data-tooltip = "#{t 'git.menu.commit.tip'}"  data-position="left" data-delay="50"
           i class="material-icons" == "backup"
-= form_tag "/gitconfigs/#{@gitconfig.id}/setup", remote: true, id: 'git-form-create', class: "#{@gitconfig.is_initialized? ? 'hide' : '' }"  do |form|
+= form_tag "/gitconfigs/#{@gitconfig.id}/setup", remote: true, id: 'git-init-form', class: "#{@gitconfig.is_initialized? ? 'hide' : '' }"  do |form|
   div class="container row"
     // Invite
     div class="col s12 center"
@@ -26,20 +26,23 @@ div class="container row #{@gitconfig.is_initialized? ? '' : 'hide' }"
     div class="col s12 input-field"
       a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t 'git.form.user.tip'}"
         i class="material-icons tip-icon" == 'create'
-      = text_field_tag  "user"
+      = text_field_tag  "user", nil, class: ''
       = label_tag       "user", t('git.form.user.label')
+      span class="helper-text" == "Validation..."
     // Email
     div class="col s12 input-field"
       a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t 'git.form.email.tip'}"
         i class="material-icons tip-icon" == 'create'
-      = text_field_tag  "email"
+      = text_field_tag  "email", nil, class: ''
       = label_tag       "email", t('git.form.email.label')
+      span class="helper-text" == "Validation..."
     // Password
     div class="col s12 input-field"
       a class="prefix tooltipped" data-position="right" data-delay="50" data-tooltip="#{t 'git.form.password.tip'}"
         i class="material-icons tip-icon" == 'create'
-      = password_field_tag  "password"
+      = password_field_tag  "password", nil, class: ''
       = label_tag       "password", t('git.form.password.label')
+      span class="helper-text" == "Validation..."
     div class="col s12 center input-field"
       = submit_tag t('git.form.configure'), class: "btn"
         
