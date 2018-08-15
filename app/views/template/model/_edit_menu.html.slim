@@ -1,0 +1,22 @@
+/Edit menu
+div#toc-menu class="fixed-action-btn toc-menu-navbar"
+  a class="btn-floating toc-main"
+    = fa_icon "navicon", class: "menu-icon"
+  ul
+    li 
+      = link_to [parent], class: "btn-floating #{t 'templates.model.edit-menu.project.color' }"  do 
+        span class="tooltipped" data-tooltip="#{t 'templates.model.edit-menu.project.tip' }" data-position="left" data-delay="50"
+          i class="material-icons" == "language"
+    li 
+      = link_to [parent, domain], class: "btn-floating #{t 'templates.model.edit-menu.list.color' }" do
+        span class="tooltipped" data-tooltip="#{t 'templates.model.edit-menu.list.tip' }" data-position="left" data-delay="50"
+          = fa_icon "arrow-left"
+    /li 
+      a href="#" class="btn-floating form-submit-link #{t 'templates.model.edit-menu.preview.color' }" 
+        span class="tooltipped" data-tooltip="#{t 'mtemplates.model.edit-menu.preview.tip' }" data-position="left" data-delay="50"
+          i class="material-icons" == "pageview"
+    li
+      = link_to "#", class: "btn-floating #{t 'templates.model.edit-menu.save.color' }", onclick: "$(this).closest('form').submit()"  do 
+        span class="tooltipped" data-tooltip="#{t 'templates.model.edit-menu.save.tip' }" data-position="left" data-delay="50"
+          = fa_icon "check-circle"
+    
