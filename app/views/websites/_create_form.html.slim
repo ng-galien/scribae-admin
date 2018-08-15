@@ -6,7 +6,7 @@
     /Name
     div class="col s12 input-field"
       = render partial: 'template/form/string_field', locals: {form: form, domain: :websites, field: :name, \
-        validate_opts: {:class => 'validate', :required => true, :pattern => "^((?!#{@black_list}).(\\w+))", :minlength => 3} }
+        validate_opts: {:class => 'validate', :required => true, :pattern => "#{@create_regex}", :minlength => 3} }
     /Description
     div class="col s12 input-field"
       = render partial: 'template/form/string_field',

@@ -18,9 +18,15 @@ class WebsitesController < ApplicationController
     @websites = Website.all
       .order(created_at: :desc)
     @website_new = Website.new
-    @black_list = Website.select('name')
+    black_list = Website.select('name')
       .map(&:name).map{ |name| name.chars.map { |c| "[#{c.upcase}#{c.downcase}]" }.join('')}
       .map{ |word| "\\b#{word}\\b" }.join('|')
+    
+    unless black_list.nil? || black_list.length == 0
+      @create_regex = "^((?!#{black_list}).(\\w+))"
+    else
+      @create_regex = "(\\w+))"
+    end
     StopPreviewJob.perform_later 
   end
 
