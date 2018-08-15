@@ -1,3 +1,4 @@
 [submodule "prototypes"]
 	path = prototypes
 	url = https://github.com/ng-galien/scribae-prototype.git
+  branch = master
